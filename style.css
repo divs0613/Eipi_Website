@@ -1,0 +1,950 @@
+:root {
+  /* Colors */
+  --color-primary: #c91240;
+  --color-primary-hover: #b01037;
+  --color-bg-light: #f3f3f3;
+  --color-text-dark: #222222;
+  --color-backplate: #e8e8e8;
+  --color-white: #ffffff;
+  --color-gold: #f4b400;
+
+  /* Typography */
+  --font-family: "Outfit", sans-serif;
+  --font-mono: "JetBrains Mono", "SF Mono", "Roboto Mono", monospace;
+  --font-size-nav: 16px;
+  --font-size-badge: 16px;
+  --font-size-paragraph: 24px;
+  --font-size-button: 24px;
+
+  /* Unified Motion Physics */
+  --ease-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-fluid: cubic-bezier(0.25, 1, 0.5, 1);
+
+  /* Layout Spacing */
+  --margin-x: 50px;
+  --margin-y: 30px;
+  --grid-gap: 24px;
+}
+
+/* Reset */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html,
+body {
+  width: 100%;
+  height: 100%;
+  background-color: var(--color-bg-light);
+  font-family: var(--font-family);
+  color: var(--color-text-dark);
+  -webkit-font-smoothing: antialiased;
+  overflow: hidden;
+  overscroll-behavior: none;
+  overscroll-behavior-y: none;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+html::-webkit-scrollbar,
+body::-webkit-scrollbar {
+  display: none;
+  width: 0;
+  height: 0;
+}
+
+/* Official Lenis integration styles to eliminate scroll stutter and pinning jitter */
+html.lenis,
+html.lenis body {
+  height: auto !important;
+  overscroll-behavior: none !important;
+  overscroll-behavior-y: none !important;
+}
+
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
+.lenis.lenis-smooth iframe {
+  pointer-events: none;
+}
+
+/* ----------------------------------------------------
+   Page Reveal & Loader
+   ---------------------------------------------------- */
+.loader {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.loader-logo {
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 0;
+}
+
+.loader-logo img {
+  height: clamp(76px, 7vw, 92px);
+  width: auto;
+  display: block;
+  transform: translateY(120%);
+}
+
+/* Initial state: scale(0.7) and flat clip-path */
+.page-wrapper {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0.7);
+  width: 100vw;
+  height: 100vh;
+  clip-path: polygon(0% 100%, 100% 100%, 100% 100%, 0% 100%);
+  -webkit-clip-path: polygon(0% 100%, 100% 100%, 100% 100%, 0% 100%);
+  will-change: transform, clip-path;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  background-color: var(--color-bg-light);
+  overflow: hidden;
+  isolation: isolate;
+}
+
+/* Post-reveal permanent state */
+.page-wrapper.is-revealed {
+  position: relative;
+  top: auto;
+  left: auto;
+  transform: none !important;
+  width: 100%;
+  min-height: 100vh;
+  clip-path: none !important;
+  -webkit-clip-path: none !important;
+  overflow: visible;
+  display: block;
+}
+
+/* Red overlay box strictly covering page wrapper until wiped */
+.overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: var(--color-primary);
+  clip-path: polygon(0 100%, 100% 100%, 100% 0, 0 0);
+  -webkit-clip-path: polygon(0 100%, 100% 100%, 100% 0, 0 0);
+  z-index: 10;
+  pointer-events: none;
+  transform: translateZ(0);
+}
+
+/* ----------------------------------------------------
+   Masked Reveal System
+   ---------------------------------------------------- */
+.reveal-mask {
+  overflow: hidden;
+  display: block;
+  padding-bottom: 0.18em;
+  margin-bottom: -0.18em;
+}
+
+.banner-actions .reveal-mask {
+  display: inline-block;
+}
+
+.reveal-elem {
+  transform: translateY(105%);
+  will-change: transform;
+}
+
+.page-wrapper.is-revealed .reveal-mask {
+  overflow: visible;
+}
+
+/* ----------------------------------------------------
+   Grid & Layout System
+   ---------------------------------------------------- */
+.grid-container {
+  width: calc(100% - (var(--margin-x) * 2));
+  margin-left: var(--margin-x);
+  margin-right: var(--margin-x);
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  column-gap: var(--grid-gap);
+}
+
+/* Header */
+.header {
+  padding-top: var(--margin-y);
+  padding-bottom: 20px;
+  background-color: var(--color-bg-light);
+  flex-shrink: 0;
+  transition:
+    padding-top 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+    padding-bottom 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+    background-color 0.3s ease;
+}
+
+.header-grid {
+  align-items: center;
+}
+
+.logo-mask {
+  grid-column: 1 / span 3;
+  display: flex;
+  align-items: center;
+}
+
+.logo-link {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+}
+
+.logo-img {
+  height: 64px;
+  width: auto;
+  display: block;
+  transition: height 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.nav-menu {
+  grid-column: 4 / span 7;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: clamp(6px, 1.35vw, 20px);
+}
+
+.nav-menu .reveal-mask {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.nav-dropdown-wrap {
+  position: relative;
+}
+
+/* ----------------------------------------------------
+   Square Red Nav Wipe Animation
+   ---------------------------------------------------- */
+.nav-item {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 6px 12px;
+  border-radius: 0;
+  font-size: var(--font-size-nav);
+  font-weight: 500;
+  color: var(--color-text-dark);
+  text-decoration: none;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+/* Red rectangular fill that wipes in from left to right */
+.nav-item::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-color: var(--color-primary);
+  border-radius: 0;
+  clip-path: inset(0 100% 0 0);
+  transition: clip-path 0.35s cubic-bezier(0.25, 1, 0.5, 1);
+  z-index: 1;
+  pointer-events: none;
+}
+
+/* White text that reveals along the exact wipe line */
+.nav-item::after {
+  content: attr(data-text);
+  position: absolute;
+  inset: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: inherit;
+  color: var(--color-white);
+  font-weight: inherit;
+  font-size: inherit;
+  border-radius: 0;
+  clip-path: inset(0 100% 0 0);
+  transition: clip-path 0.35s cubic-bezier(0.25, 1, 0.5, 1);
+  z-index: 2;
+  pointer-events: none;
+}
+
+.nav-item:hover::before,
+.nav-item:hover::after {
+  clip-path: inset(0 0% 0 0);
+}
+
+/* Products Dropdown Nav Item with Chevron */
+.nav-item.nav-item-dropdown {
+  padding-right: 28px;
+}
+
+.nav-item.nav-item-dropdown::after {
+  padding-right: 28px;
+  justify-content: flex-start;
+  padding-left: 12px;
+}
+
+.nav-chevron {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 3;
+  color: var(--color-text-dark);
+  transition: transform 0.28s cubic-bezier(0.16, 1, 0.3, 1), color 0.2s ease;
+  pointer-events: none;
+}
+
+.nav-item-dropdown:hover .nav-chevron,
+.nav-dropdown-wrap:hover .nav-chevron,
+.nav-dropdown-wrap.is-open .nav-chevron {
+  color: #ffffff;
+  transform: translateY(-50%) rotate(180deg);
+}
+
+.nav-dropdown-wrap:hover .nav-item-dropdown::before,
+.nav-dropdown-wrap:hover .nav-item-dropdown::after,
+.nav-dropdown-wrap.is-open .nav-item-dropdown::before,
+.nav-dropdown-wrap.is-open .nav-item-dropdown::after {
+  clip-path: inset(0 0% 0 0);
+}
+
+/* ----------------------------------------------------
+   Products Mega Dropdown Menu
+   ---------------------------------------------------- */
+.nav-dropdown-menu {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  padding-top: 14px;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transform: translateY(8px);
+  transition:
+    opacity 0.24s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 0.24s cubic-bezier(0.16, 1, 0.3, 1),
+    visibility 0.24s ease;
+  z-index: 100;
+}
+
+.nav-dropdown-wrap:hover .nav-dropdown-menu,
+.nav-dropdown-wrap:focus-within .nav-dropdown-menu,
+.nav-dropdown-wrap.is-open .nav-dropdown-menu {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transform: translateY(0);
+}
+
+.nav-dropdown-card {
+  width: 580px;
+  background-color: #ffffff;
+  border: 1px solid rgba(34, 34, 34, 0.12);
+  border-radius: 0;
+  box-shadow: none;
+  overflow: hidden;
+}
+
+.nav-dropdown-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+  padding: 24px;
+}
+
+.nav-dropdown-col {
+  display: flex;
+  flex-direction: column;
+}
+
+.nav-dropdown-col-header {
+  display: flex;
+  align-items: center;
+  font-family: var(--font-family, "Outfit", sans-serif);
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--color-primary, #c91240);
+  padding-bottom: 12px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+  margin-bottom: 8px;
+}
+
+.nav-dropdown-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.nav-dropdown-link {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 10px;
+  color: var(--color-text-dark, #1a1a1a);
+  text-decoration: none;
+  font-size: 13.5px;
+  font-weight: 500;
+  border-radius: 0;
+  border-left: 2px solid transparent;
+  transition:
+    background-color 0.18s ease,
+    color 0.18s ease,
+    border-left-color 0.18s ease;
+}
+
+.nav-dropdown-link:hover {
+  background-color: #f7f7f7;
+  color: var(--color-primary, #c91240);
+  border-left-color: var(--color-primary, #c91240);
+}
+
+.nav-dropdown-link-arrow {
+  color: var(--color-primary, #c91240);
+  opacity: 0;
+  transform: translateX(-4px);
+  transition: opacity 0.18s ease, transform 0.18s ease;
+  flex-shrink: 0;
+}
+
+.nav-dropdown-link:hover .nav-dropdown-link-arrow {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+/* Dropdown Footer */
+.nav-dropdown-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 16px 24px;
+  background-color: #fafafa;
+  border-top: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+.nav-dropdown-footer-text {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.nav-dropdown-footer-title {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--color-text-dark, #1a1a1a);
+}
+
+.nav-dropdown-footer-sub {
+  font-size: 11.5px;
+  color: #666666;
+}
+
+.nav-dropdown-footer-btn {
+  display: inline-flex;
+  align-items: center;
+  padding: 8px 14px;
+  background-color: var(--color-primary, #c91240);
+  color: #ffffff;
+  font-size: 12px;
+  font-weight: 600;
+  text-decoration: none;
+  border-radius: 0;
+  white-space: nowrap;
+  flex-shrink: 0;
+  cursor: pointer;
+  transition:
+    background-color 0.28s cubic-bezier(0.25, 1, 0.5, 1),
+    transform 0.28s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.nav-dropdown-footer-btn:hover {
+  background-color: #a80f35;
+  transform: none;
+  box-shadow: none;
+}
+
+.nav-dropdown-footer-btn .btn-arrow {
+  width: 0;
+  height: 14px;
+  stroke: currentColor;
+  opacity: 0;
+  margin-left: 0;
+  transform: translateX(-6px);
+  flex-shrink: 0;
+  transition:
+    width 0.28s cubic-bezier(0.25, 1, 0.5, 1),
+    margin-left 0.28s cubic-bezier(0.25, 1, 0.5, 1),
+    opacity 0.2s ease,
+    transform 0.28s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.nav-dropdown-footer-btn:hover .btn-arrow {
+  width: 14px;
+  margin-left: 6px;
+  opacity: 1;
+  transform: translateX(0);
+}
+
+/* ----------------------------------------------------
+   Header Phone Button: Zoom & Smooth Wobble Interaction
+   ---------------------------------------------------- */
+.header-phone-mask {
+  grid-column: 11 / span 2;
+  justify-self: end;
+  display: flex;
+  align-items: center;
+}
+
+.header-phone-btn {
+  width: auto;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background-color: var(--color-primary);
+  color: var(--color-white);
+  font-size: var(--font-size-nav);
+  font-weight: 600;
+  text-decoration: none;
+  padding: 10px 14px;
+  border-radius: 0;
+  white-space: nowrap;
+  cursor: pointer;
+  transform-origin: center right;
+  transition:
+    transform 0.32s cubic-bezier(0.25, 1, 0.5, 1),
+    background-color 0.25s ease;
+}
+
+.header-phone-btn:hover {
+  transform: scale(1.05);
+  background-color: var(--color-primary-hover);
+}
+
+.header-phone-btn .icon-phone {
+  width: 16px;
+  height: 16px;
+  display: inline-block;
+  transform-origin: center center;
+}
+
+/* Fluid, gentle wobble vibration */
+@keyframes phone-ring {
+  0% {
+    transform: rotate(0deg) scale(1);
+  }
+  15% {
+    transform: rotate(-14deg) scale(1.12);
+  }
+  30% {
+    transform: rotate(12deg) scale(1.12);
+  }
+  45% {
+    transform: rotate(-9deg) scale(1.08);
+  }
+  60% {
+    transform: rotate(7deg) scale(1.04);
+  }
+  75% {
+    transform: rotate(-3deg) scale(1.02);
+  }
+  100% {
+    transform: rotate(0deg) scale(1);
+  }
+}
+
+.header-phone-btn:hover .icon-phone {
+  animation: phone-ring 0.65s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
+}
+
+/* Hero Section */
+.hero {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.hero-body-grid {
+  flex: 1;
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  column-gap: var(--grid-gap);
+  align-items: end;
+  padding-top: 10px;
+  padding-bottom: 28px;
+}
+
+.hero-content {
+  grid-column: 1 / span 8;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-self: end;
+}
+
+.rating-mask {
+  margin-bottom: 16px;
+}
+
+.google-rating {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 16px;
+}
+
+.google-icon {
+  width: 22px;
+  height: 22px;
+  display: block;
+}
+
+.rating-score {
+  font-weight: 700;
+  color: var(--color-text-dark);
+}
+
+.star-rating {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  color: var(--color-gold);
+}
+
+.icon-star {
+  width: 18px;
+  height: 18px;
+}
+
+.review-count {
+  font-weight: 500;
+  color: var(--color-text-dark);
+  margin-left: 4px;
+}
+
+/* Fluid Headline Typography & Descender Safety */
+.hero-heading {
+  font-size: clamp(81px, calc(-42px + 8.54vw), 122px);
+  line-height: 1.08;
+  font-weight: 600;
+  color: var(--color-text-dark);
+  letter-spacing: -0.025em;
+  margin: 0;
+  padding: 0;
+}
+
+.hero-line {
+  display: block;
+  white-space: nowrap;
+}
+
+/* Video Reel Showcase */
+.hero-media-wrapper {
+  grid-column: 9 / span 4;
+  position: relative;
+  display: flex;
+  align-items: flex-end;
+  align-self: end;
+  margin-bottom: 24px;
+}
+
+.media-backplate {
+  position: absolute;
+  top: -38px;
+  left: -46px;
+  width: 100%;
+  height: 100%;
+  background-color: var(--color-backplate);
+  z-index: 1;
+}
+
+.media-container {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  aspect-ratio: 16 / 10.5;
+  overflow: hidden;
+  background-color: #000;
+  display: block;
+  line-height: 0;
+  transform: translateZ(0);
+}
+
+.reel-video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transform: scale(1.3);
+  will-change: transform;
+}
+
+/* Flush Bottom Progress Bar */
+.reel-progress-track {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 3px;
+  background-color: rgba(255, 255, 255, 0.22);
+  z-index: 5;
+  pointer-events: none;
+  opacity: 0;
+}
+
+.reel-progress-fill {
+  height: 100%;
+  width: 0%;
+  background-color: var(--color-primary);
+  will-change: width;
+}
+
+/* Bottom Red Banner */
+.hero-bottom-banner {
+  background-color: var(--color-primary);
+  width: 100%;
+  margin-top: auto;
+  padding-top: 38px;
+  padding-bottom: 96px;
+  flex-shrink: 0;
+}
+
+.banner-grid {
+  align-items: start;
+}
+
+.banner-left {
+  grid-column: 1 / span 6;
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+}
+
+.banner-paragraph {
+  font-size: var(--font-size-paragraph);
+  line-height: 120%;
+  font-weight: 400;
+  color: var(--color-bg-light);
+}
+
+.banner-actions {
+  display: flex;
+  align-items: center;
+  gap: 28px;
+}
+
+/* ----------------------------------------------------
+   Calculate Costs Button: Sliding Arrow Interaction
+   ---------------------------------------------------- */
+.btn-calculate {
+  font-size: var(--font-size-button);
+  font-weight: 500;
+  color: var(--color-text-dark);
+  background-color: var(--color-bg-light);
+  text-decoration: none;
+  padding: 10px 16px;
+  border-radius: 0;
+  display: inline-flex;
+  align-items: center;
+  line-height: 1.2;
+  cursor: pointer;
+  transition:
+    background-color 0.28s cubic-bezier(0.25, 1, 0.5, 1),
+    transform 0.28s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.btn-calculate:hover {
+  background-color: var(--color-bg-light);
+  transform: none;
+}
+
+.btn-calculate .btn-arrow {
+  width: 0;
+  height: 18px;
+  stroke: currentColor;
+  opacity: 0;
+  margin-left: 0;
+  transform: translateX(-8px);
+  flex-shrink: 0;
+  transition:
+    width 0.32s cubic-bezier(0.25, 1, 0.5, 1),
+    margin-left 0.32s cubic-bezier(0.25, 1, 0.5, 1),
+    opacity 0.24s ease,
+    transform 0.32s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.btn-calculate:hover .btn-arrow {
+  width: 18px;
+  margin-left: 10px;
+  opacity: 1;
+  transform: translateX(0);
+}
+
+/* ----------------------------------------------------
+   View Recent Works Link: Smooth Underline Loop
+   ---------------------------------------------------- */
+.btn-recent-works {
+  font-size: var(--font-size-button);
+  font-weight: 500;
+  color: var(--color-white);
+  text-decoration: none;
+  display: inline-block;
+  line-height: 1.2;
+  position: relative;
+  padding-bottom: 3px;
+  cursor: pointer;
+}
+
+.btn-recent-works::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background-color: var(--color-white);
+  transform-origin: right center;
+  transform: scaleX(1);
+  transition: transform 0.35s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+@keyframes underline-swipe {
+  0% {
+    transform: scaleX(1);
+    transform-origin: right center;
+  }
+  45% {
+    transform: scaleX(0);
+    transform-origin: right center;
+  }
+  55% {
+    transform: scaleX(0);
+    transform-origin: left center;
+  }
+  100% {
+    transform: scaleX(1);
+    transform-origin: left center;
+  }
+}
+
+.btn-recent-works:hover::after {
+  animation: underline-swipe 0.55s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+}
+
+.banner-right {
+  grid-column: 9 / span 4;
+}
+
+.badge-checklist {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.badge-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: var(--font-size-badge);
+  font-weight: 400;
+  color: var(--color-white);
+  line-height: 1.3;
+}
+
+.icon-badge {
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+}
+
+/* Responsive Fallbacks */
+@media (max-width: 900px) {
+  .header-grid,
+  .hero-body-grid,
+  .banner-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 28px;
+  }
+  .nav-menu {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+  .nav-dropdown-menu {
+    position: static;
+    padding-top: 8px;
+    width: 100%;
+    transform: none;
+    display: none;
+  }
+  .nav-dropdown-wrap.is-open .nav-dropdown-menu {
+    display: block;
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+  }
+  .nav-dropdown-card {
+    width: 100%;
+    max-width: 100%;
+  }
+  .nav-dropdown-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+    padding: 16px;
+  }
+  .nav-dropdown-footer {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 14px 16px;
+  }
+  .hero-heading {
+    font-size: clamp(38px, 9vw, 56px);
+  }
+  .hero-line {
+    white-space: normal;
+    display: inline;
+  }
+  .hero-media-wrapper {
+    width: 100%;
+  }
+  .media-backplate {
+    display: none;
+  }
+  .hero-bottom-banner {
+    padding-bottom: 48px;
+  }
+}

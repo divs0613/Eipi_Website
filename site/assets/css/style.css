@@ -881,17 +881,18 @@ html.wipe .p-pre { display: none; }
 }
 
 /* keurmerken en beoordeling: grote namen als lijst, score op een zwart blok --- */
-/* de keurmerken op zwart: de platen zelf blijven wit, daar zit het logo op */
-.p-keur { background: var(--p-ink); color: var(--p-bone); }
+/* de keurmerken op dezelfde bone als de Waarom Eipi-sectie: sectie en
+   vakken in één kleur, alleen de dunne lijnen verdelen het */
+.p-keur { background: var(--p-bone); color: var(--p-ink); }
 .p-keur__kop {
   display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, .38fr);
   gap: clamp(1.6rem, 4vw, 4rem); align-items: end;
 }
 .p-keur__kop-t {
   margin: clamp(.7rem, 1.6vw, 1.2rem) 0 0;
-  font-size: clamp(2.8rem, 7.6vw, 7.6rem); line-height: .9; letter-spacing: .005em; color: var(--p-bone);
+  font-size: clamp(2.8rem, 7.6vw, 7.6rem); line-height: .9; letter-spacing: .005em; color: var(--p-ink);
 }
-.p-keur__lead { margin: clamp(1.2rem, 2.4vw, 1.8rem) 0 0; max-width: 34em; font-size: clamp(1.05rem, 1.3vw, 1.2rem); line-height: 1.65; color: var(--p-bone-4); text-wrap: pretty; }
+.p-keur__lead { margin: clamp(1.2rem, 2.4vw, 1.8rem) 0 0; max-width: 34em; font-size: clamp(1.05rem, 1.3vw, 1.2rem); line-height: 1.65; color: var(--p-grey-3); text-wrap: pretty; }
 
 /* de beoordeling als label dat aan de platen hangt */
 .p-keur__onder { position: relative; margin-top: clamp(2.6rem, 5vw, 4.2rem); }
@@ -899,10 +900,10 @@ html.wipe .p-pre { display: none; }
   position: absolute; z-index: 2; top: 0; right: 0; transform: translateY(calc(-100% + 1px));
   display: flex; flex-direction: column; gap: .4rem; width: min(100%, 24rem);
   padding: clamp(1.1rem, 2vw, 1.5rem) clamp(1.2rem, 2.2vw, 1.7rem);
-  background: #fff; border: 1px solid var(--p-line-ink); border-top: 4px solid var(--p-red); border-bottom: 0; color: var(--p-ink);
+  background: var(--p-bone); border: 1px solid var(--p-line-ink); border-top: 4px solid var(--p-red); border-bottom: 0; color: var(--p-ink);
   transition: background 300ms ease;
 }
-.p-keur__tag:hover { background: var(--p-bone); }
+.p-keur__tag:hover { background: #fff; }
 .p-keur__tag:focus-visible { outline: 2px solid var(--p-red-2); outline-offset: 4px; }
 .p-keur__tagkop { display: flex; align-items: center; gap: .55rem; }
 .p-keur__g { width: 1.4rem; height: 1.4rem; flex: none; }
@@ -924,11 +925,11 @@ html.wipe .p-pre { display: none; }
   list-style: none; margin: clamp(2.4rem, 5vw, 4rem) 0 0; padding: 0;
   display: grid; grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 1px;
-  background: var(--p-line-bone-soft); border: 1px solid var(--p-line-bone-soft);
+  background: var(--p-line-ink); border: 1px solid var(--p-line-ink);
 }
 .p-keur__plaat {
   position: relative; display: flex; flex-direction: column; gap: clamp(1rem, 2vw, 1.6rem);
-  background: #fff; color: var(--p-ink); padding: clamp(1.8rem, 3.4vw, 3.2rem);
+  background: var(--p-bone); color: var(--p-ink); padding: clamp(1.8rem, 3.4vw, 3.2rem);
   transition: background 320ms ease;
 }
 
@@ -946,7 +947,9 @@ html.wipe .p-pre { display: none; }
 .p-keur__logo {
   display: block; width: 100%; max-width: clamp(200px, 21vw, 310px);
   height: clamp(96px, 10.5vw, 152px); object-fit: contain; object-position: center;
-  background: #fff; padding: clamp(.5rem, 1vw, .8rem);
+  background: transparent; padding: clamp(.5rem, 1vw, .8rem);
+  /* de logo's zijn aangeleverd op wit; multiply laat dat wit wegvallen */
+  mix-blend-mode: multiply;
 }
 .p-keur__plaat .p-keur__t {
   display: block; font-family: var(--p-display); font-weight: 400; text-transform: uppercase;
@@ -964,7 +967,7 @@ html.wipe .p-pre { display: none; }
   .p-keur__plaat .p-keur__logo { max-width: 320px; height: 170px; }
 }
 
-/* diensten-carrousel: vier per keer, balk loopt vol in vijf seconden -------- */
+/* diensten-carrousel: vier per keer, balk loopt vol in 6,5 seconde ---------- */
 /* de sectie is zwart, net als de keurmerken eronder */
 #diensten .p-slider__nm { color: var(--p-bone); }
 #diensten .p-slider__label { color: var(--p-grey-2); }
@@ -1011,7 +1014,7 @@ html.js .p-slider__item.is-on:nth-child(4n+4) { animation-delay: 210ms; }
 .p-slider__fill {
   display: block; height: 100%; width: 0; border-radius: inherit; background: var(--p-red);
   /* vijf tellen per set: de balk en de wissel in het script lopen gelijk */
-  animation: pSlide 5s linear infinite;
+  animation: pSlide 6.5s linear infinite;
 }
 .p-slider__fill.is-hold { animation: none; }
 @keyframes pSlide { from { width: 0; } to { width: 100%; } }

@@ -330,8 +330,8 @@
     };
     if (sets > 1) {
       toon(0);
-      /* vijf tellen per set, gelijk aan de balk in de stylesheet */
-      if (!rustig) { window.setInterval(function () { toon(set + 1); }, 5000); }
+      /* 6,5 tellen per set, gelijk aan de balk in de stylesheet */
+      if (!rustig) { window.setInterval(function () { toon(set + 1); }, 6500); }
     }
   }
 

@@ -25,12 +25,13 @@ window.EIPI_PROJECTEN = {
   },
   "_home": {
     "uitleg": "Welke projecten staan er op de homepage, en hoeveel? Zet hier het aantal en de volgorde van de id's. Een id dat je weglaat of weghaalt, wordt automatisch aangevuld met een ander project. Met uitgelicht kies je welk project groot op de projectenpagina staat.",
-    "aantal": 5,
+    "aantal": 6,
     "projecten": [
       "gevel-monument",
       "wagenpark",
       "kantoor-glas",
       "wayfinding",
+      "horeca-winkel",
       "specials"
     ],
     "uitgelicht": "wagenpark"

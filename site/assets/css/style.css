@@ -2036,7 +2036,6 @@ body.p-paneel-open { overflow: hidden; }
 .p-fotoreeks__vak:hover img { transform: scale(1.02); }
 /* een losse foto over de volle breedte: ook een naad boven en onder */
 .p-fotoreeks--los { padding: 1px 0; }
-.p-fotoreeks__t--groot { font-size: clamp(2.96rem, 10.26vw, 10.83rem); }
 .p-fotoreeks__kicker { grid-column: 1 / -1; margin: 0 0 .7rem; }
 .p-fotoreeks__scrim {
   position: absolute; inset: 0; pointer-events: none;
@@ -2047,6 +2046,9 @@ body.p-paneel-open { overflow: hidden; }
   margin: 0; font-family: var(--p-display); font-weight: 400; text-transform: uppercase;
   font-size: clamp(2.05rem, 4.9vw, 4rem); line-height: .92; letter-spacing: .012em;
 }
+/* de losse grote foto's hebben een veel grotere titel; deze regel moet na de
+   basisregel staan, anders wint de basisregel */
+.p-fotoreeks__t--groot { font-size: clamp(2.96rem, 10.26vw, 10.83rem); }
 .p-fotoreeks__l { margin: .65rem 0 0; max-width: 27em; font-size: 1.1rem; line-height: 1.62; color: var(--p-bone-4); text-wrap: pretty; }
 /* de losse, grote foto's hebben de titel en de tekst naast elkaar */
 .p-fotoreeks__bij--breed { padding: clamp(1.2rem, 3vw, 2.5rem) clamp(1rem, 3vw, 2.5rem); }
@@ -2057,11 +2059,8 @@ body.p-paneel-open { overflow: hidden; }
   display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 460px), 1fr));
   gap: .8rem clamp(1.5rem, 3vw, 3rem); align-items: end;
 }
-/* bij de grote foto's is de tekst duidelijk groter dan gewone leestekst:
-   hij hoort bij het beeld, niet eronder */
-.p-fotoreeks__bij--breed .p-fotoreeks__l {
-  max-width: 32em; font-size: clamp(1.3rem, 1.8vw, 1.65rem); line-height: 1.55;
-}
+/* de tekst naast de grote foto's blijft gewone leestekst */
+.p-fotoreeks__bij--breed .p-fotoreeks__l { max-width: 30em; font-size: 1.15rem; line-height: 1.68; }
 
 /* --- drie sectoren met een streepje ertussen ----------------------------- */
 .p-drie {

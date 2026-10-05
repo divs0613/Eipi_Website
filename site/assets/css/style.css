@@ -737,6 +737,15 @@ html.wipe .p-pre { display: none; }
   gap: clamp(1.6rem, 3vw, 3rem);
   align-items: start;
 }
+/* het merkteken is groter dan in de balk, met lucht tussen logo, tekst en
+   de socialknoppen */
+.p-footcol { min-width: 0; }
+.p-footcol--brand { display: flex; flex-direction: column; gap: clamp(1.4rem, 2vw, 1.9rem); }
+.p-footcol--brand .p-brand__word { font-size: clamp(2.9rem, 3.2vw, 3.4rem); }
+.p-footcol--brand .p-brand__rule { height: clamp(34px, 3.6vw, 42px); }
+.p-footcol--brand .p-brand__sub { font-size: clamp(.66rem, .78vw, .76rem); letter-spacing: .2em; }
+.p-footcol--brand .p-footabout { max-width: 26em; }
+
 /* de contactregels met een klein icoon ervoor */
 .p-footconnect { display: flex; flex-direction: column; gap: .7rem; }
 .p-footrij {

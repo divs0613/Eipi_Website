@@ -24,7 +24,7 @@ window.EIPI_PROJECTEN = {
     "voorbeeld": "true zolang het een voorbeeld is, daarna false"
   },
   "_home": {
-    "uitleg": "Welke projecten staan er op de homepage, en hoeveel? Zet hier het aantal en de volgorde van de id's. Een id dat je weglaat of weghaalt, wordt automatisch aangevuld met een ander project.",
+    "uitleg": "Welke projecten staan er op de homepage, en hoeveel? Zet hier het aantal en de volgorde van de id's. Een id dat je weglaat of weghaalt, wordt automatisch aangevuld met een ander project. Met uitgelicht kies je welk project groot op de projectenpagina staat.",
     "aantal": 5,
     "projecten": [
       "gevel-monument",
@@ -32,7 +32,8 @@ window.EIPI_PROJECTEN = {
       "kantoor-glas",
       "wayfinding",
       "specials"
-    ]
+    ],
+    "uitgelicht": "gevel-monument"
   },
   "projecten": [
     {

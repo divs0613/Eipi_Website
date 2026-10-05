@@ -766,25 +766,38 @@
       });
     };
 
-    /* De hero op de projectenpagina is een rooster: de tekst staat in één vak,
-       de andere vakken vullen zich met werk uit de gegevens. */
-    var tegelvakken = document.querySelectorAll('[data-werk-tegel]');
-    var zetTegels = function () {
-      if (!tegelvakken.length || !alleProjecten.length) { return; }
-      Array.prototype.forEach.call(tegelvakken, function (vak) {
-        var i = parseInt(vak.getAttribute('data-werk-tegel'), 10);
-        var pr = alleProjecten[i % alleProjecten.length];
-        var beeld = volgorde(pr)[0];
-        vak.innerHTML =
-          '<button type="button" class="p-werktile" data-project="' + esc(pr.id) + '" aria-label="Bekijk project: ' + esc(pr.titel) + '">' +
-            (beeld ? '<img src="' + esc(klein(beeld.src)) + '" data-groot="' + esc(beeld.src) + '" alt="' + esc(beeld.alt) + '" decoding="async">' : '') +
-            '<span class="p-werktile__bij"><b>' + esc(pr.titel) + '</b><i>' + esc(pr.type || '') + '</i></span>' +
-          '</button>';
-      });
-      vangOp(document.querySelector('.p-werkrooster'));
+    /* De hero op de projectenpagina toont één uitgelicht project op de volle
+       breedte. Welk project dat is staat bij _home.uitgelicht in de gegevens. */
+    var uitBeeld = document.querySelector('[data-werk-uitgelicht-beeld]');
+    var uitNaam = document.querySelector('[data-werk-uitgelicht-naam]');
+    var uitLink = document.querySelector('[data-werk-uitgelicht-link]');
+    var middel = function (src) {
+      var naam = String(src).split('/').pop().replace(/\.[a-z]+$/i, '');
+      return 'assets/img/middel/' + naam + '.jpg';
+    };
+    var zetUitgelicht = function () {
+      if (!uitBeeld || !alleProjecten.length) { return; }
+      var pr = null;
+      var gekozen = (window.EIPI_PROJECTEN && window.EIPI_PROJECTEN._home && window.EIPI_PROJECTEN._home.uitgelicht) || '';
+      for (var i = 0; i < alleProjecten.length; i++) {
+        if (alleProjecten[i].id === gekozen) { pr = alleProjecten[i]; }
+      }
+      if (!pr) { pr = alleProjecten[0]; }
+      var beeld = volgorde(pr)[0];
+      if (beeld) {
+        uitBeeld.src = middel(beeld.src);
+        uitBeeld.setAttribute('data-groot', beeld.src);
+        uitBeeld.alt = beeld.alt;
+        uitBeeld.addEventListener('error', function () { uitBeeld.src = beeld.src; }, { once: true });
+      }
+      if (uitNaam) { uitNaam.textContent = pr.titel; }
+      if (uitLink) {
+        uitLink.setAttribute('data-project', pr.id);
+        uitLink.setAttribute('href', '#project-' + pr.id);
+      }
     };
 
-    /* De kaart is één foto: die van kaartbeeld, of anders de eerste. */    /* De kaart is één foto: die van kaartbeeld, of anders de eerste. */
+    /* De kaart is één foto: die van kaartbeeld, of anders de eerste. */    /* De kaart is één foto: die van kaartbeeld, of anders de eerste. */    /* De kaart is één foto: die van kaartbeeld, of anders de eerste. */
     var kaart = function (pr) {
       var beelden = volgorde(pr);
       var beeld = beelden[0];
@@ -977,7 +990,7 @@
         });
       }
       teken();
-      zetTegels();
+      zetUitgelicht();
 
       document.addEventListener('click', function (e) {
         var knop = e.target.closest ? e.target.closest('[data-project]') : null;

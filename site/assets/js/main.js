@@ -766,36 +766,25 @@
       });
     };
 
-    /* De strook in de hero: alle projecten naast elkaar, drie keer, zodat hij
-       naadloos blijft doorlopen. De tweede en derde set zijn voor de sier. */
-    var stripvak = document.querySelector('[data-werk-strip]');
-    var zetStrip = function () {
-      if (!stripvak || !alleProjecten.length) { return; }
-      var beelden = [];
-      alleProjecten.forEach(function (pr) {
-        var b = volgorde(pr)[0];
-        if (b) { beelden.push({ pr: pr, b: b }); }
-      });
-      if (!beelden.length) { return; }
-      var set = function (verborgen) {
-        return beelden.map(function (x) {
-          return '<button type="button" class="p-strip__vak" data-project="' + esc(x.pr.id) + '"' +
-            (verborgen ? ' tabindex="-1" aria-hidden="true"' : ' aria-label="Bekijk project: ' + esc(x.pr.titel) + '"') + '>' +
-            '<img src="' + esc(klein(x.b.src)) + '" data-groot="' + esc(x.b.src) + '"' +
-            (verborgen ? ' alt=""' : ' alt="' + esc(x.b.alt) + '"') + ' decoding="async">' +
-            '<span class="p-strip__naam"><b>' + esc(x.pr.titel) + '</b><i>' + esc(x.pr.type || '') + '</i></span>' +
+    /* De hero op de projectenpagina is een rooster: de tekst staat in één vak,
+       de andere vakken vullen zich met werk uit de gegevens. */
+    var tegelvakken = document.querySelectorAll('[data-werk-tegel]');
+    var zetTegels = function () {
+      if (!tegelvakken.length || !alleProjecten.length) { return; }
+      Array.prototype.forEach.call(tegelvakken, function (vak) {
+        var i = parseInt(vak.getAttribute('data-werk-tegel'), 10);
+        var pr = alleProjecten[i % alleProjecten.length];
+        var beeld = volgorde(pr)[0];
+        vak.innerHTML =
+          '<button type="button" class="p-werktile" data-project="' + esc(pr.id) + '" aria-label="Bekijk project: ' + esc(pr.titel) + '">' +
+            (beeld ? '<img src="' + esc(klein(beeld.src)) + '" data-groot="' + esc(beeld.src) + '" alt="' + esc(beeld.alt) + '" decoding="async">' : '') +
+            '<span class="p-werktile__bij"><b>' + esc(pr.titel) + '</b><i>' + esc(pr.type || '') + '</i></span>' +
           '</button>';
-        }).join('');
-      };
-      /* twee regels die de andere kant op lopen: zo zie je meer werk en
-         blijft het beeld in beweging */
-      stripvak.innerHTML =
-        '<div class="p-strip__rij"><div class="p-strip__baan">' + set(false) + set(true) + set(true) + '</div></div>' +
-        '<div class="p-strip__rij p-strip__rij--af"><div class="p-strip__baan p-strip__baan--af">' + set(true) + set(true) + set(true) + '</div></div>';
-      vangOp(stripvak);
+      });
+      vangOp(document.querySelector('.p-werkrooster'));
     };
 
-    /* De kaart is één foto: die van kaartbeeld, of anders de eerste. */
+    /* De kaart is één foto: die van kaartbeeld, of anders de eerste. */    /* De kaart is één foto: die van kaartbeeld, of anders de eerste. */
     var kaart = function (pr) {
       var beelden = volgorde(pr);
       var beeld = beelden[0];
@@ -988,7 +977,7 @@
         });
       }
       teken();
-      zetStrip();
+      zetTegels();
 
       document.addEventListener('click', function (e) {
         var knop = e.target.closest ? e.target.closest('[data-project]') : null;

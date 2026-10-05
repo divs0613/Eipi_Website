@@ -3,7 +3,12 @@
    door een blok tussen { en } te kopiëren en aan te passen. Zet de foto's in
    site/assets/img/ en vul de bestandsnaam in bij beelden. Met kaartbeeld kies je
    welke foto op de kaart staat. Laat voorbeeld op true staan tot het echt werk is.
-   Uitleg staat in PROJECTEN.md. Vraag het aan Winq als je ergens niet uitkomt. */
+   Uitleg staat in PROJECTEN.md. Vraag het aan Winq als je ergens niet uitkomt.
+
+   Onder _home staat welke projecten op de homepage komen te staan: het aantal
+   en de volgorde. Haal je er een id uit, dan schuift er automatisch een ander
+   project uit de lijst naar voren. Zet het aantal op 0 om de rij op de
+   homepage leeg te laten. */
 window.EIPI_PROJECTEN = {
   "_uitleg": "Hier staan de projecten van de projectenpagina. Je kunt zelf een project toevoegen door een blok tussen { en } te kopieren en aan te passen. Zet de foto's in de map site/assets/img/ en vul de bestandsnaam in bij beelden. Met kaartbeeld kies je welke foto op de kaart staat; de andere foto's komen daarachter in de carrousel. Laat voorbeeld op true staan tot je een project echt hebt gemaakt; zet hem daarna op false. Vraag het aan Winq als je ergens niet uitkomt.",
   "_velden": {
@@ -17,6 +22,17 @@ window.EIPI_PROJECTEN = {
     "kaartbeeld": "de foto die op de kaart staat, precies zoals hij bij beelden staat. Laat weg voor de eerste foto",
     "beelden": "twee tot vier foto's met een Nederlandse alt-tekst, in de volgorde van de carrousel",
     "voorbeeld": "true zolang het een voorbeeld is, daarna false"
+  },
+  "_home": {
+    "uitleg": "Welke projecten staan er op de homepage, en hoeveel? Zet hier het aantal en de volgorde van de id's. Een id dat je weglaat of weghaalt, wordt automatisch aangevuld met een ander project.",
+    "aantal": 5,
+    "projecten": [
+      "gevel-monument",
+      "wagenpark",
+      "kantoor-glas",
+      "wayfinding",
+      "specials"
+    ]
   },
   "projecten": [
     {

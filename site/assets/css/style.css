@@ -876,52 +876,76 @@ html.wipe .p-pre { display: none; }
   color: var(--p-bone);
 }
 
-/* keurmerken en beoordeling: de erkende kant even zwart op wit -------------- */
-.p-keur { background: var(--p-ink); color: var(--p-bone); }
+/* keurmerken en beoordeling: wit vlak, met de score van Google ernaast ------ */
+.p-keur { background: #FFFEFB; color: var(--p-ink); }
+.p-keur__kop {
+  display: grid; grid-template-columns: minmax(0, 1.35fr) minmax(0, .65fr);
+  gap: clamp(1.6rem, 4vw, 4rem); align-items: end;
+}
+.p-keur__t { margin: clamp(.6rem, 1.4vw, 1rem) 0 0; font-size: clamp(2.2rem, 4.4vw, 4rem); line-height: .96; }
+.p-keur__lead { margin: clamp(1rem, 2vw, 1.5rem) 0 0; max-width: 34em; font-size: 1.05rem; line-height: 1.65; color: var(--p-grey-3); text-wrap: pretty; }
+
+/* de beoordeling als los kaartje ernaast */
+.p-keur__google {
+  display: flex; flex-direction: column; gap: .7rem;
+  padding: clamp(1.1rem, 2vw, 1.6rem); border: 1px solid var(--p-line-ink); background: var(--p-bone);
+  color: var(--p-ink); transition: border-color 260ms ease, background 260ms ease, transform 420ms var(--p-ease);
+}
+.p-keur__google:hover { border-color: var(--p-ink); background: #fff; transform: translate3d(0, -4px, 0); }
+.p-keur__google:focus-visible { outline: 2px solid var(--p-red); outline-offset: 4px; }
+.p-keur__gtop { display: flex; align-items: center; gap: .6rem; }
+.p-keur__g { width: 1.35rem; height: 1.35rem; flex: none; }
+.p-keur__label { font-family: var(--p-mono); font-size: .68rem; letter-spacing: .14em; text-transform: uppercase; color: var(--p-grey-4); }
+.p-keur__rij2 { display: flex; align-items: center; gap: .7rem; }
+.p-keur__cijfer { font-family: var(--p-display); font-weight: 400; font-size: clamp(2.4rem, 3.6vw, 3.1rem); line-height: .9; }
+.p-keur__sterren {
+  font-size: clamp(1.1rem, 1.7vw, 1.45rem); line-height: 1; letter-spacing: .06em;
+  background: linear-gradient(90deg, #F5B301 94%, rgba(11, 10, 9, .18) 94%);
+  -webkit-background-clip: text; background-clip: text; color: transparent;
+}
+.p-keur__aantal { font-family: var(--p-mono); font-size: .72rem; letter-spacing: .1em; text-transform: uppercase; color: var(--p-grey-3); }
+.p-keur__knop {
+  display: inline-flex; align-items: center; gap: .5rem; margin-top: .2rem; padding-top: .8rem;
+  border-top: 1px solid var(--p-line-ink-soft);
+  font-family: var(--p-mono); font-size: .68rem; letter-spacing: .14em; text-transform: uppercase; color: var(--p-ink);
+}
+.p-keur__knop .p-arrow { width: 1.1rem; height: 1.1rem; transition: transform 360ms var(--p-ease); }
+.p-keur__google:hover .p-keur__knop { color: var(--p-red); }
+.p-keur__google:hover .p-keur__knop .p-arrow { transform: translate3d(5px, 0, 0); }
+
+/* de vier keurmerken eronder, met dunne lijnen ertussen */
 .p-keur__rij {
-  list-style: none; margin: clamp(1.8rem, 3.5vw, 2.8rem) 0 0; padding: 0;
-  display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 1px;
-  background: var(--p-line-bone-soft); border: 1px solid var(--p-line-bone-soft);
+  list-style: none; margin: clamp(2rem, 4vw, 3.2rem) 0 0; padding: 0;
+  display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 1px;
+  background: var(--p-line-ink); border: 1px solid var(--p-line-ink);
 }
 .p-keur__kaart {
   display: flex; flex-direction: column; gap: .7rem;
-  background: var(--p-ink); padding: clamp(1.2rem, 2vw, 1.7rem);
+  background: #FFFEFB; padding: clamp(1.2rem, 2.2vw, 1.9rem);
   transition: background 320ms ease;
 }
-.p-keur__kaart:hover { background: rgba(244, 241, 234, .045); }
-.p-keur__vak { display: flex; align-items: center; height: clamp(66px, 7vw, 84px); color: var(--p-bone); }
-.p-keur__mark { width: clamp(58px, 6vw, 76px); height: clamp(58px, 6vw, 76px); color: var(--p-bone); opacity: .9; }
+.p-keur__kaart:hover { background: var(--p-bone); }
+.p-keur__vak { display: flex; align-items: center; height: clamp(70px, 7.5vw, 92px); color: var(--p-ink); }
+.p-keur__mark { width: clamp(60px, 6.2vw, 80px); height: clamp(60px, 6.2vw, 80px); }
 .p-keur__merk {
-  display: inline-flex; flex-direction: column; gap: .1rem; padding: .5rem .7rem;
-  border: 1.5px solid var(--p-bone); font-family: var(--p-display); font-weight: 400;
-  font-size: clamp(1.05rem, 1.5vw, 1.35rem); line-height: .95; letter-spacing: .06em; text-transform: uppercase;
+  display: inline-flex; flex-direction: column; gap: .1rem; padding: .5rem .75rem;
+  border: 1.5px solid var(--p-ink); font-family: var(--p-display); font-weight: 400;
+  font-size: clamp(1.05rem, 1.5vw, 1.4rem); line-height: .95; letter-spacing: .06em; text-transform: uppercase;
 }
-.p-keur__merk em { font-style: normal; font-size: .58em; letter-spacing: .16em; color: var(--p-red-2); }
-.p-keur__merk--rdw { border-color: var(--p-red-2); color: var(--p-red-2); }
-.p-keur__merk--rdw em { color: var(--p-grey-2); }
+.p-keur__merk em { font-style: normal; font-size: .58em; letter-spacing: .16em; color: var(--p-red); }
+.p-keur__merk--rdw { border-color: var(--p-red); color: var(--p-red); }
+.p-keur__merk--rdw em { color: var(--p-grey-4); }
 .p-keur__merk--leer { border-style: dashed; }
-.p-keur__g {
-  display: inline-flex; align-items: center; justify-content: center; width: clamp(46px, 5vw, 58px); height: clamp(46px, 5vw, 58px);
-  border-radius: 999px; background: var(--p-bone); color: var(--p-ink);
-  font-family: var(--p-display); font-size: clamp(1.4rem, 2vw, 1.8rem); line-height: 1;
-}
-.p-keur__t { font-family: var(--p-display); font-weight: 400; text-transform: uppercase; font-size: clamp(1.15rem, 1.6vw, 1.45rem); line-height: 1.05; }
-.p-keur__l { margin: 0; font-size: .95rem; line-height: 1.55; color: var(--p-grey-2); text-wrap: pretty; }
-.p-keur__knop {
-  display: inline-flex; align-items: center; gap: .5rem; margin-top: auto; padding-top: .9rem;
-  font-family: var(--p-mono); font-size: .68rem; letter-spacing: .14em; text-transform: uppercase;
-  color: var(--p-bone); border-top: 1px solid var(--p-line-bone-soft);
-}
-.p-keur__knop .p-arrow { width: 1.1rem; height: 1.1rem; transition: transform 360ms var(--p-ease); }
-.p-keur__knop:hover { color: var(--p-red-2); }
-.p-keur__knop:hover .p-arrow { transform: translate3d(5px, 0, 0); }
-.p-keur__knop:focus-visible { outline: 2px solid var(--p-red-2); outline-offset: 4px; }
+.p-keur__t2, .p-keur__kaart .p-keur__t { font-family: var(--p-display); font-weight: 400; text-transform: uppercase; font-size: clamp(1.15rem, 1.6vw, 1.5rem); line-height: 1.05; }
+.p-keur__l { margin: 0; font-size: .95rem; line-height: 1.55; color: var(--p-grey-3); text-wrap: pretty; }
 
-@media (max-width: 1080px) { .p-keur__rij { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
-@media (max-width: 720px) { .p-keur__rij { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
-@media (max-width: 520px) { .p-keur__rij { grid-template-columns: 1fr; } }
+@media (max-width: 1080px) {
+  .p-keur__kop { grid-template-columns: 1fr; align-items: start; }
+  .p-keur__rij { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 560px) { .p-keur__rij { grid-template-columns: 1fr; } }
 
-/* het team: afdelingen als over elkaar schuivende panelen ------------------ */
+/* het team: afdelingen als over elkaar schuivende panelen ------------------ *//* het team: afdelingen als over elkaar schuivende panelen ------------------ */
 .p-teamstack {
   display: flex; flex-direction: column; gap: 0; margin-top: clamp(1.8rem, 3.5vw, 2.8rem);
   /* over de volle breedte van het scherm, buiten de normale kolom om */
@@ -1790,6 +1814,11 @@ body.page .p-ctaform .p-hint, body.page .p-ctaform .p-note { color: var(--p-grey
   position: relative; margin: clamp(.4rem, 1.2vh, .9rem) 0 0;
   font-size: clamp(2.9rem, min(10.4vw, 15vh), 11rem); line-height: .9;
 }
+/* het tweede deel van de regel als contour: dat geeft de kop lucht */
+.p-werkdek__t2 { color: inherit; }
+@supports (-webkit-text-stroke: 1px currentColor) {
+  .p-werkdek__t2 { color: transparent; -webkit-text-stroke: clamp(1px, .16vw, 2.4px) var(--p-bone); }
+}
 
 /* de beeldstrook: alle projecten naast elkaar, langzaam langsrollend */
 .p-werkdek__strip {
@@ -1806,11 +1835,22 @@ body.page .p-ctaform .p-hint, body.page .p-ctaform .p-note { color: var(--p-grey
 .p-strip__vak { flex: 0 0 auto; padding: 0; border: 0; background: none; cursor: pointer; }
 .p-strip__vak + .p-strip__vak { margin-left: 2px; }
 .p-strip__vak img {
-  display: block; height: clamp(140px, 21vh, 250px); width: clamp(200px, 27vh, 340px); object-fit: cover;
+  display: block; height: clamp(150px, 24vh, 290px); width: clamp(215px, 31vh, 390px); object-fit: cover;
   filter: grayscale(.3) brightness(.72);
   transition: filter 380ms ease, transform 700ms var(--p-ease);
 }
+.p-strip__vak { position: relative; }
 .p-strip__vak:hover img, .p-strip__vak:focus-visible img { filter: none; transform: scale(1.03); }
+.p-strip__naam {
+  position: absolute; left: 0; right: 0; bottom: 0; z-index: 2;
+  display: flex; flex-direction: column; gap: .15rem; padding: .9rem;
+  background: linear-gradient(180deg, rgba(11, 10, 9, 0) 0%, rgba(11, 10, 9, .88) 70%);
+  opacity: 0; transform: translate3d(0, 8px, 0); transition: opacity 260ms ease, transform 420ms var(--p-ease);
+  pointer-events: none; text-align: left;
+}
+.p-strip__vak:hover .p-strip__naam, .p-strip__vak:focus-visible .p-strip__naam { opacity: 1; transform: none; }
+.p-strip__naam b { font-family: var(--p-display); font-weight: 400; text-transform: uppercase; font-size: 1.15rem; line-height: 1; color: var(--p-bone); }
+.p-strip__naam i { font-style: normal; font-family: var(--p-mono); font-size: .62rem; letter-spacing: .14em; text-transform: uppercase; color: var(--p-red-2); }
 .p-strip__vak:focus-visible { outline: 2px solid var(--p-red-2); outline-offset: -3px; }
 
 .p-werkdek__voet {
@@ -2000,3 +2040,85 @@ body.page .p-ctaform .p-hint, body.page .p-ctaform .p-note { color: var(--p-grey
   .p-paneel__doek { transition: none; }
 }
 body.p-paneel-open { overflow: hidden; }
+
+/* ==========================================================================
+   Homepage: Google-score, drie sectoren, recente projecten en klanten.
+   ========================================================================== */
+
+/* --- Google-beoordeling in de hero --------------------------------------- */
+.p-gscore {
+  display: inline-flex; align-items: center; gap: .6rem; width: fit-content;
+  margin-top: .2rem; padding: .55rem .9rem;
+  border: 1px solid var(--p-line-bone-soft); background: rgba(244, 241, 234, .05);
+  color: var(--p-bone); transition: border-color 260ms ease, background 260ms ease;
+}
+.p-gscore:hover { border-color: rgba(244, 241, 234, .45); background: rgba(244, 241, 234, .09); }
+.p-gscore:focus-visible { outline: 2px solid var(--p-red-2); outline-offset: 3px; }
+.p-gscore__g { width: 1.15rem; height: 1.15rem; flex: none; }
+.p-gscore__c { font-family: var(--p-display); font-weight: 400; font-size: 1.25rem; line-height: 1; }
+.p-gscore__sterren {
+  font-size: 1rem; line-height: 1; letter-spacing: .08em;
+  background: linear-gradient(90deg, #F5B301 94%, rgba(244, 241, 234, .28) 94%);
+  -webkit-background-clip: text; background-clip: text; color: transparent;
+}
+.p-gscore__n { font-family: var(--p-mono); font-size: .68rem; letter-spacing: .12em; text-transform: uppercase; color: var(--p-grey-2); }
+
+/* --- drie sectoren met een streepje ertussen ----------------------------- */
+.p-drie { position: relative; }
+.p-drie__blok { display: block; position: relative; color: inherit; }
+.p-drie__blok > figure { height: 100%; }
+.p-drie__blok img { transition: transform 900ms var(--p-ease), filter 500ms ease; }
+.p-drie__blok:hover img { transform: scale(1.03); }
+.p-drie__meer {
+  display: inline-flex; align-items: center; gap: .5rem; margin-top: 1rem; padding-top: .8rem;
+  border-top: 1px solid rgba(244, 241, 234, .28);
+  font-family: var(--p-mono); font-size: .68rem; letter-spacing: .14em; text-transform: uppercase; color: var(--p-bone);
+}
+.p-drie__meer .p-arrow { width: 1.1rem; height: 1.1rem; transition: transform 360ms var(--p-ease); }
+.p-drie__blok:hover .p-drie__meer { color: var(--p-red-2); }
+.p-drie__blok:hover .p-drie__meer .p-arrow { transform: translate3d(5px, 0, 0); }
+.p-drie__blok:focus-visible { outline: 2px solid var(--p-red-2); outline-offset: -4px; }
+/* het scheidingslijntje met een punt erin, tussen de blokken */
+.p-drie__blok + .p-drie__blok::before {
+  content: ""; position: absolute; left: calc(clamp(6px, .8vw, 12px) / -2); top: 50%;
+  width: 7px; height: 7px; margin-top: -3.5px; background: var(--p-red-2);
+  transform: rotate(45deg); z-index: 2;
+}
+
+/* --- recente projecten op de homepage ------------------------------------ */
+.p-recent { background: var(--p-bone); color: var(--p-ink); padding: var(--p-space) 0; }
+.p-recent__kop { display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 1rem 2rem; margin-bottom: clamp(1.4rem, 3vw, 2.2rem); }
+.p-recent__rij { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1px; background: var(--p-line-ink); border: 1px solid var(--p-line-ink); }
+.p-recent__rij:empty { display: none; }
+.p-btn--leeg {
+  background: transparent; color: var(--p-ink); border: 1px solid var(--p-line-ink);
+}
+.p-btn--leeg:hover { background: var(--p-ink); color: var(--p-bone); border-color: var(--p-ink); }
+.p-btn--leeg .p-arrow { width: 1.15rem; height: 1.15rem; }
+@media (max-width: 900px) { .p-recent__rij { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 560px) { .p-recent__rij { grid-template-columns: 1fr; } }
+
+/* --- klanten ------------------------------------------------------------- */
+.p-klanten { background: var(--p-ink); color: var(--p-bone); padding: var(--p-space) 0; }
+.p-klanten__rij {
+  list-style: none; margin: clamp(1.6rem, 3.4vw, 2.6rem) 0 0; padding: 0;
+  display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1px;
+  background: var(--p-line-bone-soft); border: 1px solid var(--p-line-bone-soft);
+}
+.p-klanten__naam {
+  display: flex; align-items: center; justify-content: center; min-height: clamp(90px, 11vw, 140px);
+  background: var(--p-ink); padding: 1rem;
+  font-family: var(--p-display); font-weight: 400; text-transform: uppercase;
+  font-size: clamp(1.2rem, 2.2vw, 1.9rem); letter-spacing: .03em; line-height: 1; text-align: center;
+  color: var(--p-grey-2); transition: color 260ms ease, background 260ms ease;
+}
+.p-klanten__naam:hover { color: var(--p-bone); background: rgba(244, 241, 234, .05); }
+.p-klanten__vraag {
+  display: flex; flex-wrap: wrap; align-items: center; gap: 1rem 2rem;
+  margin-top: clamp(1.6rem, 3.4vw, 2.6rem); padding-top: clamp(1.2rem, 2.6vw, 1.8rem);
+  border-top: 1px solid var(--p-line-bone-soft);
+}
+.p-klanten__zin { margin: 0; font-family: var(--p-display); font-weight: 400; text-transform: uppercase; font-size: clamp(1.3rem, 2.4vw, 2.1rem); line-height: 1.05; color: var(--p-bone); max-width: 24em; }
+.p-klanten__vraag .p-btn { margin-left: auto; }
+@media (max-width: 900px) { .p-klanten__rij { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 560px) { .p-klanten__rij { grid-template-columns: 1fr; } .p-klanten__vraag .p-btn { margin-left: 0; } }

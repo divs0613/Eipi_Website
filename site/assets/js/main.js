@@ -783,6 +783,7 @@
             (verborgen ? ' tabindex="-1" aria-hidden="true"' : ' aria-label="Bekijk project: ' + esc(x.pr.titel) + '"') + '>' +
             '<img src="' + esc(klein(x.b.src)) + '" data-groot="' + esc(x.b.src) + '"' +
             (verborgen ? ' alt=""' : ' alt="' + esc(x.b.alt) + '"') + ' decoding="async">' +
+            '<span class="p-strip__naam"><b>' + esc(x.pr.titel) + '</b><i>' + esc(x.pr.type || '') + '</i></span>' +
           '</button>';
         }).join('');
       };
@@ -1023,6 +1024,70 @@
         leegvak.textContent = 'De projecten konden niet geladen worden. Bel ons even, dan vertellen we erover.';
       }
     }
+  }
+
+  /* Recente projecten op de homepage: de keuze staat in projecten.js onder
+     _home. Zo kan de klant zelf bepalen hoeveel er staan en welke. */
+  var homevak = document.querySelector('[data-home-projecten]');
+  if (homevak) {
+    (function () {
+      var data = window.EIPI_PROJECTEN;
+      if (!data || !data.projecten || !data.projecten.length) { return; }
+      var alle = data.projecten;
+      var instelling = data._home || {};
+      var aantal = parseInt(instelling.aantal, 10);
+      if (isNaN(aantal) || aantal < 0) { aantal = 5; }
+      if (aantal === 0) { return; }
+      var perId = {};
+      alle.forEach(function (pr) { perId[pr.id] = pr; });
+
+      var esc = function (s) {
+        return String(s === null || s === undefined ? '' : s).replace(/[&<>"']/g, function (c) {
+          return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
+        });
+      };
+      var volgorde = function (pr) {
+        var beelden = (pr.beelden || []).filter(function (b) { return b && b.src; });
+        if (!pr.kaartbeeld) { return beelden; }
+        var voor = [], rest = [];
+        beelden.forEach(function (b) { (b.src === pr.kaartbeeld ? voor : rest).push(b); });
+        return voor.concat(rest);
+      };
+      var klein = function (src) {
+        var naam = String(src).split('/').pop().replace(/\.[a-z]+$/i, '');
+        return 'assets/img/klein/' + naam + '.jpg';
+      };
+
+      /* eerst de gekozen projecten, daarna aanvullen met de rest */
+      var gekozen = [], gedaan = {};
+      (instelling.projecten || []).forEach(function (id) {
+        if (perId[id] && !gedaan[id]) { gekozen.push(perId[id]); gedaan[id] = true; }
+      });
+      alle.forEach(function (pr) {
+        if (gekozen.length < aantal && !gedaan[pr.id]) { gekozen.push(pr); gedaan[pr.id] = true; }
+      });
+      gekozen = gekozen.slice(0, aantal);
+
+      homevak.innerHTML = gekozen.map(function (pr) {
+        var beeld = volgorde(pr)[0];
+        return '<article class="p-werkkaart">' +
+          '<div class="p-werkkaart__kop">' +
+            '<span class="p-werkkaart__plaats">' + esc(pr.plaats || '') + '</span>' +
+            '<span class="p-werkkaart__type">' + esc(pr.type || '') + '</span>' +
+            (pr.voorbeeld ? '<span class="p-werkkaart__monster">Voorbeeld</span>' : '') +
+          '</div>' +
+          (beeld ? '<div class="p-werkkaart__beeld"><img src="' + esc(klein(beeld.src)) + '" data-groot="' + esc(beeld.src) + '" alt="' + esc(beeld.alt) + '" decoding="async"><span class="p-stock p-corner">Tijdelijke foto</span></div>' : '') +
+          '<h3 class="p-werkkaart__t">' + esc(pr.titel) + '</h3>' +
+          '<p class="p-werkkaart__l">' + esc(pr.samenvatting || '') + '</p>' +
+          '<span class="p-werkkaart__voet"><a class="p-arrowlink" href="projecten.html#project-' + esc(pr.id) + '">Bekijk project ' + PIJL_TEKEN + '</a></span>' +
+          '<a class="p-werkkaart__tik" href="projecten.html#project-' + esc(pr.id) + '" aria-label="Bekijk project: ' + esc(pr.titel) + '"></a>' +
+        '</article>';
+      }).join('');
+
+      Array.prototype.forEach.call(homevak.querySelectorAll('img[data-groot]'), function (img) {
+        img.addEventListener('error', function () { img.src = img.getAttribute('data-groot'); }, { once: true });
+      });
+    }());
   }
 
   /* Vacatures: de rij klapt soepel open en dicht in plaats van direct.

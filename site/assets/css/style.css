@@ -730,22 +730,26 @@ html.wipe .p-pre { display: none; }
 
 /* footer ----------------------------------------------------------------- */
 .p-footer { background: var(--p-ink); color: var(--p-bone); padding: clamp(2.2rem, 4.5vw, 3.6rem) 0 clamp(1.2rem, 2.2vw, 1.8rem); }
-/* de voettekst: merk en contact naast elkaar, daaronder de links */
-.p-foottop {
-  display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr);
-  gap: clamp(1.6rem, 3vw, 3rem); align-items: start;
-}
-.p-footbel { display: flex; flex-direction: column; align-items: flex-start; gap: .5rem; }
-.p-footbel .p-footphone { font-size: clamp(1.9rem, 2.7vw, 2.7rem); }
-.p-footbel .p-footabout { max-width: 20em; }
-.p-footnav {
-  display: grid; grid-template-columns: repeat(3, minmax(0, 1fr));
+/* de voettekst: merk, diensten, navigatie en contact in vier kolommen */
+.p-footcols {
+  display: grid;
+  grid-template-columns: minmax(0, 1.45fr) repeat(2, minmax(0, 1fr)) minmax(0, 1.15fr);
   gap: clamp(1.6rem, 3vw, 3rem);
-  margin-top: clamp(2rem, 4vw, 3.2rem); padding-top: clamp(1.4rem, 2.6vw, 2rem);
-  border-top: 1px solid rgba(244, 241, 234, .12);
+  align-items: start;
 }
-.p-footcol { min-width: 0; }
-.p-footcol--brand { display: flex; flex-direction: column; gap: .9rem; }
+/* de contactregels met een klein icoon ervoor */
+.p-footconnect { display: flex; flex-direction: column; gap: .7rem; }
+.p-footrij {
+  display: grid; grid-template-columns: auto minmax(0, 1fr);
+  gap: .55rem .7rem; align-items: start;
+  font-size: .93rem; line-height: 1.5; color: #A29A8B;
+}
+.p-footrij__ic { width: 1.05rem; height: 1.05rem; margin-top: .15rem; color: var(--p-red-2); }
+.p-footrij__ic svg { display: block; width: 100%; height: 100%; }
+.p-footrij a { color: #A29A8B; }
+.p-footrij a:hover { color: var(--p-bone); }
+.p-footrij__tel { font-family: var(--p-display); font-size: 1.5rem; letter-spacing: .04em; line-height: 1.1; color: var(--p-bone); }
+.p-footrij__tel:hover { color: var(--p-red-2); }
 .p-foottitle { margin: 0 0 .9rem; font-family: var(--p-mono); font-size: .68rem; letter-spacing: .16em; text-transform: uppercase; color: var(--p-red-2); }
 .p-footabout { margin: 0; font-size: .93rem; line-height: 1.6; color: #A29A8B; max-width: 24em; text-wrap: pretty; }
 .p-footlinks { display: flex; flex-direction: column; gap: .5rem; }
@@ -787,9 +791,8 @@ html.wipe .p-pre { display: none; }
   .p-burger { display: flex; }
   .p-phone { margin-left: auto; }
 }
-@media (max-width: 900px) {
-  .p-foottop, .p-footnav { grid-template-columns: minmax(0, 1fr); }
-}
+@media (max-width: 1080px) { .p-footcols { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 640px) { .p-footcols { grid-template-columns: minmax(0, 1fr); } }
 @media (max-width: 820px) {
   .p-phone { display: none; }
   .p-strip { display: none; }

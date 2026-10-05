@@ -1032,9 +1032,10 @@
             '<div class="p-team__titel">' +
               (afd.index ? '<span class="p-team__index">' + esc(afd.index) + '</span>' : '') +
               '<h3 class="p-team__naam">' + esc(afd.naam || '') + '</h3>' +
-              '<span class="p-team__aantal">' + leden.length + (leden.length === 1 ? ' persoon' : ' mensen') + '</span>' +
             '</div>' +
             (afd.tekst ? '<p class="p-team__tekst">' + esc(afd.tekst) + '</p>' : '') +
+            '<span class="p-team__aantal"><b>' + leden.length + '</b><i>' +
+              (leden.length === 1 ? 'persoon' : 'mensen') + '</i></span>' +
           '</div>' +
           '<div class="p-team__rij">' +
             leden.map(function (lid) {

@@ -2072,52 +2072,55 @@ body.p-paneel-open { overflow: hidden; }
    Het team op de over-ons pagina: per afdeling een rij mensen.
    ========================================================================== */
 /* Het team: per afdeling een kop met het nummer, de naam, waar ze van zijn
-   en hoeveel mensen er staan, met daaronder de mensen zelf in gelijke
-   tegels. ----------------------------------------------------------------- */
+   en hoeveel mensen er staan, met daaronder de mensen in gelijke tegels.
+   De afdelingen hangen aan witruimte, niet aan lijnen. ------------------- */
 .p-team { margin-top: clamp(2rem, 4vw, 3.2rem); }
-.p-team__afdeling + .p-team__afdeling {
-  margin-top: clamp(2rem, 4vw, 3.2rem);
-  padding-top: clamp(1.4rem, 3vw, 2.2rem);
-  border-top: 1px solid var(--p-line-ink);
-}
+.p-team__afdeling + .p-team__afdeling { margin-top: clamp(3rem, 6vw, 5.5rem); }
 .p-team__kop {
-  display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 34rem);
-  align-items: end; gap: .7rem clamp(1.5rem, 4vw, 4rem);
-  padding-bottom: clamp(.9rem, 1.7vw, 1.3rem);
-  border-bottom: 1px solid var(--p-line-ink-soft);
-  margin-bottom: clamp(1.1rem, 2.2vw, 1.6rem);
+  display: grid; grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center; column-gap: clamp(1.5rem, 4vw, 4rem);
+  margin-bottom: clamp(1.4rem, 2.6vw, 2.1rem);
 }
-.p-team__titel { display: flex; flex-wrap: wrap; align-items: baseline; gap: .3rem clamp(.6rem, 1.2vw, 1rem); }
-/* het aantal staat op dezelfde lijn als de naam, met een streepje ervoor */
-.p-team__aantal { display: inline-flex; align-items: center; gap: .7rem; padding-bottom: .2rem; }
-.p-team__aantal::before { content: ""; width: clamp(1rem, 2vw, 2rem); height: 1px; background: var(--p-line-ink); }
-.p-team__index { font-family: var(--p-mono); font-size: .72rem; letter-spacing: .16em; color: var(--p-red); }
+.p-team__titel { display: flex; align-items: baseline; gap: clamp(.6rem, 1.2vw, 1rem); }
+.p-team__index { font-family: var(--p-mono); font-size: .78rem; letter-spacing: .16em; color: var(--p-red); }
 .p-team__naam {
   margin: 0; font-family: var(--p-display); font-weight: 400; text-transform: uppercase;
-  font-size: clamp(1.7rem, 3.1vw, 2.7rem); line-height: .95; color: var(--p-ink);
+  font-size: clamp(1.9rem, 3.4vw, 3rem); line-height: .9; color: var(--p-ink);
 }
-.p-team__tekst { margin: 0; max-width: 46ch; justify-self: end; font-size: clamp(.95rem, 1.1vw, 1.05rem); line-height: 1.6; color: var(--p-grey-3); }
-.p-team__aantal {
-  font-family: var(--p-mono); font-size: .66rem; letter-spacing: .14em;
-  text-transform: uppercase; color: var(--p-grey-4);
+.p-team__tekst {
+  margin: 0; max-width: 48ch; font-size: clamp(1.05rem, 1.35vw, 1.3rem);
+  line-height: 1.55; color: var(--p-grey-3);
+}
+/* het aantal mensen: het cijfer groot, het woord er in rood onder */
+.p-team__aantal { display: flex; flex-direction: column; align-items: flex-end; gap: .25rem; }
+.p-team__aantal b {
+  font-family: var(--p-display); font-weight: 400; line-height: .8;
+  font-size: clamp(2.6rem, 4.4vw, 4rem); color: var(--p-ink);
+}
+.p-team__aantal i {
+  font-style: normal; font-family: var(--p-mono); font-size: .68rem;
+  letter-spacing: .16em; text-transform: uppercase; color: var(--p-red);
 }
 .p-team__rij { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: clamp(.7rem, 1.5vw, 1.2rem); }
 .p-team__lid { margin: 0; display: flex; flex-direction: column; }
 .p-team__foto { display: block; width: 100%; aspect-ratio: 4 / 5; object-fit: cover; background: var(--p-bone-4); }
-.p-team__bij { display: block; margin-top: auto; padding-top: .55rem; }
+.p-team__bij { display: block; margin-top: auto; padding-top: .7rem; }
 .p-team__bij b {
   display: block; font-family: var(--p-display); font-weight: 400; text-transform: uppercase;
-  font-size: 1.05rem; line-height: 1.05; color: var(--p-ink);
+  font-size: clamp(1.2rem, 1.45vw, 1.5rem); line-height: 1; color: var(--p-ink);
 }
+/* de rol staat er kleiner onder, in het mono-label van de site */
 .p-team__bij i {
-  display: block; margin-top: .12rem; font-style: normal; font-family: var(--p-mono);
-  font-size: .62rem; letter-spacing: .1em; text-transform: uppercase; color: var(--p-grey-4);
+  display: block; margin-top: .3rem; font-style: normal; font-family: var(--p-mono);
+  font-size: .68rem; letter-spacing: .11em; text-transform: uppercase; color: var(--p-grey-4);
 }
 .p-team__leeg { margin: 0; font-size: 1rem; color: var(--p-grey-3); }
 
-/* de kop stapelt zodra de twee kolommen te krap worden */
+/* smal: het aantal gaat naast de naam staan en de tekst eronder */
 @media (max-width: 900px) {
-  .p-team__kop { grid-template-columns: minmax(0, 1fr); align-items: start; }
+  .p-team__kop { grid-template-columns: minmax(0, 1fr) auto; align-items: start; row-gap: .7rem; }
+  .p-team__tekst { grid-column: 1 / -1; grid-row: 2; max-width: 56ch; }
+  .p-team__aantal { grid-column: 2; grid-row: 1; }
 }
 @media (max-width: 1080px) { .p-team__rij { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
 @media (max-width: 720px) { .p-team__rij { grid-template-columns: repeat(3, minmax(0, 1fr)); } }

@@ -2052,11 +2052,15 @@ body.p-paneel-open { overflow: hidden; }
 .p-fotoreeks__bij--breed { padding: clamp(1.2rem, 3vw, 2.5rem) clamp(1rem, 3vw, 2.5rem); }
 .p-fotoreeks__wrap {
   max-width: var(--p-max); margin: 0 auto;
-  display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr));
+  /* 460px als ondergrens: onder de ~1050px komt de tekst onder de titel te
+     staan in plaats van in een te smalle kolom ernaast */
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 460px), 1fr));
   gap: .8rem clamp(1.5rem, 3vw, 3rem); align-items: end;
 }
-/* bij de grote foto's houdt de tekst de maat die hij daar had */
-.p-fotoreeks__bij--breed .p-fotoreeks__l { max-width: 30em; font-size: 1.15rem; line-height: 1.68; }
+/* bij de grote foto's is de tekst net zo groot als de lead elders */
+.p-fotoreeks__bij--breed .p-fotoreeks__l {
+  max-width: 34em; font-size: clamp(1.15rem, 1.35vw, 1.4rem); line-height: 1.62;
+}
 
 /* --- drie sectoren met een streepje ertussen ----------------------------- */
 .p-drie {
@@ -2100,8 +2104,9 @@ body.p-paneel-open { overflow: hidden; }
   background: var(--p-ink); text-decoration: none; min-height: clamp(170px, 20vw, 240px);
 }
 .p-mozaiek__vak--groot { grid-column: span 2; grid-row: span 2; min-height: 0; }
-/* het brede vak onderaan blijft een strook, maar met genoeg hoogte */
-.p-mozaiek__vak--breed { grid-column: 1 / -1; min-height: clamp(155px, 18.8vw, 254px); }
+/* het brede vak onderaan blijft een strook, maar met genoeg hoogte: op een
+   smaller scherm viel hij eerder terug naar ~190px, nu blijft er ~240px staan */
+.p-mozaiek__vak--breed { grid-column: 1 / -1; min-height: clamp(240px, 22vw, 330px); }
 /* het beeld vult het vak zelf, zodat de hoogte alleen van het raster komt */
 .p-mozaiek__vak img {
   position: absolute; inset: 0; display: block; width: 100%; height: 100%;

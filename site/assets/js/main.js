@@ -754,66 +754,40 @@
       return voor.concat(rest);
     };
 
-    /* De waaier in de hero: een paar projecten naast elkaar, de uitgelichte
-       in het midden en wat gedraaid. Beweegt zacht mee met de muis. */
-    var rijvak = document.querySelector('[data-werk-kaarten]');
-    var zetWaaier = function () {
-      if (!rijvak || !alleProjecten.length) { return; }
-      var uit = null;
-      for (var u = 0; u < alleProjecten.length; u++) {
-        if (alleProjecten[u].id === 'gevel-monument') { uit = alleProjecten[u]; }
-      }
-      if (!uit) { uit = alleProjecten[0]; }
-      var rest = alleProjecten.filter(function (pr) { return pr !== uit; });
-      var reeks = [];
-      if (rest[0]) { reeks.push(rest[0]); }
-      if (rest[1]) { reeks.push(rest[1]); }
-      reeks.push(uit);
-      if (rest[2]) { reeks.push(rest[2]); }
-      if (rest[3]) { reeks.push(rest[3]); }
-      /* de kaartjes zijn klein, dus gebruiken we de lichte versie uit
-         assets/img/klein; is die er niet, dan pakt de browser het origineel */
-      var klein = function (src) {
-        var naam = String(src).split('/').pop().replace(/\.[a-z]+$/i, '');
-        return 'assets/img/klein/' + naam + '.jpg';
-      };
-      rijvak.innerHTML = reeks.map(function (pr) {
-        var beeld = volgorde(pr)[0];
-        return '<button type="button" class="p-werkkaartje' + (pr === uit ? ' p-werkkaartje--groot' : '') + '"' +
-          ' data-project="' + esc(pr.id) + '"' +
-          ' aria-label="Bekijk project: ' + esc(pr.titel) + '">' +
-          '<span class="p-werkkaartje__beeld">' +
-            (beeld ? '<img src="' + esc(klein(beeld.src)) + '" data-groot="' + esc(beeld.src) + '" alt="' + esc(beeld.alt) + '" decoding="async">' : '') +
-          '</span>' +
-          '<span class="p-werkkaartje__bij"><b>' + esc(pr.titel) + '</b><span>' + esc(pr.type || '') + '</span></span>' +
-        '</button>';
-      }).join('');
-      Array.prototype.forEach.call(rijvak.querySelectorAll('img[data-groot]'), function (img) {
+    /* de kaartjes zijn klein, dus gebruiken we de lichte versie uit
+       assets/img/klein; is die er niet, dan pakt de browser het origineel */
+    var klein = function (src) {
+      var naam = String(src).split('/').pop().replace(/\.[a-z]+$/i, '');
+      return 'assets/img/klein/' + naam + '.jpg';
+    };
+    var vangOp = function (vak) {
+      Array.prototype.forEach.call(vak.querySelectorAll('img[data-groot]'), function (img) {
         img.addEventListener('error', function () { img.src = img.getAttribute('data-groot'); }, { once: true });
       });
     };
 
-    var zetParallax = function () {
-      if (!rijvak) { return; }
-      var rustig = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-      var metMuis = window.matchMedia && window.matchMedia('(hover: hover)').matches;
-      if (rustig || !metMuis) { return; }
-      var vak = document.querySelector('[data-werk-hero]');
-      if (!vak) { return; }
-      var werk = false, px = 0;
-      var teken = function () {
-        werk = false;
-        rijvak.style.setProperty('--px', px.toFixed(3));
+    /* De strook in de hero: alle projecten naast elkaar, drie keer, zodat hij
+       naadloos blijft doorlopen. De tweede en derde set zijn voor de sier. */
+    var stripvak = document.querySelector('[data-werk-strip]');
+    var zetStrip = function () {
+      if (!stripvak || !alleProjecten.length) { return; }
+      var beelden = [];
+      alleProjecten.forEach(function (pr) {
+        var b = volgorde(pr)[0];
+        if (b) { beelden.push({ pr: pr, b: b }); }
+      });
+      if (!beelden.length) { return; }
+      var set = function (verborgen) {
+        return beelden.map(function (x) {
+          return '<button type="button" class="p-strip__vak" data-project="' + esc(x.pr.id) + '"' +
+            (verborgen ? ' tabindex="-1" aria-hidden="true"' : ' aria-label="Bekijk project: ' + esc(x.pr.titel) + '"') + '>' +
+            '<img src="' + esc(klein(x.b.src)) + '" data-groot="' + esc(x.b.src) + '"' +
+            (verborgen ? ' alt=""' : ' alt="' + esc(x.b.alt) + '"') + ' decoding="async">' +
+          '</button>';
+        }).join('');
       };
-      vak.addEventListener('pointermove', function (e) {
-        var r = vak.getBoundingClientRect();
-        px = ((e.clientX - r.left) / Math.max(1, r.width) - .5) * 2;
-        if (!werk) { werk = true; window.requestAnimationFrame(teken); }
-      });
-      vak.addEventListener('pointerleave', function () {
-        px = 0;
-        if (!werk) { werk = true; window.requestAnimationFrame(teken); }
-      });
+      stripvak.innerHTML = '<div class="p-strip__baan">' + set(false) + set(true) + set(true) + '</div>';
+      vangOp(stripvak);
     };
 
     /* De kaart is één foto: die van kaartbeeld, of anders de eerste. */
@@ -1009,8 +983,7 @@
         });
       }
       teken();
-      zetWaaier();
-      zetParallax();
+      zetStrip();
 
       document.addEventListener('click', function (e) {
         var knop = e.target.closest ? e.target.closest('[data-project]') : null;

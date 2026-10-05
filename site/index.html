@@ -19,6 +19,15 @@
 (function () {
   var d = document.documentElement;
   if ('IntersectionObserver' in window) { d.className += ' js'; }
+  /* De openingsanimatie speelt alleen op de homepage en maar één keer per
+     sessie. Op alle andere pagina's blijft het doek direct weg. */
+  var thuis = /(^|\/)(index\.html)?$/.test(location.pathname);
+  var eerste = thuis;
+  try {
+    eerste = !sessionStorage.getItem('eipi-intro');
+    if (eerste && thuis) { sessionStorage.setItem('eipi-intro', '1'); }
+  } catch (e) { eerste = thuis; }
+  if (!(thuis && eerste)) { d.className += ' geen-intro'; }
   if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) { return; }
   try {
     if (sessionStorage.getItem('eipi-wipe') === '1') {
@@ -148,7 +157,7 @@
   </div>
 </div>
 
-<main>
+<main id="main">
 <section id="top" data-screen-label="Hero" style="position: relative; overflow: hidden; background: #0B0A09;">
   <div style="position: absolute; inset: 0;">
     <video data-heromedia src="assets/video/hero.mp4" autoplay muted loop playsinline preload="auto" aria-label="Omletteren van een Ford Transit Custom door Eipi Belettering" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; animation: ssFade 1600ms ease both; mask-image: linear-gradient(90deg, rgba(0,0,0,0) 0%, rgba(0,0,0,0.06) 22%, rgba(0,0,0,0.28) 36%, rgba(0,0,0,0.62) 50%, rgba(0,0,0,0.9) 64%, #000 76%); -webkit-mask-image: linear-gradient(90deg, rgba(0,0,0,0) 0%, rgba(0,0,0,0.06) 22%, rgba(0,0,0,0.28) 36%, rgba(0,0,0,0.62) 50%, rgba(0,0,0,0.9) 64%, #000 76%);"></video>
@@ -631,80 +640,80 @@
 
 </main>
 
-<footer data-screen-label="Footer" style="background: #0B0A09; color: #F4F1EA; padding: clamp(2.2rem, 4.5vw, 3.6rem) clamp(1rem, 3vw, 2.5rem) clamp(1.2rem, 2.2vw, 1.8rem);">
-  <div style="max-width: 1720px; margin: 0 auto;">
-    <div data-footgrid style="display: grid; grid-template-columns: minmax(230px, 1.4fr) minmax(180px, 1fr) repeat(4, minmax(140px, 1fr)); gap: clamp(1.8rem, 3vw, 2.8rem) clamp(1.4rem, 2.4vw, 2.6rem); align-items: start;">
-
-      <div style="min-width: 0; display: flex; flex-direction: column; gap: 0.9rem;">
-          <a href="#top" aria-label="Eipi Belettering" style="display: inline-flex; align-items: center; align-self: flex-start; gap: 0.85rem; color: #F4F1EA;"><span style="font-family: 'Bebas Neue', sans-serif; font-weight: 400; font-size: 2.6rem; line-height: 0.85; letter-spacing: 0.015em;">EIPI<span style="color: #E8354F;">.</span></span><span style="width: 1px; height: 32px; background: rgba(244,241,234,.22);"></span><span style="display: flex; flex-direction: column; gap: 3px; font-family: 'IBM Plex Mono', monospace; font-size: 0.62rem; letter-spacing: 0.22em; text-transform: uppercase; color: #8E877A; line-height: 1;"><span>Belettering&nbsp;<span style="color: #E8354F;">&amp;</span></span><span>Gevelreclame</span></span></a>
-          <p style="margin: 0; font-size: 0.93rem; line-height: 1.6; color: #A29A8B; max-width: 24em; text-wrap: pretty;">Full service signbedrijf in Purmerend, sinds 1993. Ontwerp, productie en montage in eigen huis: van autobelettering tot gevelreclame, raamfolie en bewegwijzering.</p>
-          <div style="display: flex; flex-wrap: wrap; gap: 0.4rem;">
-            <a href="#werk" class="p-pill x48"><svg class="p-pill__ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.2" y="3.2" width="17.6" height="17.6" rx="5"/><circle cx="12" cy="12" r="4.1"/><path d="M16.9 7.1h.01"/></svg>Instagram</a>
-            <a href="#werk" class="p-pill x49"><svg class="p-pill__ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14.8 21v-7.4h2.5l.4-2.9h-2.9V8.9c0-.8.2-1.4 1.4-1.4h1.5V4.9c-.3 0-1.2-.1-2.2-.1-2.2 0-3.7 1.3-3.7 3.8v2.1H9.2v2.9h2.6V21z"/></svg>Facebook</a>
-            <a href="#over" class="p-pill x50"><svg class="p-pill__ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.2" y="3.2" width="17.6" height="17.6" rx="3.4"/><path d="M7.6 10.4V17"/><circle cx="7.6" cy="7.7" r="1.1"/><path d="M11.6 17v-3.6a2.3 2.3 0 0 1 4.6 0V17"/></svg>LinkedIn</a>
-          </div>
+<footer class="p-footer" data-screen-label="Footer">
+  <div class="p-wrap">
+    <div class="p-foottop">
+      <div class="p-footcol p-footcol--brand">
+        <a href="#top" class="p-brand" aria-label="Eipi Belettering, naar de homepage">
+          <span class="p-brand__word">EIPI<span class="p-dot">.</span></span>
+          <span class="p-brand__lock">
+            <span class="p-brand__rule"></span>
+            <span class="p-brand__sub"><span>Belettering&nbsp;<span class="p-dot">&amp;</span></span><span>Gevelreclame</span></span>
+          </span>
+        </a>
+        <p class="p-footabout">Full service signbedrijf in Purmerend, sinds 1993. Ontwerp, productie en montage in eigen huis: van autobelettering tot gevelreclame, raamfolie en bewegwijzering.</p>
+        <!-- TODO: content from client — de echte socialmedia-links; deze knoppen wijzen nu naar het werk en het team. -->
+        <div class="p-pillrow">
+          <a href="#werk" class="p-pill"><svg class="p-pill__ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.2" y="3.2" width="17.6" height="17.6" rx="5"/><circle cx="12" cy="12" r="4.1"/><path d="M16.9 7.1h.01"/></svg>Instagram</a>
+          <a href="#werk" class="p-pill"><svg class="p-pill__ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14.8 21v-7.4h2.5l.4-2.9h-2.9V8.9c0-.8.2-1.4 1.4-1.4h1.5V4.9c-.3 0-1.2-.1-2.2-.1-2.2 0-3.7 1.3-3.7 3.8v2.1H9.2v2.9h2.6V21z"/></svg>Facebook</a>
+          <a href="#over" class="p-pill"><svg class="p-pill__ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.2" y="3.2" width="17.6" height="17.6" rx="3.4"/><path d="M7.6 10.4V17"/><circle cx="7.6" cy="7.7" r="1.1"/><path d="M11.6 17v-3.6a2.3 2.3 0 0 1 4.6 0V17"/></svg>LinkedIn</a>
         </div>
-      <div style="min-width: 0; display: flex; flex-direction: column; gap: 0.9rem;">
-          <div style="display: flex; flex-direction: column; gap: 0.25rem;">
-            <a href="tel:0299667700" style="font-family: 'Bebas Neue', sans-serif; font-size: 1.5rem; letter-spacing: 0.04em; line-height: 1.15; color: #F4F1EA;" class="x51">0299 - 66 77 00</a>
-            <a href="mailto:info@eipi.nl" style="font-size: 0.93rem; font-weight: 600; color: #C9C2B4;" class="x52">info@eipi.nl</a>
-          </div>
-          <p style="margin: 0; font-size: 0.93rem; line-height: 1.6; color: #A29A8B;">Volume 69-71<br>1446 WG Purmerend</p>
-          <div style="display: flex; flex-direction: column; gap: 0.28rem; font-family: 'IBM Plex Mono', monospace; font-size: 0.68rem; letter-spacing: 0.08em; text-transform: uppercase; color: #7C7466;">
-            <span style="display: flex; justify-content: space-between; gap: 0.8rem; max-width: 11rem;">Ma&ndash;vr<span style="color: #C9C2B4;">08:30&ndash;17:00</span></span>
-            <span style="display: flex; justify-content: space-between; gap: 0.8rem; max-width: 11rem;">Za &amp; zo<span style="color: #C9C2B4;">Gesloten</span></span>
-            
-          </div>
-          <p style="margin: 0; font-family: 'IBM Plex Mono', monospace; font-size: 0.68rem; letter-spacing: 0.12em; text-transform: uppercase; color: #E8354F;">Sinds 1993</p>
       </div>
 
-      <div style="min-width: 0;">
-          <p style="margin: 0 0 0.9rem; font-family: 'IBM Plex Mono', monospace; font-size: 0.68rem; letter-spacing: 0.16em; text-transform: uppercase; color: #E8354F;">Voertuig &amp; gevel</p>
-                    <div style="display: flex; flex-direction: column; gap: 0.5rem;">
-            <a href="dienst-autobelettering.html" style="font-size: 0.93rem; line-height: 1.35; color: #A29A8B; transition: color 220ms ease, transform 360ms cubic-bezier(.16,1,.3,1);" class="x53">Autobelettering</a>
-            <a href="dienst-carwrap.html" style="font-size: 0.93rem; line-height: 1.35; color: #A29A8B; transition: color 220ms ease, transform 360ms cubic-bezier(.16,1,.3,1);" class="x54">Carwrap</a>
-            <a href="dienst-ruitblinderen.html" style="font-size: 0.93rem; line-height: 1.35; color: #A29A8B; transition: color 220ms ease, transform 360ms cubic-bezier(.16,1,.3,1);" class="x55">Ramen blinderen (RDW erkend)</a>
-            <a href="dienst-gevelreclame.html" style="font-size: 0.93rem; line-height: 1.35; color: #A29A8B; transition: color 220ms ease, transform 360ms cubic-bezier(.16,1,.3,1);" class="x56">Gevelreclame</a>
-          </div>
+      <div class="p-footbel">
+        <p class="p-foottitle">Direct overleggen</p>
+        <a href="tel:0299667700" class="p-footphone">0299 - 66 77 00</a>
+        <a href="mailto:info@eipi.nl" class="p-footmail">info@eipi.nl</a>
+        <p class="p-footabout">Volume 69-71<br>1446 WG Purmerend</p>
+        <div class="p-hours">
+          <span>Ma&ndash;vr<b>08:30&ndash;17:00</b></span>
+          <span>Za &amp; zo<b>Gesloten</b></span>
         </div>
-        <div style="min-width: 0;">
-          <p style="margin: 0 0 0.9rem; font-family: 'IBM Plex Mono', monospace; font-size: 0.68rem; letter-spacing: 0.16em; text-transform: uppercase; color: #E8354F;">Glas &amp; binnen</p>
-                    <div style="display: flex; flex-direction: column; gap: 0.5rem;">
-            <a href="dienst-raamfolie.html" style="font-size: 0.93rem; line-height: 1.35; color: #A29A8B; transition: color 220ms ease, transform 360ms cubic-bezier(.16,1,.3,1);" class="x57">Raamfolie</a>
-            <a href="dienst-visuals.html" style="font-size: 0.93rem; line-height: 1.35; color: #A29A8B; transition: color 220ms ease, transform 360ms cubic-bezier(.16,1,.3,1);" class="x58">Visuals</a>
-          </div>
-        </div>
-        <div style="min-width: 0;">
-          <p style="margin: 0 0 0.9rem; font-family: 'IBM Plex Mono', monospace; font-size: 0.68rem; letter-spacing: 0.16em; text-transform: uppercase; color: #E8354F;">Borden &amp; meer</p>
-                    <div style="display: flex; flex-direction: column; gap: 0.5rem;">
-            <a href="dienst-bouwborden-spandoeken.html" style="font-size: 0.93rem; line-height: 1.35; color: #A29A8B; transition: color 220ms ease, transform 360ms cubic-bezier(.16,1,.3,1);" class="x59">Bouwborden &amp; spandoeken</a>
-            <a href="dienst-bewegwijzering.html" style="font-size: 0.93rem; line-height: 1.35; color: #A29A8B; transition: color 220ms ease, transform 360ms cubic-bezier(.16,1,.3,1);" class="x60">Bewegwijzering</a>
-            <a href="dienst-vlaggen-masten.html" style="font-size: 0.93rem; line-height: 1.35; color: #A29A8B; transition: color 220ms ease, transform 360ms cubic-bezier(.16,1,.3,1);" class="x61">Vlaggen &amp; masten</a>
-            <a href="dienst-stickers.html" style="font-size: 0.93rem; line-height: 1.35; color: #A29A8B; transition: color 220ms ease, transform 360ms cubic-bezier(.16,1,.3,1);" class="x62">Stickers</a>
-            <a href="dienst-specials.html" style="font-size: 0.93rem; line-height: 1.35; color: #A29A8B; transition: color 220ms ease, transform 360ms cubic-bezier(.16,1,.3,1);" class="x63">Specials</a>
-          </div>
-        </div>
-        <div style="min-width: 0;">
-          <p style="margin: 0 0 0.9rem; font-family: 'IBM Plex Mono', monospace; font-size: 0.68rem; letter-spacing: 0.16em; text-transform: uppercase; color: #E8354F;">Eipi</p>
-          <div style="display: flex; flex-direction: column; gap: 0.5rem;">
-            <a href="projecten.html" style="font-size: 0.93rem; line-height: 1.35; color: #A29A8B; transition: color 220ms ease, transform 360ms cubic-bezier(.16,1,.3,1);" class="x68">Ons werk</a>
-            <a href="#over" style="font-size: 0.93rem; line-height: 1.35; color: #A29A8B; transition: color 220ms ease, transform 360ms cubic-bezier(.16,1,.3,1);" class="x69">Team &amp; vacatures</a>
-            <a href="diensten.html" style="font-size: 0.93rem; line-height: 1.35; color: #A29A8B; transition: color 220ms ease, transform 360ms cubic-bezier(.16,1,.3,1);" class="x70">Zo werken we</a>
-            <a href="#vragen" style="font-size: 0.93rem; line-height: 1.35; color: #A29A8B; transition: color 220ms ease, transform 360ms cubic-bezier(.16,1,.3,1);" class="x71">Veelgestelde vragen</a>
-            <a href="#contact" style="font-size: 0.93rem; line-height: 1.35; color: #A29A8B; transition: color 220ms ease, transform 360ms cubic-bezier(.16,1,.3,1);" class="x72">Contact &amp; offerte</a>
-          </div>
       </div>
     </div>
 
-    <div style="margin-top: clamp(1.8rem, 3.5vw, 2.6rem); padding-top: clamp(1rem, 2vw, 1.4rem); border-top: 1px solid rgba(244,241,234,.12); display: flex; flex-wrap: wrap; align-items: center; gap: 0.6rem clamp(0.9rem, 2vw, 1.8rem); font-family: 'IBM Plex Mono', monospace; font-size: 0.68rem; letter-spacing: 0.12em; text-transform: uppercase; color: #7C7466;">
+    <nav class="p-footnav" aria-label="Voettekst">
+      <div class="p-footcol">
+        <p class="p-foottitle">Voertuig &amp; gevel</p>
+        <div class="p-footlinks">
+          <a href="dienst-autobelettering.html" class="p-footlink">Autobelettering</a>
+          <a href="dienst-carwrap.html" class="p-footlink">Carwrap</a>
+          <a href="dienst-ruitblinderen.html" class="p-footlink">Ramen blinderen (RDW erkend)</a>
+          <a href="dienst-gevelreclame.html" class="p-footlink">Gevelreclame</a>
+        </div>
+      </div>
+      <div class="p-footcol">
+        <p class="p-foottitle">Glas, bord &amp; meer</p>
+        <div class="p-footlinks">
+          <a href="dienst-raamfolie.html" class="p-footlink">Raamfolie</a>
+          <a href="dienst-visuals.html" class="p-footlink">Visuals</a>
+          <a href="dienst-bouwborden-spandoeken.html" class="p-footlink">Bouwborden &amp; spandoeken</a>
+          <a href="dienst-bewegwijzering.html" class="p-footlink">Bewegwijzering</a>
+          <a href="dienst-vlaggen-masten.html" class="p-footlink">Vlaggen &amp; masten</a>
+          <a href="dienst-stickers.html" class="p-footlink">Stickers</a>
+          <a href="dienst-specials.html" class="p-footlink">Specials</a>
+        </div>
+      </div>
+      <div class="p-footcol">
+        <p class="p-foottitle">Eipi</p>
+        <div class="p-footlinks">
+          <a href="projecten.html" class="p-footlink">Ons werk</a>
+          <a href="diensten.html" class="p-footlink">Diensten</a>
+          <a href="over-ons.html" class="p-footlink">Over ons</a>
+          <a href="werken-bij.html" class="p-footlink">Team &amp; vacatures</a>
+          <a href="#vragen" class="p-footlink">Veelgestelde vragen</a>
+          <a href="contact.html#contact" class="p-footlink">Contact &amp; offerte</a>
+        </div>
+      </div>
+    </nav>
+
+    <div class="p-legal">
       <span>&copy; 2026 Eipi Belettering en Gevelreclame B.V.</span>
       <span>KvK 63550016</span>
-      <span>BTW NL 8558.86.684.B01</span>
-      <a href="#contact" style="color: #7C7466;" class="x73">Voorwaarden</a>
-      <a href="#contact" style="color: #7C7466;" class="x74">Privacy</a>
-      <a href="#top" style="color: #7C7466;" class="x75">Sitemap</a>
-      <span>Purmerend &middot; Zaanstreek &middot; Amsterdam &middot; Noord-Holland &middot; en door heel Europa</span>
-      <a href="#top" style="margin-left: auto; color: #C9C2B4;" class="x76">Terug naar boven &uarr;</a>
+      <span>BTW NL 8558.86.684 B01</span>
+      <a href="voorwaarden.html">Algemene voorwaarden</a>
+      <a href="privacy.html">Privacy</a>
+      <a href="#main" class="p-legal__back">Terug naar boven <span aria-hidden="true">&uarr;</span></a>
     </div>
   </div>
 </footer>

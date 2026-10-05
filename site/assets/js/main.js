@@ -263,7 +263,9 @@
       kijker.observe(el);
     });
   }
-  if (document.documentElement.className.indexOf('wipe') !== -1) { window.setTimeout(beginReveal, 460); }
+  /* zonder intro mag het meteen: er is geen deksel om op te wachten */
+  if (document.documentElement.className.indexOf('geen-intro') !== -1) { window.setTimeout(beginReveal, 60); }
+  else if (document.documentElement.className.indexOf('wipe') !== -1) { window.setTimeout(beginReveal, 460); }
   else { window.setTimeout(beginReveal, 1550); }
 
   /* vangnet: een cijfer dat al in beeld staat maar nog niet geteld heeft,

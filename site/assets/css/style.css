@@ -2055,7 +2055,8 @@ body.p-paneel-open { overflow: hidden; }
   display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr));
   gap: .8rem clamp(1.5rem, 3vw, 3rem); align-items: end;
 }
-.p-fotoreeks__bij--breed .p-fotoreeks__l { max-width: 30em; }
+/* bij de grote foto's houdt de tekst de maat die hij daar had */
+.p-fotoreeks__bij--breed .p-fotoreeks__l { max-width: 30em; font-size: 1.15rem; line-height: 1.68; }
 
 /* --- drie sectoren met een streepje ertussen ----------------------------- */
 .p-drie {
@@ -2099,8 +2100,8 @@ body.p-paneel-open { overflow: hidden; }
   background: var(--p-ink); text-decoration: none; min-height: clamp(170px, 20vw, 240px);
 }
 .p-mozaiek__vak--groot { grid-column: span 2; grid-row: span 2; min-height: 0; }
-/* het brede vak onderaan is bewust laag: een strook, geen blok */
-.p-mozaiek__vak--breed { grid-column: 1 / -1; min-height: clamp(120px, 14.5vw, 195px); }
+/* het brede vak onderaan blijft een strook, maar met genoeg hoogte */
+.p-mozaiek__vak--breed { grid-column: 1 / -1; min-height: clamp(155px, 18.8vw, 254px); }
 /* het beeld vult het vak zelf, zodat de hoogte alleen van het raster komt */
 .p-mozaiek__vak img {
   position: absolute; inset: 0; display: block; width: 100%; height: 100%;
@@ -2148,38 +2149,46 @@ body.p-paneel-open { overflow: hidden; }
 .p-teamthuis__lid a { display: block; color: inherit; }
 .p-teamthuis__lid a:hover img { opacity: .85; }
 
-/* --- klanten: elke klant met een logo links en een foto rechts ------------ */
+/* --- klanten: een wand van panelen. Elke klant is één paneel met de foto,
+       het logo en de naam; het paneel waar je op staat groeit open. --------- */
 .p-klanten { background: var(--p-ink); color: var(--p-bone); padding: var(--p-space) 0; }
-.p-klanten__rij {
+.p-klanten__wand {
   list-style: none; margin: clamp(1.6rem, 3.4vw, 2.6rem) 0 0; padding: 0;
-  display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1px;
+  display: flex; gap: 1px; min-height: clamp(340px, 36vw, 480px);
   background: var(--p-line-bone-soft); border: 1px solid var(--p-line-bone-soft);
 }
-.p-klant {
-  display: grid; grid-template-columns: auto minmax(0, 1fr) minmax(0, 1.15fr);
-  align-items: center; gap: clamp(.8rem, 1.8vw, 1.5rem);
-  background: var(--p-ink); padding: clamp(.9rem, 1.6vw, 1.3rem);
+.p-klant { flex: 1 1 0; min-width: 0; transition: flex-grow 560ms var(--p-ease); }
+.p-klant:hover { flex-grow: 2.6; }
+.p-klant__vak { position: relative; height: 100%; margin: 0; overflow: hidden; background: var(--p-ink); }
+.p-klant__vak img {
+  position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;
+  filter: grayscale(1) contrast(1.04); opacity: .5;
+  transition: opacity 560ms ease, filter 560ms ease, transform 900ms var(--p-ease);
+}
+.p-klant:hover .p-klant__vak img { filter: none; opacity: 1; transform: scale(1.03); }
+.p-klant__bij {
+  position: absolute; left: 0; right: 0; bottom: 0;
+  display: flex; flex-direction: column; gap: clamp(.7rem, 1.4vw, 1.1rem);
+  padding: clamp(.9rem, 1.6vw, 1.4rem);
+  background: linear-gradient(180deg, rgba(11, 10, 9, 0) 0%, rgba(11, 10, 9, .92) 100%);
 }
 /* plaatsvervanger voor het logo: net zo groot als een echt logo straks */
 .p-klant__logo {
-  display: grid; place-items: center; width: clamp(54px, 5.2vw, 74px); aspect-ratio: 1;
-  border: 1px solid var(--p-line-bone); border-radius: 4px;
-  font-family: var(--p-display); font-weight: 400; font-size: clamp(1.3rem, 1.7vw, 1.7rem);
+  display: grid; place-items: center; width: clamp(44px, 3.8vw, 60px); aspect-ratio: 1;
+  border: 1px solid var(--p-line-bone); border-radius: 6px;
+  font-family: var(--p-display); font-weight: 400; font-size: clamp(1.1rem, 1.5vw, 1.5rem);
   line-height: 1; letter-spacing: .04em; color: var(--p-bone);
-  background: rgba(244, 241, 234, .05);
+  background: rgba(11, 10, 9, .55); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px);
 }
 .p-klant__tekst { display: flex; flex-direction: column; gap: .3rem; min-width: 0; }
 .p-klant__naam {
   font-family: var(--p-display); font-weight: 400; text-transform: uppercase;
-  font-size: clamp(1.05rem, 1.5vw, 1.45rem); line-height: 1.02; color: var(--p-bone);
+  font-size: clamp(1.05rem, 1.6vw, 1.6rem); line-height: 1.02; color: var(--p-bone);
 }
 .p-klant__soort {
   font-style: normal; font-family: var(--p-mono); font-size: .62rem;
   letter-spacing: .14em; text-transform: uppercase; color: var(--p-grey-2);
 }
-.p-klant__foto { position: relative; margin: 0; overflow: hidden; background: rgba(244, 241, 234, .06); }
-.p-klant__foto img { display: block; width: 100%; height: clamp(96px, 9.5vw, 132px); object-fit: cover; transition: transform 900ms var(--p-ease); }
-.p-klant:hover .p-klant__foto img { transform: scale(1.04); }
 .p-klanten__vraag {
   display: flex; flex-wrap: wrap; align-items: center; gap: 1rem 2rem;
   margin-top: clamp(1.6rem, 3.4vw, 2.6rem); padding-top: clamp(1.2rem, 2.6vw, 1.8rem);
@@ -2190,11 +2199,17 @@ body.p-paneel-open { overflow: hidden; }
   text-transform: uppercase; font-size: clamp(1.5rem, 2.8vw, 2.5rem); line-height: 1.05; color: var(--p-bone);
 }
 .p-klanten__vraag .p-btn { margin-left: auto; }
-@media (max-width: 1080px) { .p-klanten__rij { grid-template-columns: minmax(0, 1fr); } }
+/* zonder muis kun je niet uitklappen: dan doen alle foto's gewoon mee */
+@media (hover: none) {
+  .p-klant__vak img { filter: none; opacity: 1; }
+}
+/* smal: geen panelen naast elkaar maar onder elkaar */
+@media (max-width: 900px) {
+  .p-klanten__wand { flex-direction: column; min-height: 0; }
+  .p-klant { flex: none; }
+  .p-klant__vak { height: clamp(210px, 46vw, 280px); }
+}
 @media (max-width: 560px) {
-  .p-klant { grid-template-columns: auto minmax(0, 1fr); }
-  .p-klant__foto { grid-column: 1 / -1; }
-  .p-klant__foto img { height: clamp(140px, 42vw, 200px); }
   .p-klanten__vraag .p-btn { margin-left: 0; }
 }
 

@@ -2097,8 +2097,8 @@ body.p-paneel-open { overflow: hidden; }
   font-size: clamp(1.9rem, 3.4vw, 3rem); line-height: .9; color: var(--p-ink);
 }
 .p-team__tekst {
-  margin: 0; max-width: 48ch; font-size: clamp(1.05rem, 1.35vw, 1.3rem);
-  line-height: 1.55; color: var(--p-grey-3);
+  margin: 0; max-width: 46ch; font-size: clamp(1.2rem, 1.7vw, 1.6rem);
+  line-height: 1.5; color: var(--p-grey-3);
 }
 /* het aantal mensen als pil: rood gevuld, net als de actieve filter */
 .p-team__aantal {

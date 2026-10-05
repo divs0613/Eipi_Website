@@ -894,7 +894,7 @@ html.wipe .p-pre { display: none; }
   position: absolute; z-index: 2; top: 0; right: 0; transform: translateY(calc(-100% + 1px));
   display: flex; flex-direction: column; gap: .4rem; width: min(100%, 24rem);
   padding: clamp(1.1rem, 2vw, 1.5rem) clamp(1.2rem, 2.2vw, 1.7rem);
-  background: var(--p-ink); border: 1px solid var(--p-ink); border-bottom: 0; color: var(--p-bone);
+  background: var(--p-ink); border: 1px solid var(--p-line-ink); border-bottom: 0; color: var(--p-bone);
   transition: background 300ms ease;
 }
 .p-keur__tag:hover { background: #1A1815; }
@@ -923,10 +923,10 @@ html.wipe .p-pre { display: none; }
 }
 .p-keur__plaat {
   position: relative; display: flex; flex-direction: column; gap: clamp(1rem, 2vw, 1.6rem);
-  background: var(--p-ink); color: var(--p-bone); padding: clamp(1.8rem, 3.4vw, 3.2rem);
+  background: var(--p-bone); color: var(--p-ink); padding: clamp(1.8rem, 3.4vw, 3.2rem);
   transition: background 320ms ease;
 }
-.p-keur__plaat:hover { background: #1A1815; }
+.p-keur__plaat:hover { background: #EDE9E0; }
 .p-keur__plaat:nth-child(1) { grid-row: 1 / span 2; justify-content: center; }
 .p-keur__plaat:nth-child(2) { grid-column: 2; grid-row: 1; }
 .p-keur__plaat:nth-child(3) { grid-column: 2; grid-row: 2; }
@@ -938,7 +938,7 @@ html.wipe .p-pre { display: none; }
 /* het nummer in de hoek van elk blok */
 .p-keur__plaat::after {
   content: attr(data-nr); position: absolute; top: clamp(1rem, 2vw, 1.6rem); right: clamp(1rem, 2vw, 1.6rem);
-  font-family: var(--p-mono); font-size: .7rem; letter-spacing: .16em; color: var(--p-grey-2);
+  font-family: var(--p-mono); font-size: .7rem; letter-spacing: .16em; color: var(--p-grey-4);
 }
 .p-keur__logo {
   display: block; width: 100%; max-width: clamp(180px, 20vw, 290px);
@@ -947,10 +947,10 @@ html.wipe .p-pre { display: none; }
 }
 .p-keur__plaat .p-keur__t {
   display: block; font-family: var(--p-display); font-weight: 400; text-transform: uppercase;
-  font-size: clamp(1.4rem, 2.4vw, 2.2rem); line-height: 1.02; color: var(--p-bone);
+  font-size: clamp(1.4rem, 2.4vw, 2.2rem); line-height: 1.02; color: var(--p-ink);
 }
 .p-keur__plaat:nth-child(1) .p-keur__t { font-size: clamp(2rem, 3.6vw, 3.3rem); }
-.p-keur__l { margin: 0; font-size: clamp(.98rem, 1.15vw, 1.08rem); line-height: 1.6; color: var(--p-grey-2); max-width: 34em; text-wrap: pretty; }
+.p-keur__l { margin: 0; font-size: clamp(.98rem, 1.15vw, 1.08rem); line-height: 1.6; color: var(--p-grey-3); max-width: 34em; text-wrap: pretty; }
 
 @media (max-width: 1080px) {
   .p-keur__kop { grid-template-columns: 1fr; align-items: start; }

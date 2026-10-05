@@ -31,8 +31,8 @@ window.EIPI_PROJECTEN = {
       "wagenpark",
       "kantoor-glas",
       "wayfinding",
-      "horeca-winkel",
-      "specials"
+      "specials",
+      "horeca-winkel"
     ],
     "uitgelicht": "wagenpark"
   },

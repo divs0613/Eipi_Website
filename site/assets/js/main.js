@@ -1006,8 +1006,9 @@
   }
 
   /* Het team op de over-ons pagina: per afdeling een rij mensen, uit team.js.
-     Zo kan de klant zelf afdelingen en collega's toevoegen of verplaatsen. */
-  var teamvak = document.querySelector('[data-team]');
+     Zo kan de klant zelf afdelingen en collega's toevoegen of verplaatsen.
+     De homepage heeft een eigen, compactere wand: [data-team-thuis]. */
+  var teamvak = document.querySelector('[data-team-afdelingen]');
   if (teamvak) {
     (function () {
       var data = window.EIPI_TEAM;
@@ -1046,6 +1047,43 @@
           '</div>' +
         '</section>';
       }).join('');
+    }());
+  }
+
+  /* Het team op de homepage: alle collega's uit team.js in één wand, met
+     dezelfde namen en rollen als op de over-ons pagina. */
+  var thuisvak = document.querySelector('[data-team-thuis]');
+  if (thuisvak) {
+    (function () {
+      var data = window.EIPI_TEAM;
+      var afdelingen = (data && data.afdelingen) || [];
+      var leden = [];
+      afdelingen.forEach(function (afd) {
+        (afd.leden || []).forEach(function (lid) { leden.push(lid); });
+      });
+      var esc = function (s) {
+        return String(s === null || s === undefined ? '' : s).replace(/[&<>"']/g, function (c) {
+          return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
+        });
+      };
+      var foto = function (lid) {
+        var bron = (lid && lid.foto) || 'assets/img/teamfoto-placeholder.svg';
+        var naam = (lid && lid.naam) || 'een collega';
+        return '<img src="' + esc(bron) + '" alt="' + esc('Teamfoto van ' + naam) + '" loading="lazy" decoding="async">';
+      };
+      if (!leden.length) {
+        thuisvak.innerHTML = '<p class="p-team__leeg">Het team kon niet geladen worden. Bel ons even, dan vertellen we wie waarvoor aan de lijn komt.</p>';
+        return;
+      }
+      var tegels = leden.map(function (lid) {
+        return '<figure class="p-teamthuis__lid">' + foto(lid) +
+          '<figcaption><b>' + esc(lid.naam || 'Voornaam') + '</b> <i>' + esc(lid.rol || '') + '</i></figcaption>' +
+        '</figure>';
+      }).join('');
+      tegels += '<figure class="p-teamthuis__lid p-teamthuis__lid--jij">' +
+        '<a href="werken-bij.html" aria-label="Bekijk de vacatures">' + foto(null) + '</a>' +
+        '<figcaption><b>Jij?</b> <i>Bekijk de vacatures</i></figcaption></figure>';
+      thuisvak.innerHTML = tegels;
     }());
   }
 
@@ -1091,24 +1129,35 @@
       });
       gekozen = gekozen.slice(0, aantal);
 
-      homevak.innerHTML = gekozen.map(function (pr) {
-        var beeld = volgorde(pr)[0];
-        return '<article class="p-werkkaart">' +
-          '<div class="p-werkkaart__kop">' +
-            '<span class="p-werkkaart__plaats">' + esc(pr.plaats || '') + '</span>' +
-            '<span class="p-werkkaart__type">' + esc(pr.type || '') + '</span>' +
-            (pr.voorbeeld ? '<span class="p-werkkaart__monster">Voorbeeld</span>' : '') +
-          '</div>' +
-          (beeld ? '<div class="p-werkkaart__beeld"><img src="' + esc(klein(beeld.src)) + '" data-groot="' + esc(beeld.src) + '" alt="' + esc(beeld.alt) + '" decoding="async"><span class="p-stock p-corner">Tijdelijke foto</span></div>' : '') +
-          '<h3 class="p-werkkaart__t">' + esc(pr.titel) + '</h3>' +
-          '<p class="p-werkkaart__l">' + esc(pr.samenvatting || '') + '</p>' +
-          '<span class="p-werkkaart__voet"><a class="p-arrowlink" href="projecten.html#project-' + esc(pr.id) + '">Bekijk project ' + PIJL_TEKEN + '</a></span>' +
-          '<a class="p-werkkaart__tik" href="projecten.html#project-' + esc(pr.id) + '" aria-label="Bekijk project: ' + esc(pr.titel) + '"></a>' +
-        '</article>';
+      /* Vers werk op de homepage: een mozaïek van de laatste projecten. Groot
+         beeld vooraan, daaronder vier tegels en een brede onderaan. Elk vak
+         is een link naar het project op de projectenpagina. */
+      var vakken = gekozen.map(function (pr, i) {
+        var beeld = volgorde(pr)[0] || {};
+        var klasse = i === 0 ? ' p-mozaiek__vak--groot' : (i === gekozen.length - 1 && i > 2 ? ' p-mozaiek__vak--breed' : '');
+        var meta = [];
+        if (pr.voorbeeld) { meta.push('Voorbeeld'); }
+        if (pr.type) { meta.push(pr.type); }
+        if (pr.plaats) { meta.push(pr.plaats); }
+        return '<a class="p-mozaiek__vak' + klasse + '" href="projecten.html#project-' + esc(pr.id) + '">' +
+          (beeld.src ? '<img src="' + esc(klein(beeld.src)) + '" data-groot="' + esc(beeld.src) + '" alt="' + esc(beeld.alt) + '" decoding="async">' : '') +
+          '<span class="p-stock p-corner">Tijdelijke foto</span>' +
+          '<span class="p-mozaiek__bij">' +
+            '<span class="p-mozaiek__nr">' + (i + 1 < 10 ? '0' : '') + (i + 1) + '</span>' +
+            '<b class="p-mozaiek__t">' + esc(pr.titel || '') + '</b>' +
+            '<i class="p-mozaiek__m">' + esc(meta.join(' \u00b7 ')) + '</i>' +
+          '</span>' +
+        '</a>';
       }).join('');
 
+      homevak.innerHTML = vakken;
+
+      /* staat de kleine versie er niet, dan pakken we het origineel */
       Array.prototype.forEach.call(homevak.querySelectorAll('img[data-groot]'), function (img) {
-        img.addEventListener('error', function () { img.src = img.getAttribute('data-groot'); }, { once: true });
+        img.addEventListener('error', function () {
+          var groot = img.getAttribute('data-groot');
+          if (groot && img.getAttribute('src') !== groot) { img.setAttribute('src', groot); }
+        });
       });
     }());
   }

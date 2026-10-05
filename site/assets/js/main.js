@@ -787,7 +787,11 @@
           '</button>';
         }).join('');
       };
-      stripvak.innerHTML = '<div class="p-strip__baan">' + set(false) + set(true) + set(true) + '</div>';
+      /* twee regels die de andere kant op lopen: zo zie je meer werk en
+         blijft het beeld in beweging */
+      stripvak.innerHTML =
+        '<div class="p-strip__rij"><div class="p-strip__baan">' + set(false) + set(true) + set(true) + '</div></div>' +
+        '<div class="p-strip__rij p-strip__rij--af"><div class="p-strip__baan p-strip__baan--af">' + set(true) + set(true) + set(true) + '</div></div>';
       vangOp(stripvak);
     };
 

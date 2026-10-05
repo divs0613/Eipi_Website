@@ -2057,9 +2057,10 @@ body.p-paneel-open { overflow: hidden; }
   display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 460px), 1fr));
   gap: .8rem clamp(1.5rem, 3vw, 3rem); align-items: end;
 }
-/* bij de grote foto's is de tekst net zo groot als de lead elders */
+/* bij de grote foto's is de tekst duidelijk groter dan gewone leestekst:
+   hij hoort bij het beeld, niet eronder */
 .p-fotoreeks__bij--breed .p-fotoreeks__l {
-  max-width: 34em; font-size: clamp(1.15rem, 1.35vw, 1.4rem); line-height: 1.62;
+  max-width: 32em; font-size: clamp(1.3rem, 1.8vw, 1.65rem); line-height: 1.55;
 }
 
 /* --- drie sectoren met een streepje ertussen ----------------------------- */
@@ -2104,9 +2105,9 @@ body.p-paneel-open { overflow: hidden; }
   background: var(--p-ink); text-decoration: none; min-height: clamp(170px, 20vw, 240px);
 }
 .p-mozaiek__vak--groot { grid-column: span 2; grid-row: span 2; min-height: 0; }
-/* het brede vak onderaan blijft een strook, maar met genoeg hoogte: op een
-   smaller scherm viel hij eerder terug naar ~190px, nu blijft er ~240px staan */
-.p-mozaiek__vak--breed { grid-column: 1 / -1; min-height: clamp(240px, 22vw, 330px); }
+/* het brede vak onderaan krijgt echte hoogte: het is het sluitstuk van de
+   rij, geen streepje. Op 1440 is het 475px, op 1000px nog altijd 340px. */
+.p-mozaiek__vak--breed { grid-column: 1 / -1; min-height: clamp(340px, 33vw, 475px); }
 /* het beeld vult het vak zelf, zodat de hoogte alleen van het raster komt */
 .p-mozaiek__vak img {
   position: absolute; inset: 0; display: block; width: 100%; height: 100%;

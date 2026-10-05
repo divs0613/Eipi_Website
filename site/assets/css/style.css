@@ -894,10 +894,10 @@ html.wipe .p-pre { display: none; }
   position: absolute; z-index: 2; top: 0; right: 0; transform: translateY(calc(-100% + 1px));
   display: flex; flex-direction: column; gap: .4rem; width: min(100%, 24rem);
   padding: clamp(1.1rem, 2vw, 1.5rem) clamp(1.2rem, 2.2vw, 1.7rem);
-  background: var(--p-bone); border: 1px solid #FBF9F4; border-bottom: 0; color: var(--p-ink);
+  background: #fff; border: 1px solid var(--p-line-ink); border-top: 4px solid var(--p-red); border-bottom: 0; color: var(--p-ink);
   transition: background 300ms ease;
 }
-.p-keur__tag:hover { background: #EFEBE2; }
+.p-keur__tag:hover { background: var(--p-bone); }
 .p-keur__tag:focus-visible { outline: 2px solid var(--p-red-2); outline-offset: 4px; }
 .p-keur__tagkop { display: flex; align-items: center; gap: .55rem; }
 .p-keur__g { width: 1.4rem; height: 1.4rem; flex: none; }
@@ -908,7 +908,7 @@ html.wipe .p-pre { display: none; }
 .p-keur__aantal { font-family: var(--p-mono); font-size: .72rem; letter-spacing: .1em; text-transform: uppercase; color: var(--p-grey-3); }
 .p-keur__knop {
   display: inline-flex; align-items: center; gap: .5rem; margin-top: .35rem; padding-top: .8rem;
-  border-top: 1px solid #FBF9F4;
+  border-top: 1px solid var(--p-line-ink);
   font-family: var(--p-mono); font-size: .68rem; letter-spacing: .14em; text-transform: uppercase; color: var(--p-ink);
 }
 .p-keur__knop .p-arrow { width: 1.1rem; height: 1.1rem; transition: transform 360ms var(--p-ease); }
@@ -919,14 +919,14 @@ html.wipe .p-pre { display: none; }
   list-style: none; margin: clamp(2.4rem, 5vw, 4rem) 0 0; padding: 0;
   display: grid; grid-template-columns: minmax(0, 1.12fr) minmax(0, 1fr);
   grid-template-rows: auto auto; gap: 1px;
-  background: #FBF9F4; border: 1px solid #FBF9F4;
+  background: var(--p-line-ink); border: 1px solid var(--p-line-ink);
 }
 .p-keur__plaat {
   position: relative; display: flex; flex-direction: column; gap: clamp(1rem, 2vw, 1.6rem);
-  background: var(--p-bone); color: var(--p-ink); padding: clamp(1.8rem, 3.4vw, 3.2rem);
+  background: #fff; color: var(--p-ink); padding: clamp(1.8rem, 3.4vw, 3.2rem);
   transition: background 320ms ease;
 }
-.p-keur__plaat:hover { background: #EDE9E0; }
+.p-keur__plaat:hover { background: var(--p-bone); }
 .p-keur__plaat:nth-child(1) { grid-row: 1 / span 2; justify-content: center; }
 .p-keur__plaat:nth-child(2) { grid-column: 2; grid-row: 1; }
 .p-keur__plaat:nth-child(3) { grid-column: 2; grid-row: 2; }

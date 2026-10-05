@@ -2094,11 +2094,12 @@ body.p-paneel-open { overflow: hidden; }
 .p-team__index { font-family: var(--p-mono); font-size: .78rem; letter-spacing: .16em; color: var(--p-red); }
 .p-team__naam {
   margin: 0; font-family: var(--p-display); font-weight: 400; text-transform: uppercase;
-  font-size: clamp(1.9rem, 3.4vw, 3rem); line-height: .9; color: var(--p-ink);
+  font-size: clamp(2.1rem, 4.4vw, 3.8rem); line-height: .88; color: var(--p-ink);
 }
+/* de toelichting blijft gewone leestekst, kleiner dan de naam erboven */
 .p-team__tekst {
-  margin: 0; max-width: 46ch; font-size: clamp(1.2rem, 1.7vw, 1.6rem);
-  line-height: 1.5; color: var(--p-grey-3);
+  margin: 0; max-width: 52ch; font-size: clamp(1.05rem, 1.15vw, 1.2rem);
+  line-height: 1.6; color: var(--p-grey-3);
 }
 /* het aantal mensen als pil: rood gevuld, net als de actieve filter */
 .p-team__aantal {

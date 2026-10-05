@@ -775,7 +775,7 @@ html.wipe .p-pre { display: none; }
 .p-footkeur { display: flex; flex-wrap: wrap; align-items: center; gap: clamp(.9rem, 1.8vw, 1.5rem); }
 .p-footkeur img { display: block; width: auto; height: clamp(48px, 4.8vw, 68px); object-fit: contain; }
 /* het derde merk is vierkant en oogt daardoor kleiner: 15% extra */
-.p-footkeur img:nth-child(3) { height: clamp(55px, 5.5vw, 78px); }
+.p-footkeur img:nth-child(3) { height: clamp(61px, 6.1vw, 86px); }
 
 .p-pillrow { display: flex; flex-wrap: wrap; gap: .4rem; }
 .p-pill {

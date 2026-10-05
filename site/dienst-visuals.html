@@ -19,23 +19,14 @@
 (function () {
   var d = document.documentElement;
   if ('IntersectionObserver' in window) { d.className += ' js'; }
-  /* De openingsanimatie speelt alleen op de homepage en maar één keer per
-     sessie. Op alle andere pagina's blijft het doek direct weg. */
+  /* De openingsanimatie hoort bij de homepage: hij speelt bij het binnenkomen
+     en bij het herladen van die pagina, en niet bij elke wissel naar een andere
+     pagina. Op alle andere pagina's blijft het doek dus direct weg. */
   var thuis = /(^|\/)(index\.html)?$/.test(location.pathname);
-  var eerste = thuis;
-  try {
-    eerste = !sessionStorage.getItem('eipi-intro');
-    if (eerste && thuis) { sessionStorage.setItem('eipi-intro', '1'); }
-  } catch (e) { eerste = thuis; }
-  if (!(thuis && eerste)) { d.className += ' geen-intro'; }
-  if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) { return; }
-  try {
-    if (sessionStorage.getItem('eipi-wipe') === '1') {
-      sessionStorage.removeItem('eipi-wipe');
-      d.className += ' wipe';
-      window.setTimeout(function () { d.className = d.className.replace(/\bwipe(-out)?\b/g, ''); }, 2500);
-    }
-  } catch (e) {}
+  if (!thuis) { d.className += ' geen-intro'; }
+  if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    d.className += ' geen-intro';
+  }
 })();
 </script>
 </head>

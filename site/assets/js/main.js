@@ -1210,51 +1210,7 @@
     });
   }
 
-  /* Paginawissel: bij een klik op een link naar een andere pagina schuift het
-     doek dicht, daarna gaat de browser verder. Op de nieuwe pagina schuift het
-     doek door. Zonder dit script werkt de site gewoon normaal. */
-  var doek = document.getElementById('p-wipe');
-  var rustig = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  var weggaat = false;
-  /* terugknop uit de geschiedenis: nooit bedekt achterblijven */
-  window.addEventListener('pageshow', function (e) {
-    if (e.persisted && doek) {
-      doek.classList.remove('is-leaving');
-      document.documentElement.className = document.documentElement.className.replace(/\bwipe(-out)?\b/g, '');
-    }
-  });
-  if (doek && !rustig) {
-    document.addEventListener('click', function (e) {
-      if (weggaat) { return; }
-      if (e.defaultPrevented || e.button !== 0) { return; }
-      if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) { return; }
-      var link = e.target.closest ? e.target.closest('a[href]') : null;
-      if (!link) { return; }
-      if (link.target && link.target !== '_self') { return; }
-      if (link.hasAttribute('download')) { return; }
-      var href = link.getAttribute('href') || '';
-      if (href.charAt(0) === '#') { return; }
-      if (/^(mailto:|tel:|https?:)/i.test(href)) { return; }
-      if (!/\.html($|[?#])/.test(href)) { return; }
-      e.preventDefault();
-      weggaat = true;
-      doek.classList.add('is-leaving');
-      try { sessionStorage.setItem('eipi-wipe', '1'); } catch (err) {}
-      window.setTimeout(function () { window.location.href = link.href; }, 490);
-    });
-
-    /* het doek dat al dicht staat, doorschuiven naar beneden */
-    if (document.documentElement.className.indexOf('wipe') !== -1) {
-      window.requestAnimationFrame(function () {
-        var d = document.documentElement;
-        d.className = d.className.replace(/\bwipe\b/g, 'wipe-out');
-        window.setTimeout(function () {
-          d.className = d.className.replace(/\bwipe(-out)?\b/g, '');
-          doek.classList.add('is-done');
-        }, 900);
-      });
-    }
-  } else if (doek) {
-    document.documentElement.className = document.documentElement.className.replace(/\bwipe(-out)?\b/g, '');
-  }
+  /* De paginawissel met het doek is eruit: de intro speelt op de homepage en
+     bij het laden daarvan, niet bij elke stap naar een andere pagina. Het doek
+     blijft in de html staan voor het geval het later terugkomt. */
 })();

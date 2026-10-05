@@ -959,95 +959,6 @@ html.wipe .p-pre { display: none; }
   .p-keur__plaat .p-keur__logo { max-width: 320px; height: 170px; }
 }
 
-/* het team: afdelingen als over elkaar schuivende panelen ------------------ *//* het team: afdelingen als over elkaar schuivende panelen ------------------ *//* het team: afdelingen als over elkaar schuivende panelen ------------------ *//* het team: afdelingen als over elkaar schuivende panelen ------------------ *//* het team: afdelingen als over elkaar schuivende panelen ------------------ */
-.p-teamstack {
-  display: flex; flex-direction: column; gap: 0; margin-top: clamp(1.8rem, 3.5vw, 2.8rem);
-  /* over de volle breedte van het scherm, buiten de normale kolom om */
-  width: 100vw; margin-left: calc(50% - 50vw); margin-right: calc(50% - 50vw);
-  --p-kant: max(var(--p-gutter), calc((100vw - var(--p-max)) / 2 + var(--p-gutter)));
-}
-.p-teamdept {
-  position: sticky; top: var(--stapel-top, 96px);
-  display: grid; grid-template-columns: minmax(0, .85fr) minmax(0, 1.5fr);
-  gap: clamp(1.2rem, 3vw, 2.6rem); align-items: start;
-  background: var(--p-bone);
-  border-top: 1px solid var(--p-line-ink);
-  padding: clamp(1.4rem, 2.6vw, 2.2rem) var(--p-kant, var(--p-gutter)) clamp(1.6rem, 3vw, 2.4rem);
-  overflow: hidden;
-  transition: background 140ms linear;
-}
-/* de kaart die wordt ingehaald, wordt een tikje donkerder zodat je ziet
-   dat hij naar achteren wordt geduwd */
-.p-teamdept::after {
-  content: ""; position: absolute; inset: 0; z-index: 4; pointer-events: none;
-  background: rgba(11, 10, 9, var(--dim, 0));
-}
-.p-teamdept:nth-child(1) { --i: 0; }
-.p-teamdept:nth-child(2) { --i: 1; }
-.p-teamdept:nth-child(3) { --i: 2; }
-.p-teamdept:nth-child(4) { --i: 3; }
-.p-teamdept:nth-child(5) { --i: 4; }
-.p-teamdept:last-child { border-bottom: 1px solid var(--p-line-ink); }
-.p-teamdept__head { position: relative; z-index: 1; }
-.p-teamdept__side { min-width: 0; display: flex; flex-direction: column; z-index: 1; }
-.p-teamdept__mark {
-  --mk: clamp(210px, 23vw, 315px);
-  position: absolute; left: clamp(.7rem, 1.6vw, 1.5rem); bottom: calc(clamp(1.6rem, 3vw, 2.4rem) * -.4); z-index: 0;
-  width: var(--mk); height: var(--mk);
-  color: var(--p-ink); opacity: .05; pointer-events: none;
-}
-.p-teamdept__index { font-family: var(--p-mono); font-size: .75rem; letter-spacing: .14em; color: var(--p-red); }
-.p-teamdept__name {
-  margin: .45rem 0 0; font-family: var(--p-display); font-weight: 400; text-transform: uppercase;
-  font-size: clamp(2.4rem, 4.8vw, 5.2rem); line-height: 1; letter-spacing: .012em; overflow-wrap: break-word;
-}
-.p-teamdept__count {
-  display: block; margin-top: .5rem; font-family: var(--p-mono); font-size: .75rem;
-  letter-spacing: .12em; text-transform: uppercase; color: var(--p-grey-4);
-}
-.p-teamdept__text { margin: .8rem 0 0; font-size: 1rem; line-height: 1.6; color: var(--p-grey-3); max-width: 30em; }
-.p-teamdept__nav { align-self: flex-end; margin-bottom: .8rem; display: flex; align-items: center; gap: .5rem; flex: none; }
-.p-carbar {
-  display: block; width: clamp(90px, 10vw, 140px); height: 2px; margin-right: .8rem;
-  background: var(--p-line-ink); border-radius: 999px; overflow: hidden; align-self: center;
-}
-.p-carbar__fill { display: block; height: 100%; width: 20%; background: var(--p-red); border-radius: inherit; }
-.p-carbtn {
-  width: 48px; height: 48px; border-radius: 999px; cursor: pointer;
-  border: 1.5px solid var(--p-red); background: var(--p-red); color: #fff;
-  font-size: 1.15rem; line-height: 1;
-  transition: background 240ms ease, color 240ms ease, border-color 240ms ease, transform 320ms var(--p-ease);
-}
-.p-carbtn:hover { background: var(--p-ink); color: var(--p-bone); border-color: var(--p-ink); transform: translate3d(0, -2px, 0); }
-.p-teamdept__cards {
-  display: flex; gap: .75rem; overflow-x: auto;
-  scroll-snap-type: x mandatory; scrollbar-width: none;
-  margin-top: 1.2rem; padding-bottom: .4rem;
-}
-.p-teamdept__cards::-webkit-scrollbar { display: none; }
-.p-member {
-  flex: 0 0 calc((100% - 1.5rem) / 3);
-  scroll-snap-align: start;
-  display: flex; flex-direction: column; gap: .6rem;
-  background: var(--p-ink); color: var(--p-bone);
-  border: 1px solid rgba(11, 10, 9, .28); border-radius: 16px;
-  padding: 1rem 1rem 1.1rem;
-  transition: transform 420ms var(--p-ease), border-color 260ms ease;
-}
-.p-member:hover { transform: translate3d(0, -6px, 0); border-color: var(--p-red); }
-.p-member__photo { position: relative; margin: 0; border-radius: 10px; overflow: hidden; aspect-ratio: 4 / 5; background: rgba(244, 241, 234, .08); }
-.p-member__photo img { display: block; width: 100%; height: 100%; object-fit: cover; transition: transform 600ms var(--p-ease); }
-.p-member:hover .p-member__photo img { transform: scale(1.06); }
-.p-member__name { font-family: var(--p-display); font-weight: 400; text-transform: uppercase; font-size: clamp(1.5rem, 2.2vw, 2rem); line-height: 1; letter-spacing: .02em; color: var(--p-bone); }
-.p-teamnote { margin: clamp(1.2rem, 2.4vw, 1.8rem) 0 0; }
-
-@media (max-width: 900px) {
-  .p-teamdept { position: static; grid-template-columns: 1fr; }
-  .p-teamdept::after { display: none; }
-  .p-member { flex-basis: calc((100% - .75rem) / 2); }
-}
-@media (max-width: 560px) { .p-member { flex-basis: 78%; } }
-
 /* diensten-carrousel: vier per keer, balk loopt vol in drie seconden -------- */
 #diensten { padding-block: clamp(2.2rem, 4.4vw, 3.6rem); }
 .p-slider__label {
@@ -2160,20 +2071,54 @@ body.p-paneel-open { overflow: hidden; }
 /* ==========================================================================
    Het team op de over-ons pagina: per afdeling een rij mensen.
    ========================================================================== */
+/* Het team: per afdeling een kop met het nummer, de naam, waar ze van zijn
+   en hoeveel mensen er staan, met daaronder de mensen zelf in gelijke
+   tegels. ----------------------------------------------------------------- */
 .p-team { margin-top: clamp(2rem, 4vw, 3.2rem); }
-.p-team__afdeling + .p-team__afdeling { margin-top: clamp(2rem, 4vw, 3.2rem); padding-top: clamp(1.4rem, 3vw, 2.2rem); border-top: 1px solid var(--p-line-ink); }
-.p-team__kop { display: flex; flex-wrap: wrap; align-items: baseline; gap: .5rem 1rem; margin-bottom: clamp(1rem, 2vw, 1.4rem); }
+.p-team__afdeling + .p-team__afdeling {
+  margin-top: clamp(2rem, 4vw, 3.2rem);
+  padding-top: clamp(1.4rem, 3vw, 2.2rem);
+  border-top: 1px solid var(--p-line-ink);
+}
+.p-team__kop {
+  display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 34rem);
+  align-items: end; gap: .7rem clamp(1.5rem, 4vw, 4rem);
+  padding-bottom: clamp(.9rem, 1.7vw, 1.3rem);
+  border-bottom: 1px solid var(--p-line-ink-soft);
+  margin-bottom: clamp(1.1rem, 2.2vw, 1.6rem);
+}
+.p-team__titel { display: flex; flex-wrap: wrap; align-items: baseline; gap: .3rem clamp(.6rem, 1.2vw, 1rem); }
+/* het aantal staat op dezelfde lijn als de naam, met een streepje ervoor */
+.p-team__aantal { display: inline-flex; align-items: center; gap: .7rem; padding-bottom: .2rem; }
+.p-team__aantal::before { content: ""; width: clamp(1rem, 2vw, 2rem); height: 1px; background: var(--p-line-ink); }
 .p-team__index { font-family: var(--p-mono); font-size: .72rem; letter-spacing: .16em; color: var(--p-red); }
-.p-team__naam { margin: 0; font-family: var(--p-display); font-weight: 400; text-transform: uppercase; font-size: clamp(1.6rem, 3vw, 2.6rem); line-height: 1; color: var(--p-ink); }
-.p-team__aantal { font-family: var(--p-mono); font-size: .68rem; letter-spacing: .14em; text-transform: uppercase; color: var(--p-grey-4); }
-.p-team__tekst { flex: 1 1 18rem; margin: 0; font-size: .98rem; line-height: 1.6; color: var(--p-grey-3); }
-.p-team__rij { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: clamp(.7rem, 1.6vw, 1.3rem); }
-.p-team__lid { margin: 0; }
-.p-team__foto { display: block; width: 100%; aspect-ratio: 4 / 5; object-fit: cover; background: var(--p-bone); }
-.p-team__bij { display: block; padding-top: .55rem; }
-.p-team__bij b { display: block; font-family: var(--p-display); font-weight: 400; text-transform: uppercase; font-size: 1.05rem; line-height: 1; color: var(--p-ink); }
-.p-team__bij i { font-style: normal; font-family: var(--p-mono); font-size: .62rem; letter-spacing: .1em; text-transform: uppercase; color: var(--p-grey-4); }
+.p-team__naam {
+  margin: 0; font-family: var(--p-display); font-weight: 400; text-transform: uppercase;
+  font-size: clamp(1.7rem, 3.1vw, 2.7rem); line-height: .95; color: var(--p-ink);
+}
+.p-team__tekst { margin: 0; max-width: 46ch; justify-self: end; font-size: clamp(.95rem, 1.1vw, 1.05rem); line-height: 1.6; color: var(--p-grey-3); }
+.p-team__aantal {
+  font-family: var(--p-mono); font-size: .66rem; letter-spacing: .14em;
+  text-transform: uppercase; color: var(--p-grey-4);
+}
+.p-team__rij { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: clamp(.7rem, 1.5vw, 1.2rem); }
+.p-team__lid { margin: 0; display: flex; flex-direction: column; }
+.p-team__foto { display: block; width: 100%; aspect-ratio: 4 / 5; object-fit: cover; background: var(--p-bone-4); }
+.p-team__bij { display: block; margin-top: auto; padding-top: .55rem; }
+.p-team__bij b {
+  display: block; font-family: var(--p-display); font-weight: 400; text-transform: uppercase;
+  font-size: 1.05rem; line-height: 1.05; color: var(--p-ink);
+}
+.p-team__bij i {
+  display: block; margin-top: .12rem; font-style: normal; font-family: var(--p-mono);
+  font-size: .62rem; letter-spacing: .1em; text-transform: uppercase; color: var(--p-grey-4);
+}
 .p-team__leeg { margin: 0; font-size: 1rem; color: var(--p-grey-3); }
+
+/* de kop stapelt zodra de twee kolommen te krap worden */
+@media (max-width: 900px) {
+  .p-team__kop { grid-template-columns: minmax(0, 1fr); align-items: start; }
+}
 @media (max-width: 1080px) { .p-team__rij { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
 @media (max-width: 720px) { .p-team__rij { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
 @media (max-width: 520px) { .p-team__rij { grid-template-columns: repeat(2, minmax(0, 1fr)); } }

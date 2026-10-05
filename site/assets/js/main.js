@@ -236,76 +236,6 @@
     window.setTimeout(eind, 1500);
   }
 
-  /* De teamkaarten op over-ons schuiven over elkaar heen. De kaart die wordt
-     ingehaald, dimt mee met hoe ver de volgende al over hem heen zit. */
-  var stapel = document.querySelector('.p-teamstack');
-  if (stapel) {
-    var lagen = stapel.querySelectorAll('.p-teamdept');
-    var rustig = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    if (lagen.length > 1 && !rustig) {
-      var naam = document.querySelector('.p-nav');
-      if (naam) { stapel.style.setProperty('--stapel-top', (naam.offsetHeight + 14) + 'px'); }
-      var werk = false;
-      var kleur = function () {
-        werk = false;
-        for (var i = 0; i < lagen.length - 1; i++) {
-          var nu = lagen[i].getBoundingClientRect();
-          var straks = lagen[i + 1].getBoundingClientRect();
-          var dek = (nu.bottom - straks.top) / Math.max(1, nu.height);
-          dek = dek < 0 ? 0 : (dek > 1 ? 1 : dek);
-          lagen[i].style.setProperty('--dim', (Math.pow(dek, 1.35) * .62).toFixed(3));
-        }
-      };
-      var vraag = function () {
-        if (werk) { return; }
-        werk = true;
-        window.requestAnimationFrame(kleur);
-        /* als er geen frame komt, rekenen we het alsnog uit */
-        window.setTimeout(function () { if (werk) { kleur(); } }, 120);
-      };
-      window.addEventListener('scroll', vraag, { passive: true });
-      window.addEventListener('resize', vraag);
-      kleur();
-    }
-  }
-
-  /* Profielcarrousels op de over-ons pagina: pijltjes schuiven één kaart op.
-     Zonder deze knoppen blijft slepen gewoon werken. */
-  document.addEventListener('click', function (e) {
-    var knop = e.target.closest ? e.target.closest('[data-slide]') : null;
-    if (!knop) { return; }
-    var baan = document.getElementById(knop.getAttribute('data-slide'));
-    if (!baan) { return; }
-    var kaart = baan.querySelector('.p-member');
-    var stap = kaart ? kaart.getBoundingClientRect().width + 12 : 320;
-    var zacht = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    baan.scrollBy({ left: (knop.getAttribute('data-dir') === 'next' ? stap : -stap), behavior: zacht ? 'auto' : 'smooth' });
-  });
-
-  /* Voortgangsbalkje bij elke carrousel: volgt het slepen. */
-  function zetPositie(baan) {
-    var vulbalk = baan.id ? document.querySelector('[data-bar="' + baan.id + '"] .p-carbar__fill') : null;
-    if (!vulbalk) { return; }
-    var kaart = baan.querySelector('.p-member');
-    var stap = kaart ? kaart.getBoundingClientRect().width + 12 : 320;
-    var totaal = baan.querySelectorAll('.p-member').length;
-    if (!totaal || !stap) { return; }
-    var max = baan.scrollWidth - baan.clientWidth;
-    var deel = max > 0 ? baan.scrollLeft / max : 0;
-    var pct = (deel * (totaal - 1) + 1) / totaal * 100;
-    vulbalk.style.width = Math.min(100, Math.max(0, pct)).toFixed(1) + '%';
-  }
-  var banen = document.querySelectorAll('.p-teamdept__cards');
-  Array.prototype.forEach.call(banen, function (baan) {
-    var bezig = false;
-    baan.addEventListener('scroll', function () {
-      if (bezig) { return; }
-      bezig = true;
-      window.requestAnimationFrame(function () { zetPositie(baan); bezig = false; });
-    }, { passive: true });
-    zetPositie(baan);
-  });
-
   /* Blokken rustig in beeld laten komen. Alleen op pagina's waar data-reveal
      staat, en zonder IntersectionObserver blijft alles gewoon zichtbaar.
      Op een koude lading wachten we tot de preloader weg is, zodat de
@@ -1099,10 +1029,12 @@
         var leden = afd.leden || [];
         return '<section class="p-team__afdeling" id="team-' + esc(afd.id || '') + '">' +
           '<div class="p-team__kop">' +
-            (afd.index ? '<span class="p-team__index">' + esc(afd.index) + '</span>' : '') +
-            '<h3 class="p-team__naam">' + esc(afd.naam || '') + '</h3>' +
-            '<p class="p-team__tekst">' + esc(afd.tekst || '') + '</p>' +
-            '<span class="p-team__aantal">' + leden.length + (leden.length === 1 ? ' persoon' : ' mensen') + '</span>' +
+            '<div class="p-team__titel">' +
+              (afd.index ? '<span class="p-team__index">' + esc(afd.index) + '</span>' : '') +
+              '<h3 class="p-team__naam">' + esc(afd.naam || '') + '</h3>' +
+              '<span class="p-team__aantal">' + leden.length + (leden.length === 1 ? ' persoon' : ' mensen') + '</span>' +
+            '</div>' +
+            (afd.tekst ? '<p class="p-team__tekst">' + esc(afd.tekst) + '</p>' : '') +
           '</div>' +
           '<div class="p-team__rij">' +
             leden.map(function (lid) {

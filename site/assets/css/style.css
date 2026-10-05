@@ -917,17 +917,17 @@ html.wipe .p-pre { display: none; }
   background: var(--p-line-ink); border: 1px solid var(--p-line-ink);
 }
 .p-keur__plaat {
-  position: relative; display: flex; flex-direction: column; gap: clamp(.9rem, 1.8vw, 1.3rem);
-  background: #fff; padding: clamp(1.6rem, 3vw, 2.8rem);
+  position: relative; display: flex; flex-direction: column; gap: clamp(1rem, 2vw, 1.6rem);
+  background: #fff; padding: clamp(1.8rem, 3.4vw, 3.2rem);
   transition: background 320ms ease;
 }
 .p-keur__plaat:hover { background: var(--p-bone); }
 .p-keur__plaat:nth-child(1) { grid-row: 1 / span 2; justify-content: center; }
 .p-keur__plaat:nth-child(2) { grid-column: 2; grid-row: 1; }
 .p-keur__plaat:nth-child(3) { grid-column: 2; grid-row: 2; }
-.p-keur__plaat:nth-child(2), .p-keur__plaat:nth-child(3) { flex-direction: row; align-items: center; gap: clamp(1rem, 2.4vw, 2rem); }
+.p-keur__plaat:nth-child(2), .p-keur__plaat:nth-child(3) { flex-direction: row; align-items: center; gap: clamp(1.2rem, 2.8vw, 2.4rem); }
 .p-keur__plaat:nth-child(2) .p-keur__tekst, .p-keur__plaat:nth-child(3) .p-keur__tekst { display: flex; flex-direction: column; gap: .5rem; }
-.p-keur__plaat:nth-child(1) .p-keur__logo { max-width: clamp(200px, 26vw, 330px); height: clamp(110px, 13vw, 170px); }
+.p-keur__plaat:nth-child(1) .p-keur__logo { max-width: clamp(240px, 30vw, 420px); height: clamp(130px, 15vw, 210px); }
 .p-keur__plaat:nth-child(2) .p-keur__logo, .p-keur__plaat:nth-child(3) .p-keur__logo { flex: 0 0 auto; }
 
 /* het nummer in de hoek van elk blok */
@@ -936,14 +936,14 @@ html.wipe .p-pre { display: none; }
   font-family: var(--p-mono); font-size: .7rem; letter-spacing: .16em; color: var(--p-grey-4);
 }
 .p-keur__logo {
-  display: block; width: 100%; max-width: clamp(150px, 16vw, 210px);
-  height: clamp(70px, 7.6vw, 100px); object-fit: contain; object-position: left center;
+  display: block; width: 100%; max-width: clamp(180px, 20vw, 290px);
+  height: clamp(84px, 9.4vw, 130px); object-fit: contain; object-position: left center;
 }
 .p-keur__plaat .p-keur__t {
   display: block; font-family: var(--p-display); font-weight: 400; text-transform: uppercase;
   font-size: clamp(1.4rem, 2.4vw, 2.2rem); line-height: 1.02; color: var(--p-ink);
 }
-.p-keur__plaat:nth-child(1) .p-keur__t { font-size: clamp(1.8rem, 3.2vw, 2.9rem); }
+.p-keur__plaat:nth-child(1) .p-keur__t { font-size: clamp(2rem, 3.6vw, 3.3rem); }
 .p-keur__l { margin: 0; font-size: clamp(.98rem, 1.15vw, 1.08rem); line-height: 1.6; color: var(--p-grey-3); max-width: 34em; text-wrap: pretty; }
 
 @media (max-width: 1080px) {
@@ -1819,25 +1819,32 @@ body.page .p-ctaform .p-hint, body.page .p-ctaform .p-note { color: var(--p-grey
 }
 .p-werkdek__foto { position: absolute; inset: 0; z-index: 0; margin: 0; }
 .p-werkdek__foto img { width: 100%; height: 100%; object-fit: cover; animation: pWerkZoom 26s var(--p-ease) both; }
+/* de disclaimer onder de vaste kop, anders valt hij erachter */
+.p-werkdek__stock { position: absolute; top: clamp(7.5rem, 14vh, 10rem); left: var(--p-gutter); z-index: 3; }
 @keyframes pWerkZoom { from { transform: scale(1.06); } to { transform: scale(1); } }
 /* dezelfde aanpak als op de homepage: donker van links, licht van rechts */
 .p-werkdek__scrim {
   position: absolute; inset: 0; z-index: 1;
   background:
-    linear-gradient(90deg, #0B0A09 0%, #0B0A09 26%, rgba(11,10,9,.9) 42%, rgba(11,10,9,.58) 60%, rgba(11,10,9,.2) 78%, rgba(11,10,9,.4) 100%),
-    linear-gradient(180deg, rgba(11,10,9,.62) 0%, rgba(11,10,9,0) 26%, rgba(11,10,9,0) 58%, rgba(11,10,9,.72) 100%);
+    linear-gradient(90deg, #0B0A09 0%, rgba(11,10,9,.94) 22%, rgba(11,10,9,.8) 40%, rgba(11,10,9,.4) 62%, rgba(11,10,9,.08) 84%, rgba(11,10,9,.22) 100%),
+    linear-gradient(180deg, rgba(11,10,9,.55) 0%, rgba(11,10,9,0) 26%, rgba(11,10,9,0) 58%, rgba(11,10,9,.68) 100%);
 }
 
-.p-werkdek__in { position: relative; z-index: 2; display: flex; flex-direction: column; align-items: flex-start; max-width: min(46rem, 62%); margin-left: 0; margin-right: auto; }
+.p-werkdek__in {
+  position: relative; z-index: 2;
+  display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(0, .95fr);
+  gap: clamp(1.4rem, 4vw, 4rem); align-items: end;
+}
+.p-werkdek__tekst { display: flex; flex-direction: column; align-items: flex-start; max-width: 42rem; }
 .p-werkdek__t { margin: clamp(.5rem, 1.4vh, 1rem) 0 0; font-size: clamp(2.8rem, min(9.6vw, 14vh), 9.6rem); line-height: .9; }
 .p-werkdek__lead { margin: clamp(1rem, 2.2vh, 1.5rem) 0 0; max-width: 30em; color: var(--p-grey-2); }
 .p-werkdek__in .p-hero__actions { margin-top: clamp(1.2rem, 2.6vh, 1.8rem); }
 
-/* het uitgelichte project als regel onder de knoppen */
+/* het uitgelichte project rechts, met een streep erboven */
 .p-werkdek__uit {
-  display: flex; flex-direction: column; gap: .35rem;
-  margin-top: clamp(1.6rem, 3.4vh, 2.4rem); padding-top: clamp(1rem, 2vh, 1.4rem);
-  border-top: 1px solid rgba(244, 241, 234, .28); color: var(--p-bone); width: 100%;
+  justify-self: end; display: flex; flex-direction: column; gap: .35rem;
+  width: 100%; max-width: 26rem; padding-top: clamp(1rem, 2vh, 1.4rem);
+  border-top: 1px solid rgba(244, 241, 234, .38); color: var(--p-bone);
 }
 .p-werkdek__lab { font-family: var(--p-mono); font-size: .68rem; letter-spacing: .18em; text-transform: uppercase; color: var(--p-red-2); }
 .p-werkdek__naam { font-family: var(--p-display); font-weight: 400; text-transform: uppercase; font-size: clamp(1.5rem, 2.6vw, 2.3rem); line-height: 1.02; }
@@ -1863,13 +1870,15 @@ body.page .p-ctaform .p-hint, body.page .p-ctaform .p-note { color: var(--p-grey
 }
 .p-werkdek__meer .p-arrow { width: 1.1rem; height: 1.1rem; transition: transform 360ms var(--p-ease); }
 .p-werkdek__meer:hover { color: var(--p-red-2); }
-.p-werkdek__meer:hover .p-arrow { transform: translate3d(5px, 0, 0); }
+.p-werkdek__meer .p-arrow--omlaag { transform: rotate(90deg); }
+.p-werkdek__meer:hover .p-arrow--omlaag { transform: rotate(90deg) translate3d(6px, 0, 0); }
 .p-werkdek__meer:focus-visible { outline: 2px solid var(--p-red-2); outline-offset: 4px; }
 
 @media (prefers-reduced-motion: reduce) { .p-werkdek__foto img { animation: none; } }
 @media (max-width: 900px) {
   .p-hero--werk { min-height: 0; padding-block: clamp(7rem, 20vh, 9rem) clamp(1.6rem, 4vh, 2.4rem); }
-  .p-werkdek__in { max-width: 100%; }
+  .p-werkdek__in { grid-template-columns: 1fr; gap: clamp(1.4rem, 4vh, 2.2rem); }
+  .p-werkdek__uit { justify-self: start; max-width: 100%; }
   .p-werkdek__t { font-size: clamp(2.6rem, 12vw, 4.6rem); }
   .p-werkdek__scrim {
     background:

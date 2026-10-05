@@ -33,7 +33,7 @@ window.EIPI_PROJECTEN = {
       "wayfinding",
       "specials"
     ],
-    "uitgelicht": "gevel-monument"
+    "uitgelicht": "wagenpark"
   },
   "projecten": [
     {

@@ -771,6 +771,10 @@ html.wipe .p-pre { display: none; }
 .p-hours { display: flex; flex-direction: column; gap: .28rem; font-family: var(--p-mono); font-size: .68rem; letter-spacing: .08em; text-transform: uppercase; color: #7C7466; }
 .p-hours span { display: flex; justify-content: space-between; gap: .8rem; max-width: 11rem; }
 .p-hours b { font-weight: 400; color: var(--p-grey-2); }
+/* de keurmerken in de voettekst, boven de socialknoppen */
+.p-footkeur { display: flex; flex-wrap: wrap; align-items: center; gap: clamp(.9rem, 1.8vw, 1.5rem); }
+.p-footkeur img { display: block; width: auto; height: clamp(36px, 3.6vw, 50px); object-fit: contain; }
+
 .p-pillrow { display: flex; flex-wrap: wrap; gap: .4rem; }
 .p-pill {
   display: inline-flex; align-items: center; gap: .5rem;
@@ -988,8 +992,6 @@ html.wipe .p-pre { display: none; }
   display: block; width: 100%; max-width: clamp(200px, 21vw, 310px);
   height: clamp(96px, 10.5vw, 152px); object-fit: contain; object-position: center;
   background: transparent; padding: clamp(.5rem, 1vw, .8rem);
-  /* de logo's zijn aangeleverd op wit; multiply laat dat wit wegvallen */
-  mix-blend-mode: multiply;
 }
 .p-keur__plaat .p-keur__t {
   display: block; font-family: var(--p-display); font-weight: 400; text-transform: uppercase;
@@ -2221,7 +2223,6 @@ body.p-paneel-open { overflow: hidden; }
 }
 .p-teamthuis__lid b { font-weight: 400; color: var(--p-bone); }
 .p-teamthuis__lid i { font-style: normal; color: var(--p-grey); }
-.p-teamthuis__lid--jij b { color: var(--p-red-2); }
 .p-teamthuis__lid a { display: block; color: inherit; }
 .p-teamthuis__lid a:hover img { opacity: .85; }
 

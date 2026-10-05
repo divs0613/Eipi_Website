@@ -1083,9 +1083,6 @@
           '<figcaption><b>' + esc(lid.naam || 'Voornaam') + '</b> <i>' + esc(lid.rol || '') + '</i></figcaption>' +
         '</figure>';
       }).join('');
-      tegels += '<figure class="p-teamthuis__lid p-teamthuis__lid--jij">' +
-        '<a href="werken-bij.html" aria-label="Bekijk de vacatures">' + foto(null) + '</a>' +
-        '<figcaption><b>Jij?</b> <i>Bekijk de vacatures</i></figcaption></figure>';
       thuisvak.innerHTML = tegels;
     }());
   }

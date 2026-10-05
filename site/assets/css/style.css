@@ -2156,3 +2156,24 @@ body.p-paneel-open { overflow: hidden; }
 .p-klanten__vraag .p-btn { margin-left: auto; }
 @media (max-width: 900px) { .p-klanten__rij { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 @media (max-width: 560px) { .p-klanten__rij { grid-template-columns: 1fr; } .p-klanten__vraag .p-btn { margin-left: 0; } }
+
+/* ==========================================================================
+   Het team op de over-ons pagina: per afdeling een rij mensen.
+   ========================================================================== */
+.p-team { margin-top: clamp(2rem, 4vw, 3.2rem); }
+.p-team__afdeling + .p-team__afdeling { margin-top: clamp(2rem, 4vw, 3.2rem); padding-top: clamp(1.4rem, 3vw, 2.2rem); border-top: 1px solid var(--p-line-ink); }
+.p-team__kop { display: flex; flex-wrap: wrap; align-items: baseline; gap: .5rem 1rem; margin-bottom: clamp(1rem, 2vw, 1.4rem); }
+.p-team__index { font-family: var(--p-mono); font-size: .72rem; letter-spacing: .16em; color: var(--p-red); }
+.p-team__naam { margin: 0; font-family: var(--p-display); font-weight: 400; text-transform: uppercase; font-size: clamp(1.6rem, 3vw, 2.6rem); line-height: 1; color: var(--p-ink); }
+.p-team__aantal { font-family: var(--p-mono); font-size: .68rem; letter-spacing: .14em; text-transform: uppercase; color: var(--p-grey-4); }
+.p-team__tekst { flex: 1 1 18rem; margin: 0; font-size: .98rem; line-height: 1.6; color: var(--p-grey-3); }
+.p-team__rij { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: clamp(.7rem, 1.6vw, 1.3rem); }
+.p-team__lid { margin: 0; }
+.p-team__foto { display: block; width: 100%; aspect-ratio: 4 / 5; object-fit: cover; background: var(--p-bone); }
+.p-team__bij { display: block; padding-top: .55rem; }
+.p-team__bij b { display: block; font-family: var(--p-display); font-weight: 400; text-transform: uppercase; font-size: 1.05rem; line-height: 1; color: var(--p-ink); }
+.p-team__bij i { font-style: normal; font-family: var(--p-mono); font-size: .62rem; letter-spacing: .1em; text-transform: uppercase; color: var(--p-grey-4); }
+.p-team__leeg { margin: 0; font-size: 1rem; color: var(--p-grey-3); }
+@media (max-width: 1080px) { .p-team__rij { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
+@media (max-width: 720px) { .p-team__rij { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+@media (max-width: 520px) { .p-team__rij { grid-template-columns: repeat(2, minmax(0, 1fr)); } }

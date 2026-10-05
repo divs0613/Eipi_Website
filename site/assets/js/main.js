@@ -1075,6 +1075,47 @@
     }
   }
 
+  /* Het team op de over-ons pagina: per afdeling een rij mensen, uit team.js.
+     Zo kan de klant zelf afdelingen en collega's toevoegen of verplaatsen. */
+  var teamvak = document.querySelector('[data-team]');
+  if (teamvak) {
+    (function () {
+      var data = window.EIPI_TEAM;
+      var afdelingen = (data && data.afdelingen) || [];
+      var esc = function (s) {
+        return String(s === null || s === undefined ? '' : s).replace(/[&<>"']/g, function (c) {
+          return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
+        });
+      };
+      var foto = function (lid) {
+        var bron = lid.foto || 'assets/img/teamfoto-placeholder.svg';
+        return '<img class="p-team__foto" src="' + esc(bron) + '" alt="' + esc('Teamfoto van ' + (lid.naam || 'een collega')) + '" loading="lazy" decoding="async">';
+      };
+      if (!afdelingen.length) {
+        teamvak.innerHTML = '<p class="p-team__leeg">Het team kon niet geladen worden. Bel ons even, dan vertellen we wie waarvoor aan de lijn komt.</p>';
+        return;
+      }
+      teamvak.innerHTML = afdelingen.map(function (afd) {
+        var leden = afd.leden || [];
+        return '<section class="p-team__afdeling" id="team-' + esc(afd.id || '') + '">' +
+          '<div class="p-team__kop">' +
+            (afd.index ? '<span class="p-team__index">' + esc(afd.index) + '</span>' : '') +
+            '<h3 class="p-team__naam">' + esc(afd.naam || '') + '</h3>' +
+            '<p class="p-team__tekst">' + esc(afd.tekst || '') + '</p>' +
+            '<span class="p-team__aantal">' + leden.length + (leden.length === 1 ? ' persoon' : ' mensen') + '</span>' +
+          '</div>' +
+          '<div class="p-team__rij">' +
+            leden.map(function (lid) {
+              return '<figure class="p-team__lid">' + foto(lid) +
+                '<figcaption class="p-team__bij"><b>' + esc(lid.naam || 'Voornaam') + '</b><i>' + esc(lid.rol || '') + '</i></figcaption>' +
+              '</figure>';
+            }).join('') +
+          '</div>' +
+        '</section>';
+      }).join('');
+    }());
+  }
+
   /* Recente projecten op de homepage: de keuze staat in projecten.js onder
      _home. Zo kan de klant zelf bepalen hoeveel er staan en welke. */
   var homevak = document.querySelector('[data-home-projecten]');

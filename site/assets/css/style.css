@@ -1825,8 +1825,9 @@ body.page .p-ctaform .p-hint, body.page .p-ctaform .p-note { color: var(--p-grey
   position: fixed; z-index: 55; left: 50%; bottom: clamp(.9rem, 2.6vh, 1.6rem);
   transform: translateX(-50%); margin: 0; padding: .55rem .7rem;
   width: auto; max-width: calc(100vw - 1.6rem); overflow-x: auto; scrollbar-width: none;
-  background: rgba(244, 241, 234, .94); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
-  border: 1px solid var(--p-line-ink); border-radius: 999px;
+  /* zwart, zodat het balkje boven de kaarten uit blijft komen */
+  background: rgba(11, 10, 9, .93); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(244, 241, 234, .22); border-radius: 999px;
   /* één rij pillen, gecentreerd */
   flex-direction: row; flex-wrap: nowrap; justify-content: center; align-items: center; gap: .45rem;
   /* standaard weggeschoven onder de rand */
@@ -1836,7 +1837,13 @@ body.page .p-ctaform .p-hint, body.page .p-ctaform .p-note { color: var(--p-grey
 .p-filters--plak.p-filters--op { transform: translateX(-50%) translateY(0); opacity: 1; pointer-events: auto; }
 .p-filters--plak::-webkit-scrollbar { display: none; }
 .p-filters--plak .p-filters__rij { display: contents; }
-.p-filters--plak .p-filter { min-height: 38px; padding: .4rem .75rem; font-size: .92rem; white-space: nowrap; }
+.p-filters--plak .p-filter {
+  min-height: 38px; padding: .4rem .75rem; font-size: .92rem; white-space: nowrap;
+  color: var(--p-bone); border-color: rgba(244, 241, 234, .28);
+}
+.p-filters--plak .p-filter:hover { border-color: var(--p-bone); }
+/* de actieve pil blijft rood, ook op het zwarte balkje */
+.p-filters--plak .p-filter[aria-pressed="true"] { background: var(--p-red); border-color: var(--p-red); color: #fff; }
 
 /* op mobiel staan ze onder elkaar in plaats van naast elkaar */
 @media (max-width: 900px) {
@@ -2079,7 +2086,9 @@ body.p-paneel-open { overflow: hidden; }
 .p-team__kop {
   display: grid; grid-template-columns: auto minmax(0, 1fr) auto;
   align-items: center; column-gap: clamp(1.5rem, 4vw, 4rem);
-  margin-bottom: clamp(1.4rem, 2.6vw, 2.1rem);
+  padding-bottom: clamp(1rem, 2vw, 1.5rem);
+  border-bottom: 1px solid var(--p-line-ink);
+  margin-bottom: clamp(1.2rem, 2.4vw, 1.8rem);
 }
 .p-team__titel { display: flex; align-items: baseline; gap: clamp(.6rem, 1.2vw, 1rem); }
 .p-team__index { font-family: var(--p-mono); font-size: .78rem; letter-spacing: .16em; color: var(--p-red); }
@@ -2091,16 +2100,16 @@ body.p-paneel-open { overflow: hidden; }
   margin: 0; max-width: 48ch; font-size: clamp(1.05rem, 1.35vw, 1.3rem);
   line-height: 1.55; color: var(--p-grey-3);
 }
-/* het aantal mensen: het cijfer groot, het woord er in rood onder */
-.p-team__aantal { display: flex; flex-direction: column; align-items: flex-end; gap: .25rem; }
-.p-team__aantal b {
-  font-family: var(--p-display); font-weight: 400; line-height: .8;
-  font-size: clamp(2.6rem, 4.4vw, 4rem); color: var(--p-ink);
+/* het aantal mensen als pil: rood gevuld, net als de actieve filter */
+.p-team__aantal {
+  display: inline-flex; align-items: center; gap: .45rem; white-space: nowrap;
+  font-family: var(--p-display); font-weight: 400; text-transform: uppercase; letter-spacing: .02em;
+  font-size: clamp(.95rem, 1.1vw, 1.08rem); line-height: 1; color: #fff;
+  background: var(--p-red); border: 1px solid var(--p-red); border-radius: 999px;
+  padding: .55rem 1.05rem;
 }
-.p-team__aantal i {
-  font-style: normal; font-family: var(--p-mono); font-size: .68rem;
-  letter-spacing: .16em; text-transform: uppercase; color: var(--p-red);
-}
+.p-team__aantal b { font-weight: 400; font-size: 1.4em; line-height: .8; color: #fff; }
+.p-team__aantal i { font-style: normal; color: #fff; }
 .p-team__rij { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: clamp(.7rem, 1.5vw, 1.2rem); }
 .p-team__lid { margin: 0; display: flex; flex-direction: column; }
 .p-team__foto { display: block; width: 100%; aspect-ratio: 4 / 5; object-fit: cover; background: var(--p-bone-4); }

@@ -784,7 +784,7 @@ html.wipe .p-pre { display: none; }
 /* het jaar staat als merkteken op de achtergrond, rechtsonder in het blok met
    kolommen: het loopt tot net over de rand, zodat het onderaan een tikje
    afgesneden wordt en de juridische lijn er strak onder ligt */
-.p-footcols { position: relative; overflow: hidden; padding-bottom: clamp(1rem, 2vw, 1.8rem); }
+.p-footcols { position: relative; overflow: hidden; padding-bottom: clamp(2.2rem, 4.4vw, 3.6rem); }
 .p-footjaar {
   position: absolute; right: 0; bottom: -.07em; margin: 0;
   pointer-events: none; user-select: none;
@@ -2149,9 +2149,18 @@ body.p-paneel-open { overflow: hidden; }
 
 /* --- recente projecten op de homepage ------------------------------------ */
 .p-recent { background: var(--p-bone); color: var(--p-ink); padding: var(--p-space) 0; }
-.p-recent .p-head { margin-bottom: clamp(1.4rem, 3vw, 2.2rem); }
-.p-recent__bij { display: flex; flex-direction: column; align-items: flex-start; gap: clamp(1rem, 2vw, 1.6rem); }
-.p-recent__bij .p-lead { margin-top: 0; }
+/* de kop van Vers werk: de titel zo groot als op de homepage zelf, de
+   toelichting eronder en de knop aan de rechterkant */
+.p-recent__kop { margin-bottom: clamp(1.6rem, 3.2vw, 2.6rem); }
+.p-recent__t { font-size: clamp(3.31rem, 8.66vw, 8.66rem); }
+.p-recent__onder {
+  display: flex; flex-wrap: wrap; align-items: flex-end;
+  gap: 1rem clamp(1.4rem, 3vw, 2.6rem);
+  margin-top: clamp(1.2rem, 2.4vw, 1.8rem);
+}
+.p-recent__onder .p-lead { margin-top: 0; }
+.p-recent__onder .p-btn { margin-left: auto; }
+@media (max-width: 640px) { .p-recent__onder .p-btn { margin-left: 0; } }
 /* --- vers werk: een mozaïek van de laatste projecten ---------------------- */
 .p-mozaiek {
   display: grid; grid-template-columns: repeat(4, minmax(0, 1fr));
@@ -2185,6 +2194,8 @@ body.p-paneel-open { overflow: hidden; }
   font-size: clamp(1.15rem, 1.7vw, 1.75rem); line-height: 1.02;
 }
 .p-mozaiek__vak--groot .p-mozaiek__t { font-size: clamp(1.6rem, 2.6vw, 2.9rem); }
+/* het brede vak onderaan draagt dezelfde titelmaat als het grote vak */
+.p-mozaiek__vak--breed .p-mozaiek__t { font-size: clamp(1.6rem, 2.6vw, 2.9rem); }
 .p-mozaiek__m { font-family: var(--p-mono); font-size: .62rem; letter-spacing: .12em; text-transform: uppercase; color: var(--p-grey-2); }
 @media (max-width: 900px) {
   .p-mozaiek { grid-template-columns: repeat(2, minmax(0, 1fr)); }

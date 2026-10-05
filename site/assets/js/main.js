@@ -987,6 +987,11 @@
             k.setAttribute('aria-pressed', k === knop ? 'true' : 'false');
           });
           teken();
+          /* na het filteren weer bij de bovenkant van de projecten beginnen */
+          var kopvak = document.querySelector('.p-werkkop') || werkvak;
+          var rustig = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+          var naar = kopvak.getBoundingClientRect().top + window.pageYOffset - 130;
+          window.scrollTo({ top: naar < 0 ? 0 : naar, behavior: rustig ? 'auto' : 'smooth' });
         });
       }
       teken();
@@ -1003,22 +1008,28 @@
           open(uitgelicht.getAttribute('data-uitgelicht'), uitgelicht);
         });
       }
-      /* de filters blijven onderin staan zolang je langs de kaarten scrolt en
-         verdwijnen zodra de voettekst in beeld komt */
+      /* De filters blijven onderin staan zodra je langs de kaarten scrolt, en
+         schuiven weer weg als de voettekst in beeld komt. */
       if (filtervak && 'IntersectionObserver' in window) {
-        var inGrid = false, inVoet = false;
-        var werkBij = function () {
-          if (inGrid && !inVoet) { filtervak.classList.add('p-filters--plak'); }
-          else { filtervak.classList.remove('p-filters--plak'); }
+        var inKaarten = false, inVoet = false;
+        var zetBalk = function () {
+          var aan = inKaarten && !inVoet;
+          filtervak.classList.toggle('p-filters--plak', aan || inKaarten);
+          filtervak.classList.toggle('p-filters--op', aan);
         };
+        var drempel = document.querySelector('.p-werkkop') || werkvak;
         new IntersectionObserver(function (items) {
-          inGrid = items[0].isIntersecting; werkBij();
-        }, { rootMargin: '-15% 0px -12% 0px' }).observe(werkvak);
+          /* pas zodra de kop met de filters uit beeld is */
+          inKaarten = !items[0].isIntersecting;
+          zetBalk();
+        }, { threshold: 0 }).observe(drempel);
         var voet = document.querySelector('.p-footer');
         if (voet) {
           new IntersectionObserver(function (items) {
-            inVoet = items[0].isIntersecting; werkBij();
-          }, { rootMargin: '0px 0px -20% 0px' }).observe(voet);
+            /* meteen inklappen zodra het donkere vlak van de voet te zien is */
+            inVoet = items[0].isIntersecting;
+            zetBalk();
+          }, { threshold: 0 }).observe(voet);
         }
       }
 

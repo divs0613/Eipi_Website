@@ -773,7 +773,7 @@ html.wipe .p-pre { display: none; }
 .p-hours b { font-weight: 400; color: var(--p-grey-2); }
 /* de keurmerken in de voettekst, boven de socialknoppen */
 .p-footkeur { display: flex; flex-wrap: wrap; align-items: center; gap: clamp(.9rem, 1.8vw, 1.5rem); }
-.p-footkeur img { display: block; width: auto; height: clamp(36px, 3.6vw, 50px); object-fit: contain; }
+.p-footkeur img { display: block; width: auto; height: clamp(48px, 4.8vw, 68px); object-fit: contain; }
 
 .p-pillrow { display: flex; flex-wrap: wrap; gap: .4rem; }
 .p-pill {

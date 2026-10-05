@@ -2044,12 +2044,16 @@ body.p-paneel-open { overflow: hidden; }
 .p-fotoreeks__bij { position: absolute; left: 0; right: 0; bottom: 0; padding: clamp(1.2rem, 2.5vw, 2rem); color: var(--p-bone); }
 .p-fotoreeks__t {
   margin: 0; font-family: var(--p-display); font-weight: 400; text-transform: uppercase;
-  font-size: clamp(2.05rem, 4.9vw, 4rem); line-height: .92; letter-spacing: .012em;
+  font-size: clamp(2.05rem, 5.13vw, 4.1rem); line-height: .92; letter-spacing: .012em;
 }
-/* de losse grote foto's hebben een veel grotere titel; deze regel moet na de
-   basisregel staan, anders wint de basisregel */
+/* Alle maten hieronder staan NA de basisregel: even zwaar, dus de laatste
+   wint. Zo houdt elke foto de titelmaat die hij in het ontwerp had. */
+.p-fotoreeks__t--klein { font-size: clamp(2.05rem, 4.79vw, 3.88rem); }
+.p-fotoreeks__t--l { font-size: clamp(2.28rem, 7.41vw, 7.41rem); }
+.p-fotoreeks__t--xl { font-size: clamp(2.74rem, 9.12vw, 9.12rem); }
 .p-fotoreeks__t--groot { font-size: clamp(2.96rem, 10.26vw, 10.83rem); }
-.p-fotoreeks__l { margin: .65rem 0 0; max-width: 27em; font-size: 1.1rem; line-height: 1.62; color: var(--p-bone-4); text-wrap: pretty; }
+.p-fotoreeks__l { margin: .65rem 0 0; max-width: 27em; font-size: 1.08rem; line-height: 1.62; color: var(--p-bone-4); text-wrap: pretty; }
+.p-fotoreeks__l--klein { font-size: 1.1rem; }
 /* de losse, grote foto's hebben de titel en de tekst naast elkaar */
 .p-fotoreeks__bij--breed { padding: clamp(1.2rem, 3vw, 2.5rem) clamp(1rem, 3vw, 2.5rem); }
 .p-fotoreeks__wrap {
@@ -2060,7 +2064,8 @@ body.p-paneel-open { overflow: hidden; }
   gap: .8rem clamp(1.5rem, 3vw, 3rem); align-items: end;
 }
 /* de tekst naast de grote foto's blijft gewone leestekst */
-.p-fotoreeks__bij--breed .p-fotoreeks__l { max-width: 30em; font-size: 1.15rem; line-height: 1.68; }
+.p-fotoreeks__bij--breed .p-fotoreeks__l { max-width: 30em; font-size: 1.12rem; line-height: 1.68; }
+.p-fotoreeks__bij--breed .p-fotoreeks__l--groot { font-size: 1.15rem; }
 
 /* --- drie sectoren met een streepje ertussen ----------------------------- */
 .p-drie {
@@ -2136,6 +2141,7 @@ body.p-paneel-open { overflow: hidden; }
 /* --- het team op de homepage: dezelfde namen als op de over-ons pagina ---- */
 .p-teamthuis { background: var(--p-ink); color: var(--p-bone); padding: var(--p-space) 0; }
 .p-teamthuis .p-h2 { font-size: clamp(2.28rem, 6.84vw, 6.84rem); }
+.p-teamthuis .p-lead { font-size: 1.12rem; }
 .p-teamthuis__rij {
   margin-top: clamp(1.6rem, 3.4vw, 2.6rem);
   display: grid; grid-template-columns: repeat(auto-fill, minmax(clamp(110px, 13vw, 170px), 1fr));

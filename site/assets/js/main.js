@@ -1003,6 +1003,25 @@
           open(uitgelicht.getAttribute('data-uitgelicht'), uitgelicht);
         });
       }
+      /* de filters blijven onderin staan zolang je langs de kaarten scrolt en
+         verdwijnen zodra de voettekst in beeld komt */
+      if (filtervak && 'IntersectionObserver' in window) {
+        var inGrid = false, inVoet = false;
+        var werkBij = function () {
+          if (inGrid && !inVoet) { filtervak.classList.add('p-filters--plak'); }
+          else { filtervak.classList.remove('p-filters--plak'); }
+        };
+        new IntersectionObserver(function (items) {
+          inGrid = items[0].isIntersecting; werkBij();
+        }, { rootMargin: '-15% 0px -12% 0px' }).observe(werkvak);
+        var voet = document.querySelector('.p-footer');
+        if (voet) {
+          new IntersectionObserver(function (items) {
+            inVoet = items[0].isIntersecting; werkBij();
+          }, { rootMargin: '0px 0px -20% 0px' }).observe(voet);
+        }
+      }
+
       if (paneel) {
         paneel.addEventListener('click', function (e) {
           if (e.target.closest && e.target.closest('[data-paneel-sluit]')) { dicht(); }

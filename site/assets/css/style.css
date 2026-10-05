@@ -917,8 +917,8 @@ html.wipe .p-pre { display: none; }
 /* de papieren als een mozaïek: één groot blok links, twee kleinere rechts */
 .p-keur__drie {
   list-style: none; margin: clamp(2.4rem, 5vw, 4rem) 0 0; padding: 0;
-  display: grid; grid-template-columns: minmax(0, 1.12fr) minmax(0, 1fr);
-  grid-template-rows: auto auto; gap: 1px;
+  display: grid; grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1px;
   background: var(--p-line-ink); border: 1px solid var(--p-line-ink);
 }
 .p-keur__plaat {
@@ -926,14 +926,12 @@ html.wipe .p-pre { display: none; }
   background: #fff; color: var(--p-ink); padding: clamp(1.8rem, 3.4vw, 3.2rem);
   transition: background 320ms ease;
 }
-.p-keur__plaat:nth-child(1) { grid-row: 1 / span 2; justify-content: center; }
-.p-keur__plaat:nth-child(2) { grid-column: 2; grid-row: 1; }
-.p-keur__plaat:nth-child(3) { grid-column: 2; grid-row: 2; }
-.p-keur__plaat:nth-child(2), .p-keur__plaat:nth-child(3) { flex-direction: column; align-items: flex-start; }
-.p-keur__plaat:nth-child(2) .p-keur__tekst, .p-keur__plaat:nth-child(3) .p-keur__tekst { display: flex; flex-direction: column; gap: .5rem; }
-.p-keur__plaat:nth-child(1) .p-keur__logo { max-width: clamp(300px, 38vw, 560px); height: clamp(160px, 19vw, 280px); }
-.p-keur__plaat:nth-child(2) .p-keur__logo, .p-keur__plaat:nth-child(3) .p-keur__logo { max-width: clamp(300px, 34vw, 560px); height: clamp(150px, 17vw, 270px); }
-.p-keur__plaat:nth-child(2) .p-keur__tekst, .p-keur__plaat:nth-child(3) .p-keur__tekst { display: flex; flex-direction: column; gap: .5rem; min-width: 0; }
+
+
+.p-keur__plaat .p-keur__tekst { display: flex; flex-direction: column; gap: .5rem; }
+.p-keur__plaat .p-keur__logo { max-width: clamp(260px, 28vw, 460px); height: clamp(140px, 15.5vw, 250px); }
+
+.p-keur__plaat .p-keur__tekst { display: flex; flex-direction: column; gap: .5rem; min-width: 0; }
 
 /* het nummer in de hoek van elk blok */
 .p-keur__plaat::after {
@@ -949,18 +947,16 @@ html.wipe .p-pre { display: none; }
   display: block; font-family: var(--p-display); font-weight: 400; text-transform: uppercase;
   font-size: clamp(1.4rem, 2.4vw, 2.2rem); line-height: 1.02; color: var(--p-ink);
 }
-.p-keur__plaat:nth-child(1) .p-keur__t { font-size: clamp(2rem, 3.6vw, 3.3rem); }
+.p-keur__plaat .p-keur__t { font-size: clamp(1.6rem, 2.8vw, 2.5rem); }
 .p-keur__l { margin: 0; font-size: clamp(.98rem, 1.15vw, 1.08rem); line-height: 1.6; color: var(--p-grey-3); max-width: 34em; text-wrap: pretty; }
 
 @media (max-width: 1080px) {
   .p-keur__kop { grid-template-columns: 1fr; align-items: start; }
 }
+@media (max-width: 1080px) { .p-keur__drie { grid-template-columns: 1fr; } }
 @media (max-width: 820px) {
   .p-keur__tag { position: static; transform: none; width: 100%; margin-bottom: clamp(1rem, 3vw, 1.6rem); }
-  .p-keur__drie { grid-template-columns: 1fr; grid-template-rows: none; }
-  .p-keur__plaat:nth-child(1) { grid-row: auto; }
-  .p-keur__plaat:nth-child(2), .p-keur__plaat:nth-child(3) { grid-column: 1; grid-row: auto; flex-direction: column; align-items: flex-start; }
-  .p-keur__plaat:nth-child(1) .p-keur__logo { max-width: 240px; height: 120px; }
+  .p-keur__plaat .p-keur__logo { max-width: 320px; height: 170px; }
 }
 
 /* het team: afdelingen als over elkaar schuivende panelen ------------------ *//* het team: afdelingen als over elkaar schuivende panelen ------------------ *//* het team: afdelingen als over elkaar schuivende panelen ------------------ *//* het team: afdelingen als over elkaar schuivende panelen ------------------ *//* het team: afdelingen als over elkaar schuivende panelen ------------------ */

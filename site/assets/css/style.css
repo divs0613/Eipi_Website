@@ -876,87 +876,81 @@ html.wipe .p-pre { display: none; }
   color: var(--p-bone);
 }
 
-/* keurmerken en beoordeling: rode band met de score, daaronder de papieren --- */
-.p-keur { background: #FFFEFB; color: var(--p-ink); padding: 0; }
-.p-keur__band { background: var(--p-red); color: var(--p-bone); padding: var(--p-space) 0; }
+/* keurmerken en beoordeling: zwart-wit, als een lijst met nummers ----------- */
+.p-keur { background: #fff; color: var(--p-ink); }
 .p-keur__kop {
-  display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, .46fr);
+  display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, .42fr);
   gap: clamp(1.6rem, 4vw, 4rem); align-items: end;
 }
-.p-keur .p-eyebrow { color: rgba(244, 241, 234, .75); }
 .p-keur__kop-t {
-  margin: clamp(.6rem, 1.4vw, 1.1rem) 0 0;
-  font-size: clamp(2.8rem, 7.4vw, 7.4rem); line-height: .9; letter-spacing: .005em; color: #fff;
+  margin: clamp(.7rem, 1.6vw, 1.2rem) 0 0;
+  font-size: clamp(2.8rem, 7.6vw, 7.6rem); line-height: .9; letter-spacing: .005em; color: var(--p-ink);
 }
-.p-keur__lead { margin: clamp(1.2rem, 2.4vw, 1.8rem) 0 0; max-width: 32em; font-size: clamp(1.05rem, 1.3vw, 1.2rem); line-height: 1.65; color: rgba(244, 241, 234, .82); text-wrap: pretty; }
+.p-keur__lead { margin: clamp(1.2rem, 2.4vw, 1.8rem) 0 0; max-width: 34em; font-size: clamp(1.05rem, 1.3vw, 1.2rem); line-height: 1.65; color: var(--p-grey-3); text-wrap: pretty; }
 
-/* de beoordeling als wit kaartje op de rode band */
+/* de beoordeling: geen kader, geen schaduw, alleen een streep erboven */
 .p-keur__google {
   display: flex; flex-direction: column; gap: .7rem;
-  padding: clamp(1.1rem, 2vw, 1.6rem); background: #FFFEFB; color: var(--p-ink);
-  transition: transform 420ms var(--p-ease), box-shadow 420ms ease;
-  box-shadow: 0 30px 60px -40px rgba(11, 10, 9, .7);
+  padding-top: clamp(1rem, 2vw, 1.5rem); border-top: 1px solid var(--p-ink);
+  color: var(--p-ink); transition: opacity 260ms ease;
 }
-.p-keur__google:hover { transform: translate3d(0, -5px, 0); }
-.p-keur__google:focus-visible { outline: 2px solid var(--p-bone); outline-offset: 4px; }
+.p-keur__google:hover { opacity: .72; }
+.p-keur__google:focus-visible { outline: 2px solid var(--p-ink); outline-offset: 4px; }
 .p-keur__gtop { display: flex; align-items: center; gap: .6rem; }
-.p-keur__g { width: 1.35rem; height: 1.35rem; flex: none; }
+.p-keur__g { width: 1.3rem; height: 1.3rem; flex: none; color: var(--p-ink); }
 .p-keur__label { font-family: var(--p-mono); font-size: .68rem; letter-spacing: .14em; text-transform: uppercase; color: var(--p-grey-4); }
 .p-keur__rij2 { display: flex; align-items: baseline; gap: .7rem; flex-wrap: wrap; }
-.p-keur__cijfer { font-family: var(--p-display); font-weight: 400; font-size: clamp(2.6rem, 4vw, 3.4rem); line-height: .9; }
-.p-keur__sterren {
-  font-size: clamp(1.15rem, 1.8vw, 1.5rem); line-height: 1; letter-spacing: .06em;
-  background: linear-gradient(90deg, #F5B301 94%, rgba(11, 10, 9, .16) 94%);
-  -webkit-background-clip: text; background-clip: text; color: transparent;
-}
+.p-keur__cijfer { font-family: var(--p-display); font-weight: 400; font-size: clamp(2.8rem, 4.4vw, 3.8rem); line-height: .85; }
+.p-keur__sterren { font-size: clamp(1.15rem, 1.8vw, 1.5rem); line-height: 1; letter-spacing: .06em; color: var(--p-ink); }
 .p-keur__aantal { font-family: var(--p-mono); font-size: .72rem; letter-spacing: .1em; text-transform: uppercase; color: var(--p-grey-3); }
 .p-keur__knop {
-  display: inline-flex; align-items: center; gap: .5rem; margin-top: .2rem; padding-top: .85rem;
-  border-top: 1px solid var(--p-line-ink-soft);
+  display: inline-flex; align-items: center; gap: .5rem; margin-top: .1rem;
   font-family: var(--p-mono); font-size: .68rem; letter-spacing: .14em; text-transform: uppercase; color: var(--p-ink);
 }
 .p-keur__knop .p-arrow { width: 1.1rem; height: 1.1rem; transition: transform 360ms var(--p-ease); }
-.p-keur__google:hover .p-keur__knop { color: var(--p-red); }
 .p-keur__google:hover .p-keur__knop .p-arrow { transform: translate3d(5px, 0, 0); }
 
-/* de vier keurmerken op wit, met dunne lijnen ertussen */
-.p-keur__onder { padding-top: clamp(2rem, 4.4vw, 3.6rem); padding-bottom: var(--p-space); }
+/* de vier papieren als lijst: nummer, merk, titel, uitleg */
+.p-keur__lijst { list-style: none; margin: clamp(2.4rem, 5vw, 4rem) 0 0; padding: 0; border-top: 1px solid var(--p-ink); }
 .p-keur__rij {
-  list-style: none; margin: 0; padding: 0;
-  display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 1px;
-  background: var(--p-line-ink); border: 1px solid var(--p-line-ink);
+  display: grid; grid-template-columns: clamp(3rem, 5vw, 5rem) clamp(90px, 9vw, 130px) minmax(0, .8fr) minmax(0, 1.2fr);
+  gap: clamp(1rem, 3vw, 2.6rem); align-items: center;
+  padding-block: clamp(1.4rem, 2.8vw, 2.4rem); border-bottom: 1px solid var(--p-line-ink);
+  transition: background 300ms ease;
 }
-.p-keur__kaart {
-  position: relative; display: flex; flex-direction: column; gap: .8rem;
-  background: #FFFEFB; padding: clamp(1.4rem, 2.6vw, 2.3rem);
-  transition: background 320ms ease;
-}
-.p-keur__kaart:hover { background: var(--p-bone); }
+.p-keur__rij:hover { background: rgba(11, 10, 9, .03); }
 .p-keur__nr {
-  position: absolute; top: clamp(1rem, 2vw, 1.6rem); right: clamp(1rem, 2vw, 1.6rem);
-  font-family: var(--p-mono); font-size: .7rem; letter-spacing: .16em; color: var(--p-red);
+  font-family: var(--p-display); font-weight: 400; font-size: clamp(1.8rem, 3vw, 2.8rem); line-height: .8;
+  color: transparent; -webkit-text-stroke: 1px var(--p-ink);
 }
-.p-keur__vak { display: flex; align-items: center; height: clamp(84px, 9vw, 118px); color: var(--p-ink); }
-.p-keur__mark { width: clamp(72px, 7.6vw, 104px); height: clamp(72px, 7.6vw, 104px); }
+@supports not (-webkit-text-stroke: 1px currentColor) { .p-keur__nr { color: var(--p-grey-4); } }
+.p-keur__vak { display: flex; align-items: center; color: var(--p-ink); }
+.p-keur__mark { width: clamp(58px, 6.4vw, 88px); height: clamp(58px, 6.4vw, 88px); }
 .p-keur__merk {
-  display: inline-flex; flex-direction: column; gap: .1rem; padding: .55rem .8rem;
+  display: inline-flex; flex-direction: column; gap: .1rem; padding: .45rem .65rem;
   border: 1.5px solid var(--p-ink); font-family: var(--p-display); font-weight: 400;
-  font-size: clamp(1.15rem, 1.7vw, 1.55rem); line-height: .95; letter-spacing: .06em; text-transform: uppercase;
+  font-size: clamp(1rem, 1.4vw, 1.3rem); line-height: .95; letter-spacing: .06em; text-transform: uppercase;
 }
-.p-keur__merk em { font-style: normal; font-size: .58em; letter-spacing: .16em; color: var(--p-red); }
-.p-keur__merk--rdw { border-color: var(--p-red); color: var(--p-red); }
-.p-keur__merk--rdw em { color: var(--p-grey-4); }
+.p-keur__merk em { font-style: normal; font-size: .58em; letter-spacing: .16em; color: var(--p-grey-4); }
 .p-keur__merk--leer { border-style: dashed; }
-.p-keur__kaart .p-keur__t { display: block; font-family: var(--p-display); font-weight: 400; text-transform: uppercase; font-size: clamp(1.3rem, 1.9vw, 1.8rem); line-height: 1.05; color: var(--p-ink); }
-.p-keur__l { margin: 0; font-size: .95rem; line-height: 1.55; color: var(--p-grey-3); text-wrap: pretty; }
+.p-keur__kaart .p-keur__t, .p-keur__rij .p-keur__t {
+  display: block; font-family: var(--p-display); font-weight: 400; text-transform: uppercase;
+  font-size: clamp(1.4rem, 2.4vw, 2.3rem); line-height: 1.02; color: var(--p-ink);
+}
+.p-keur__l { margin: 0; font-size: 1rem; line-height: 1.6; color: var(--p-grey-3); max-width: 40em; text-wrap: pretty; }
 
 @media (max-width: 1080px) {
   .p-keur__kop { grid-template-columns: 1fr; align-items: start; }
-  .p-keur__rij { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .p-keur__rij { grid-template-columns: clamp(3rem, 8vw, 4.4rem) clamp(80px, 12vw, 110px) minmax(0, 1fr); row-gap: .8rem; }
+  .p-keur__rij .p-keur__l { grid-column: 1 / -1; }
 }
-@media (max-width: 560px) { .p-keur__rij { grid-template-columns: 1fr; } }
+@media (max-width: 560px) {
+  .p-keur__rij { grid-template-columns: auto 1fr; }
+  .p-keur__vak { grid-row: span 2; }
+  .p-keur__rij .p-keur__t, .p-keur__rij .p-keur__l { grid-column: 2; }
+}
 
-/* het team: afdelingen als over elkaar schuivende panelen ------------------ *//* het team: afdelingen als over elkaar schuivende panelen ------------------ *//* het team: afdelingen als over elkaar schuivende panelen ------------------ */
+/* het team: afdelingen als over elkaar schuivende panelen ------------------ *//* het team: afdelingen als over elkaar schuivende panelen ------------------ *//* het team: afdelingen als over elkaar schuivende panelen ------------------ *//* het team: afdelingen als over elkaar schuivende panelen ------------------ */
 .p-teamstack {
   display: flex; flex-direction: column; gap: 0; margin-top: clamp(1.8rem, 3.5vw, 2.8rem);
   /* over de volle breedte van het scherm, buiten de normale kolom om */
@@ -1812,8 +1806,8 @@ body.page .p-ctaform .p-hint, body.page .p-ctaform .p-note { color: var(--p-grey
 /* --- de projectenhero: grote kop die over een lopende beeldstrook valt ----- */
 .p-hero--werk {
   position: relative; overflow: hidden;
-  padding-block: clamp(7rem, 13vh, 10rem) clamp(1.6rem, 3.5vh, 2.8rem);
-  min-height: clamp(580px, 88vh, 1000px);
+  padding-block: clamp(10rem, 19vh, 14rem) clamp(1.8rem, 4vh, 3rem);
+  min-height: clamp(620px, 92vh, 1060px);
   display: flex; flex-direction: column;
   background: var(--p-ink);
 }
@@ -1825,11 +1819,8 @@ body.page .p-ctaform .p-hint, body.page .p-ctaform .p-note { color: var(--p-grey
   position: relative; margin: clamp(.4rem, 1.2vh, .9rem) 0 0;
   font-size: clamp(3rem, min(11.4vw, 16vh), 12.4rem); line-height: .88;
 }
-/* het tweede deel van de regel als contour: dat geeft de kop lucht */
+/* de hele kop in één kleur, zonder contour */
 .p-werkdek__t2 { color: inherit; }
-@supports (-webkit-text-stroke: 1px currentColor) {
-  .p-werkdek__t2 { color: transparent; -webkit-text-stroke: clamp(1px, .16vw, 2.4px) var(--p-bone); }
-}
 
 /* de beeldstrook ligt schuin over de pagina, met een rode hoek erachter */
 .p-werkdek__bandwrap {
@@ -1840,16 +1831,11 @@ body.page .p-ctaform .p-hint, body.page .p-ctaform .p-note { color: var(--p-grey
   transform: rotate(-3.2deg) scale(1.06);
   transform-origin: 50% 50%;
 }
-.p-werkdek__wig {
-  position: absolute; z-index: 0; right: 0; top: 0; width: min(34vw, 460px); aspect-ratio: 1 / 1;
-  background: var(--p-red); clip-path: polygon(100% 0, 100% 100%, 0 0);
-  opacity: .9;
-}
 /* de beeldstrook: alle projecten naast elkaar, langzaam langsrollend */
 .p-werkdek__strip {
   position: relative; z-index: 1; overflow: hidden;
-  border-top: 1px solid rgba(244, 241, 234, .3); border-bottom: 1px solid rgba(244, 241, 234, .3);
-  padding-block: clamp(.6rem, 1.6vh, 1.1rem); background: var(--p-ink);
+  border-top: 1px solid var(--p-line-ink); border-bottom: 1px solid var(--p-line-ink);
+  padding-block: clamp(.7rem, 1.8vh, 1.3rem); background: #FFFEFB;
   -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 4%, #000 96%, transparent 100%);
   mask-image: linear-gradient(90deg, transparent 0, #000 4%, #000 96%, transparent 100%);
 }
@@ -1873,8 +1859,8 @@ body.page .p-ctaform .p-hint, body.page .p-ctaform .p-note { color: var(--p-grey
   pointer-events: none; text-align: left;
 }
 .p-strip__vak:hover .p-strip__naam, .p-strip__vak:focus-visible .p-strip__naam { opacity: 1; transform: none; }
-.p-strip__naam b { font-family: var(--p-display); font-weight: 400; text-transform: uppercase; font-size: 1.15rem; line-height: 1; color: var(--p-bone); }
-.p-strip__naam i { font-style: normal; font-family: var(--p-mono); font-size: .62rem; letter-spacing: .14em; text-transform: uppercase; color: var(--p-red-2); }
+.p-strip__naam b { font-family: var(--p-display); font-weight: 400; text-transform: uppercase; font-size: 1.15rem; line-height: 1; color: #fff; }
+.p-strip__naam i { font-style: normal; font-family: var(--p-mono); font-size: .62rem; letter-spacing: .14em; text-transform: uppercase; color: rgba(255, 255, 255, .72); }
 .p-strip__vak:focus-visible { outline: 2px solid var(--p-red-2); outline-offset: -3px; }
 
 /* de voet: tekst links, knoppen rechts, de meta als regel eronder */
@@ -1904,7 +1890,6 @@ body.page .p-ctaform .p-hint, body.page .p-ctaform .p-note { color: var(--p-grey
   .p-hero--werk { min-height: 0; padding-block: clamp(6.4rem, 18vh, 8.6rem) clamp(1.6rem, 4vh, 2.4rem); }
   .p-werkdek__t { font-size: clamp(2.6rem, 12vw, 4.6rem); }
   .p-werkdek__bandwrap { margin-top: clamp(-4.6rem, -7vh, -1.6rem); transform: rotate(-2deg) scale(1.04); }
-  .p-werkdek__wig { width: min(46vw, 320px); }
   .p-strip__vak img { height: clamp(112px, 26vw, 170px); width: clamp(160px, 34vw, 240px); }
   .p-werkdek__voet { grid-template-columns: 1fr; gap: 1.1rem; align-items: start; }
   .p-werkdek__doe { justify-content: flex-start; }

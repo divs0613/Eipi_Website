@@ -740,7 +740,7 @@ html.wipe .p-pre { display: none; }
 /* het merkteken is groter dan in de balk, met lucht tussen logo, tekst en
    de socialknoppen */
 .p-footcol { min-width: 0; }
-.p-footcol--brand { display: flex; flex-direction: column; gap: clamp(1.4rem, 2vw, 1.9rem); }
+.p-footcol--brand { display: flex; flex-direction: column; gap: clamp(1rem, 1.4vw, 1.3rem); }
 .p-footcol--brand .p-brand__word { font-size: clamp(2.9rem, 3.2vw, 3.4rem); }
 .p-footcol--brand .p-brand__rule { height: clamp(34px, 3.6vw, 42px); }
 .p-footcol--brand .p-brand__sub { font-size: clamp(.66rem, .78vw, .76rem); letter-spacing: .2em; }
@@ -780,8 +780,16 @@ html.wipe .p-pre { display: none; }
 }
 .p-pill__ic { width: 14px; height: 14px; flex: none; }
 .p-pill:hover { color: var(--p-red-2); border-color: var(--p-red-2); transform: translate3d(0, -2px, 0); }
+/* het jaar als groot, rustig merkteken in de lege ruimte rechtsonder */
+.p-footjaar {
+  margin: clamp(1.4rem, 2.6vw, 2.2rem) 0 0;
+  text-align: right; user-select: none;
+  font-family: var(--p-display); font-weight: 400; text-transform: uppercase;
+  font-size: clamp(3.2rem, 8.4vw, 8.4rem); line-height: .78; letter-spacing: .01em;
+  color: rgba(244, 241, 234, .07);
+}
 .p-legal {
-  margin-top: clamp(1.8rem, 3.5vw, 2.6rem); padding-top: clamp(1rem, 2vw, 1.4rem);
+  margin-top: clamp(2rem, 4vw, 3rem); padding-top: clamp(1rem, 2vw, 1.4rem);
   border-top: 1px solid rgba(244, 241, 234, .12); display: flex; flex-wrap: wrap; align-items: center;
   gap: .6rem clamp(.9rem, 2vw, 1.8rem); font-family: var(--p-mono); font-size: .68rem;
   letter-spacing: .12em; text-transform: uppercase; color: #7C7466;

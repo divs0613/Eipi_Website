@@ -1015,7 +1015,8 @@
         var voorbijKop = false, inKaarten = false, inCta = false, inVoet = false;
         var zetBalk = function () {
           var aan = voorbijKop && inKaarten && !inCta && !inVoet;
-          filtervak.classList.toggle('p-filters--plak', aan);
+          /* vast zodra we voorbij de kop zijn, zodat hij alleen op en neer gaat */
+          filtervak.classList.toggle('p-filters--plak', voorbijKop);
           filtervak.classList.toggle('p-filters--op', aan);
         };
         var kopvak = document.querySelector('.p-werkkop');
@@ -1032,6 +1033,7 @@
         }, { threshold: 0 }).observe(werkvak);
         var cta = document.querySelector('.p-cta');
         if (cta) {
+          cta = cta.closest('section') || cta;
           new IntersectionObserver(function (items) {
             inCta = items[0].isIntersecting; zetBalk();
           }, { threshold: 0 }).observe(cta);

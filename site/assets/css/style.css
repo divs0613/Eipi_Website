@@ -1691,6 +1691,11 @@ html:not(.js) .p-xacc__body { position: static; opacity: 1; visibility: visible;
   .p-shero { grid-template-columns: 1fr; align-items: start; }
   .p-shero__ghost { display: none; }
   .p-shero__tri { width: 26%; }
+  /* het beeld staat onder de tekst in dezelfde kolom: het krijgt daar zijn
+     eigen hoogte, zodat het niet over de dienstenlijst eronder valt */
+  .p-hero--diensten .p-vrail {
+    position: relative; inset: auto; height: clamp(340px, 44vh, 440px);
+  }
 }
 @media (max-width: 720px) {
   .p-svcbar__in { min-height: 54px; }
@@ -1904,6 +1909,19 @@ body.page .p-ctaform .p-hint, body.page .p-ctaform .p-note { color: var(--p-grey
 .p-filters--plak .p-filter:hover { border-color: var(--p-bone); }
 /* de actieve pil blijft rood, ook op het zwarte balkje */
 .p-filters--plak .p-filter[aria-pressed="true"] { background: var(--p-red); border-color: var(--p-red); color: #fff; }
+
+/* op mobiel is de kleefbalk een strook over de volle breedte: recht van vorm,
+   met de pillen erin zoals ze zijn */
+@media (max-width: 720px) {
+  .p-filters--plak {
+    left: 0; right: 0; bottom: 0; max-width: none;
+    border-radius: 0; border-left: 0; border-right: 0; border-bottom: 0;
+    justify-content: flex-start;
+    padding: .6rem var(--p-gutter);
+    transform: translateY(150%);
+  }
+  .p-filters--plak.p-filters--op { transform: translateY(0); }
+}
 
 /* op mobiel staan ze onder elkaar in plaats van naast elkaar */
 @media (max-width: 900px) {
@@ -2122,6 +2140,10 @@ body.p-paneel-open { overflow: hidden; }
 /* de tekst naast de grote foto's blijft gewone leestekst */
 /* de titel krijgt de brede kolom, zodat Op de weg. op één regel past */
 .p-fotoreeks__bij--breed .p-fotoreeks__wrap { grid-template-columns: minmax(0, 1.34fr) minmax(0, 1fr); }
+/* op mobiel staat alles onder elkaar: label, dan de titel, dan de tekst */
+@media (max-width: 900px) {
+  .p-fotoreeks__bij--breed .p-fotoreeks__wrap { grid-template-columns: minmax(0, 1fr); }
+}
 .p-fotoreeks__bij--breed .p-fotoreeks__l { max-width: 30em; font-size: 1.12rem; line-height: 1.68; }
 .p-fotoreeks__bij--breed .p-fotoreeks__l--groot { font-size: 1.15rem; }
 

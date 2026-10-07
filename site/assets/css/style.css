@@ -1294,6 +1294,9 @@ html.js .p-slider__item.is-on:nth-child(4n+4) { animation-delay: 210ms; }
 .p-row__line { margin: 0; font-size: .95rem; line-height: 1.5; color: var(--p-grey-3); text-wrap: pretty; max-width: 60ch; }
 .p-row__go { display: inline-flex; color: var(--p-grey-4); transition: color 260ms ease, transform 420ms var(--p-ease); }
 .p-row__go .p-arrow { width: 1.5rem; height: 1.5rem; }
+/* het beeld bij een rij: op mobiel een duimpje in de rij zelf, op de brede
+   versie doet het voorbeeldpaneel ernaast dit werk */
+.p-row__beeld { display: none; }
 .p-row:hover, .p-row:focus-visible, .p-row.is-on { background: rgba(11, 10, 9, .042); }
 .p-row:hover .p-row__t, .p-row:focus-visible .p-row__t, .p-row.is-on .p-row__t { color: var(--p-red); }
 .p-row:hover .p-row__n, .p-row:focus-visible .p-row__n, .p-row.is-on .p-row__n { color: var(--p-red); }
@@ -1689,6 +1692,20 @@ html:not(.js) .p-xacc__body { position: static; opacity: 1; visibility: visible;
 
 @media (max-width: 900px) {
   .p-shero { grid-template-columns: 1fr; align-items: start; }
+  /* de dienstenlijst: elke rij met een beeld aan de linkerkant */
+  .p-row {
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    align-items: center; gap: .35rem clamp(.9rem, 3vw, 1.2rem);
+    padding: clamp(.9rem, 3vw, 1.2rem) clamp(.3rem, 2vw, .6rem);
+  }
+  .p-row__n, .p-row__ic { display: none; }
+  .p-row__beeld {
+    display: block; grid-row: 1; width: clamp(74px, 24vw, 108px);
+    aspect-ratio: 4 / 3; overflow: hidden; background: var(--p-bone-4);
+  }
+  .p-row__beeld img { display: block; width: 100%; height: 100%; object-fit: cover; }
+  .p-row__t { font-size: clamp(1.3rem, 5vw, 1.7rem); }
+  .p-row__line { font-size: .92rem; }
   .p-shero__ghost { display: none; }
   .p-shero__tri { width: 26%; }
   /* het beeld staat onder de tekst in dezelfde kolom: het krijgt daar zijn
